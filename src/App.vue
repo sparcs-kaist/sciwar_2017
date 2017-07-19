@@ -1,7 +1,30 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+  <div class="container">
+    <div id="nav-bar">
+      <div class="block">
+        <router-link :to="{ name: 'home' }" class="button">Home</router-link>
+        <router-link :to="{ name: 'album' }" class="button">album</router-link>
+        <router-link :to="{ name: 'videos' }" class="button">videos</router-link>
+        <router-link :to="{ name: 'schedule' }" class="button">schedule</router-link>
+        <router-link :to="{ name: 'map' }" class="button">map</router-link>
+      </div>
+    </div>
+    <div class="contents">
+      <div class="sidebar-left">
+        <router-link :to="{ name: 'home' }" class="button">Home</router-link>
+        <router-link :to="{ name: 'home' }" class="button">Home</router-link>
+        <router-link :to="{ name: 'home' }" class="button">Home</router-link>
+        <router-link :to="{ name: 'home' }" class="button">Home</router-link>
+        <router-link :to="{ name: 'home' }" class="button">Home</router-link>
+        <router-link :to="{ name: 'home' }" class="button">Home</router-link>
+      </div>
+      <div class="main">
+        <router-view name="contents"></router-view>
+      </div>
+      <div class="sidebar-right">
+        Hi
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,6 +35,8 @@ export default {
 </script>
 
 <style>
+@import '../node_modules/bulma/css/bulma.css';
+@import '../static/global.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
