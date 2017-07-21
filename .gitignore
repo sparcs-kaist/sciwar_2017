@@ -18,3 +18,5 @@ virtualenv/
 *.njsproj
 *.sln
 .*.swp
+
+*.pyc
