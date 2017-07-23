@@ -31,6 +31,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'ssal.sparcs.org',
     'localhost',
+    '0.0.0.0',
+    '127.0.0.1',
 ]
 
 

@@ -21,29 +21,29 @@ class Event(models.Model):
     )
     
     type = models.IntegerField(default=0, choices=TYPE)
-    name_en = models.CharField(max_length=30)
-    name_kr = models.CharField(max_length=30)
+    name_eng = models.CharField(max_length=30)
+    name_kor = models.CharField(max_length=30)
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(blank=True)
     winner = models.IntegerField(default=0, choices=SCHOOLS)
     location = models.IntegerField()
-    score_KAIST = models.IntegerField(default=0)
-    score_POSTECH = models.IntegerField(default=0)
-    players_KAIST = models.ManyToManyField(Player, related_name="player_kaist")
-    players_POSTECH = models.ManyToManyField(Player, related_name="player_postech")
+    score_k = models.IntegerField(default=0)
+    score_p = models.IntegerField(default=0)
+    players_k = models.ManyToManyField(Player, related_name="player_kaist")
+    players_p = models.ManyToManyField(Player, related_name="player_postech")
 
     def __str__(self):
-        return f'{self.name_kr}'
+        return f'{self.name_kor}'
 
 
 class Video(models.Model):
     link = models.CharField(max_length=300)
     name = models.CharField(max_length=100)
     time = models.DateTimeField()
-    event = models.ForeignKey(Event)
+    event = models.ManyToManyField(Event)
 
     def __str__(self):
-        return f'{self.event.name_kr}: {self.name}'
+        return f'{self.name}'
 
 
 class CheerMessage(models.Model):
@@ -53,21 +53,21 @@ class CheerMessage(models.Model):
     event = models.ForeignKey(Event)
 
     def __str__(self):
-        return f'<{self.get_school_display()}>: {self.content}, {self.event.name_kr}'
+        return f'<{self.get_school_display()}>: {self.content}, {self.event.name_kor}'
 
 
 class TotoContent(models.Model):
     student_id = models.CharField(max_length=8)
     name = models.CharField(max_length=30)
     time = models.DateTimeField(auto_now_add=True)
-    score_baseball_KAIST = models.IntegerField()
-    score_baseball_POSTECH = models.IntegerField()
-    score_basketball_KAIST = models.IntegerField()
-    score_basketball_POSTECH = models.IntegerField()
-    score_esports_KAIST = models.IntegerField()
-    score_esports_POSTECH = models.IntegerField()
-    score_soccer_KAIST = models.IntegerField()
-    score_soccer_POSTECH = models.IntegerField()
+    score_baseball_k = models.IntegerField()
+    score_baseball_p = models.IntegerField()
+    score_basketball_k = models.IntegerField()
+    score_basketball_p = models.IntegerField()
+    score_esports_k = models.IntegerField()
+    score_esports_p = models.IntegerField()
+    score_soccer_k = models.IntegerField()
+    score_soccer_p = models.IntegerField()
     winner_basketball = models.IntegerField(choices=SCHOOLS)
     winner_baseball = models.IntegerField(choices=SCHOOLS)
     winner_esports = models.IntegerField(choices=SCHOOLS)

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Album from '@/components/Album'
 import Videos from '@/components/Videos'
+import Video from '@/components/Video'
 import Schedule from '@/components/Schedule'
 import Map from '@/components/Map'
 import Supporters from '@/components/Supporters'
@@ -37,6 +38,13 @@ export default new Router({
       name: 'videos',
       components: {
         contents: Videos
+      }
+    },
+    {
+      path: '/videos/:id',
+      name: 'video',
+      components: {
+        contents: Video
       }
     },
     {
