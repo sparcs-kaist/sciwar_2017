@@ -19,6 +19,11 @@ class Event(models.Model):
         (0, 'Sports'),
         (1, 'Others'),
     )
+    STATUS = (
+        (0, 'Pre'),
+        (1, 'Live'),
+        (2, 'Post'),
+    )
     
     type = models.IntegerField(default=0, choices=TYPE)
     name_eng = models.CharField(max_length=30)
@@ -29,18 +34,30 @@ class Event(models.Model):
     location = models.IntegerField()
     score_k = models.IntegerField(default=0)
     score_p = models.IntegerField(default=0)
-    players_k = models.ManyToManyField(Player, related_name="player_kaist")
-    players_p = models.ManyToManyField(Player, related_name="player_postech")
+    players_k = models.ManyToManyField(Player, related_name="events_k")
+    players_p = models.ManyToManyField(Player, related_name="events_p")
+    live = models.IntegerField(
+        default = 0,
+        choices = STATUS,
+    )
 
     def __str__(self):
         return f'{self.name_kor}'
 
 
 class Video(models.Model):
+    TYPE = (
+        (0, 'Live streaming'),
+        (1, 'Others'),
+    )
     link = models.CharField(max_length=300)
     name = models.CharField(max_length=100)
     time = models.DateTimeField()
     event = models.ManyToManyField(Event)
+    type = models.IntegerField(
+        default = 0,
+        choices = TYPE,
+    )
 
     def __str__(self):
         return f'{self.name}'
@@ -59,19 +76,116 @@ class CheerMessage(models.Model):
 class TotoContent(models.Model):
     student_id = models.CharField(max_length=8)
     name = models.CharField(max_length=30)
-    time = models.DateTimeField(auto_now_add=True)
-    score_baseball_k = models.IntegerField()
-    score_baseball_p = models.IntegerField()
-    score_basketball_k = models.IntegerField()
-    score_basketball_p = models.IntegerField()
-    score_esports_k = models.IntegerField()
-    score_esports_p = models.IntegerField()
-    score_soccer_k = models.IntegerField()
-    score_soccer_p = models.IntegerField()
-    winner_basketball = models.IntegerField(choices=SCHOOLS)
-    winner_baseball = models.IntegerField(choices=SCHOOLS)
-    winner_esports = models.IntegerField(choices=SCHOOLS)
-    winner_soccer = models.IntegerField(choices=SCHOOLS)
-    winner_quiz = models.IntegerField(choices=SCHOOLS)
-    winner_AI = models.IntegerField(choices=SCHOOLS)
-    winner_hacking = models.IntegerField(choices=SCHOOLS)
+    time = models.DateTimeField(auto_now_add = True)
+
+class BasketballToto(models.Model):
+    event = models.ForeignKey(
+        Event,
+        related_name = 'basketball_toto',
+    )
+    bet = models.ForeignKey(
+        TotoContent,
+        related_name = 'basketball_toto',
+    )
+    score_k = models.IntegerField()
+    score_p = models.IntegerField()
+    winner = models.IntegerField(
+        default = 0,
+        choices = SCHOOLS,
+    )
+
+
+class BaseballToto(models.Model):
+    event = models.ForeignKey(
+        Event,
+        related_name = 'baseball_toto',
+    )
+    bet = models.ForeignKey(
+        TotoContent,
+        related_name = 'baseball_toto',
+    )
+    score_k = models.IntegerField()
+    score_p = models.IntegerField()
+    winner = models.IntegerField(
+        default = 0,
+        choices = SCHOOLS,
+    )
+
+
+class SoccerToto(models.Model):
+    event = models.ForeignKey(
+        Event,
+        related_name = 'soccer_toto',
+    )
+    bet = models.ForeignKey(
+        TotoContent,
+        related_name = 'soccer_toto',
+    )
+    score_k = models.IntegerField()
+    score_p = models.IntegerField()
+    winner = models.IntegerField(
+        default = 0,
+        choices = SCHOOLS,
+    )
+
+
+class EsportsToto(models.Model):
+    event = models.ForeignKey(
+        Event,
+        related_name = 'esports_toto',
+    )
+    bet = models.ForeignKey(
+        TotoContent,
+        related_name = 'esports_toto',
+    )
+    score_k = models.IntegerField()
+    score_p = models.IntegerField()
+    winner = models.IntegerField(
+        default = 0,
+        choices = SCHOOLS,
+    )
+
+
+class QuizToto(models.Model):
+    event = models.ForeignKey(
+        Event,
+        related_name = 'quiz_toto',
+    )
+    bet = models.ForeignKey(
+        TotoContent,
+        related_name = 'quiz_toto',
+    )
+    winner = models.IntegerField(
+        default = 0,
+        choices = SCHOOLS,
+    )
+
+
+class AIToto(models.Model):
+    event = models.ForeignKey(
+        Event,
+        related_name = 'ai_toto',
+    )
+    bet = models.ForeignKey(
+        TotoContent,
+        related_name = 'ai_toto',
+    )
+    winner = models.IntegerField(
+        default = 0,
+        choices = SCHOOLS,
+    )
+
+
+class HackingToto(models.Model):
+    event = models.ForeignKey(
+        Event,
+        related_name = 'hacking_toto',
+    )
+    bet = models.ForeignKey(
+        TotoContent,
+        related_name = 'hacking_toto',
+    )
+    winner = models.IntegerField(
+        default = 0,
+        choices = SCHOOLS,
+    )
