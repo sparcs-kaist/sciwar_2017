@@ -1,6 +1,5 @@
 <template>
   <div id="video">
-    <h1>상세 내용</h1>
     <iframe width="560" height="315" :src="link" frameborder="0" allowfullscreen></iframe>
   </div>
 </template>
@@ -18,7 +17,7 @@ export default {
   },
   data () {
     return {
-      link: {}
+      link: []
     }
   }
 }
