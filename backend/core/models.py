@@ -77,7 +77,7 @@ class TotoContent(models.Model):
     student_id = models.CharField(max_length=8)
     name = models.CharField(max_length=30)
     time = models.DateTimeField(auto_now_add = True)
-    total = models.FloatField()
+    total = models.FloatField(default=0.0)
 
 
 class BasketballToto(models.Model):
