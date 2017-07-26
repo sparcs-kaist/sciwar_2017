@@ -11,7 +11,7 @@ import Toto from '@/components/Toto'
 import Login from '@/components/Login'
 import SupportersCheck from '@/components/Internal/Supporters'
 import TotoCheck from '@/components/Internal/Toto'
-import ScoreUpdate from '@/components/Internal/Score'
+import StatusUpdate from '@/components/Internal/Events'
 import ScheduleUpdate from '@/components/Internal/Schedule'
 
 Vue.use(Router)
@@ -97,10 +97,10 @@ export default new Router({
       }
     },
     {
-      path: '/internal/score',
-      name: 'score_update',
+      path: '/internal/events',
+      name: 'status_update',
       components: {
-        contents: ScoreUpdate
+        contents: StatusUpdate
       }
     },
     {

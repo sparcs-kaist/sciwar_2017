@@ -19,12 +19,12 @@ from . import views
 urlpatterns = [
     # GET
     url(r'^events/$', views.events),
-    url(r'^events/(?P<event_id>\d+)/$', views.event),
+    url(r'^events/(?P<event_id>\d+)/$', views.event), # GET + POST
     url(r'^events/(?P<event_id>\d+)/messages/$', views.messages),
     url(r'^videos/$', views.videos),
     url(r'^videos/(?P<pk>\d+)/$', views.video),
     
-    # POST
+    # PUT
     #url(r'^toto/$', views.toto),
     #url(r'^events/(?P<event_id>\d+/message/$', views.message),
 ]

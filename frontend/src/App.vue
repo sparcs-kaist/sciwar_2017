@@ -34,9 +34,10 @@ export default {
 }
 </script>
 
+<style lang="sass" src="bulma"></style>
 <style>
-@import '../node_modules/bulma/css/bulma.css';
 @import '../static/global.css';
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

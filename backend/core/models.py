@@ -29,11 +29,11 @@ class Event(models.Model):
     name_eng = models.CharField(max_length=30)
     name_kor = models.CharField(max_length=30)
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField(blank=True)
+    end_time = models.DateTimeField()
     winner = models.IntegerField(default=0, choices=SCHOOLS)
     location = models.IntegerField()
-    score_k = models.IntegerField(default=0)
-    score_p = models.IntegerField(default=0)
+    score_k = models.IntegerField(blank=True, null=True, default=0)
+    score_p = models.IntegerField(blank=True, null=True, default=0)
     players_k = models.ManyToManyField(Player, related_name="events_k")
     players_p = models.ManyToManyField(Player, related_name="events_p")
     live = models.IntegerField(
@@ -42,7 +42,7 @@ class Event(models.Model):
     )
 
     def __str__(self):
-        return f'{self.name_kor}'
+        return f'{self.name_kor} {self.live}'
 
 
 class Video(models.Model):
