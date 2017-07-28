@@ -88,11 +88,11 @@ export default {
 }
 
 .event-name {
-  margin-left: 50px;
+  margin-left: 150px;
 }
 
 .event-status {
-  margin-right: 50px;
+  margin-right: 150px;
 }
 
 .input {
