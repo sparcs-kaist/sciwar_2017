@@ -18,28 +18,53 @@
       <div id="sidebar-wrapper">
         <p id="menu">MENU</p>
         <div id="sidebar-left">
-          <router-link :to="{ name: 'status_update' }" class="button"><p>
-            Internal score
-              <i class="fa fa-chevron-right menu" aria-hidden="ture"></i>
+          <router-link :to="{ name: 'status_update' }" class="button">
+            <div class="menu-images">
+              <img src="/static/images/sciwar.png" width="35">
+            </div>
+            <p>
+            카포전이란
+              <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
-          <router-link :to="{ name: 'schedule' }" class="button"><p>일정
-              <i class="fa fa-chevron-right menu" aria-hidden="ture"></i>
+          <router-link :to="{ name: 'schedule' }" class="button">
+            <div class="menu-images">
+              <img src="/static/images/schedule.png" width="35">
+            </div>
+            <p>
+            일정
+              <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
-          <router-link :to="{ name: 'toto_check' }" class="button">
-            <p>Internal toto
-              <i class="fa fa-chevron-right menu" aria-hidden="ture"></i>
+          <router-link :to="{ name: 'supporters' }" class="button">
+            <div class="menu-images">
+              <img src="/static/images/supporters.png" width="50">
+            </div>
+            <p>
+            서포터즈
+              <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
-          <router-link :to="{ name: 'supporters_check' }" class="button">
-            <p>Internal supporters
-              <i class="fa fa-chevron-right menu" aria-hidden="ture"></i>
+          <router-link :to="{ name: 'toto' }" class="button">
+            <div class="menu-images">
+              <img src="/static/images/toto.png" width="35">
+            </div>
+            <p>
+            토토이벤트
+              <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
-          <router-link :to="{ name: 'schedule_update' }" class="button">
-            <p>Internal schedule
-              <i class="fa fa-chevron-right menu" aria-hidden="ture"></i>
+          <router-link :to="{ name: 'map' }" class="button">
+            <div class="menu-images">
+              <img src="/static/images/map.png" width="35">
+            </div>
+            <p>
+            지도
+              <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
-          <router-link :to="{ name: 'home' }" class="button">
-            <p>Home
-              <i class="fa fa-chevron-right menu" aria-hidden="ture"></i>
+          <router-link :to="{ name: 'album' }" class="button">
+            <div class="menu-images">
+              <img src="/static/images/image.png" width="35">
+            </div>
+            <p>
+            사진&비디오
+              <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
         </div>
         <div id="home-top">
@@ -52,7 +77,7 @@
             </div>
           </router-link>
           <div v-on:click="topClick" id="top">
-            <i style="color: rgb(149,179,215)"class="fa fa-chevron-up" aria-hidden="ture"></i>
+            <i class="fa fa-chevron-up" aria-hidden="ture"></i>
             <p style="margin-top: -24px;">TOP</p>
           </div>
         </div>
@@ -236,6 +261,10 @@ export default {
   color: rgb(119, 149, 185);
 }
 
+#top > .fa {
+  color: rgb(149, 179, 215);
+}
+
 #top:hover > .fa {
   color: rgb(119, 149, 185);
 }
@@ -286,6 +315,20 @@ a:hover > p > .fa {
 #sidebar-left > a > p {
   text-align: left;
   width: 100%;
+  margin-top: -4px;
+  margin-left: 10px;
+}
+
+#sidebar-left > a:nth-child(3) > p {
+  margin-left: 0px;
+}
+
+#sidebar-left > a:nth-child(3) > div {
+  margin-left: -2px;
+}
+
+.menu-images {
+  margin-top: 2px;
 }
 
 .main {
