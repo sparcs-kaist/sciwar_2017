@@ -1,11 +1,6 @@
 <template>
   <div class="container">
-    <div class="image">
-      <p class="noto-sans big">2017 SCIENCE WAR</p>
-      <p class="kopub">카이스트포스텍학생대제전</p>
-      <p class="noto-sans small">OCT. 15 - 17<sup class="th"> th</sup> KAIST</p>
-    </div>
-    <div id="nav-bar">
+    <div id="nav-bar" class="fixed">
       <div class="block">
         <div class="navbar-name kaist">
           KAIST
@@ -32,7 +27,7 @@
       </div>
     </div>
     <div class="contents">
-      <div id="sidebar-wrapper">
+      <div id="sidebar-wrapper" class="fixed">
         <p id="menu">MENU</p>
         <div id="sidebar-left">
           <router-link :to="{ name: 'status_update' }" class="button">
@@ -113,18 +108,15 @@ export default {
   name: 'app',
   data () {
     return {
-      scrolled: false
     }
   },
   created () {
-    window.addEventListener('scroll', this.handleScroll)
     this.$http.get('/api/events')
       .then((response) => {
         this.events = JSON.parse(response.data)
         this.kaistScore = 0
         this.postechScore = 0
         for (let i in this.events) {
-          console.log('this.events[i]', this.events[i])
           if (this.events[i].fields.winner === 1) {
             this.kaistScore += 1
           } else if (this.events[i].fields.winner === 2) {
@@ -135,34 +127,21 @@ export default {
         document.getElementById('postech-score').innerHTML = this.postechScore
       })
   },
-  mounted () {
-    this.navTop = document.getElementById('nav-bar').offsetTop
-    this.sideTop = document.getElementById('nav-bar').offsetHeight + this.navTop + 'px'
-    this.sideScrollTop = document.getElementById('nav-bar').offsetHeight + 'px'
-    console.log(this.navTop)
+  updated () {
+    if (document.getElementsByClassName('image')[0]) {
+      console.log(document.getElementsByClassName('image'))
+    } else {
+      document.getElementById('nav-bar').style.top = '0px'
+      console.log(1)
+      document.getElementById('sidebar-wrapper').style.top = '144px'
+      document.getElementById('nav-bar').classList.add('fixed')
+      document.getElementById('sidebar-wrapper').classList.add('fixed')
+    }
   },
   methods: {
-    handleScroll () {
-      this.scrolled = window.scrollY
-      console.log(this.scrolled)
-      if (this.scrolled > this.navTop) {
-        document.getElementById('nav-bar').classList.add('fixed')
-        document.getElementById('sidebar-wrapper').classList.add('fixed')
-        document.getElementById('nav-bar').style.top = '0px'
-        document.getElementById('sidebar-wrapper').style.top = this.sideScrollTop
-      } else {
-        document.getElementById('nav-bar').classList.remove('fixed')
-        document.getElementById('sidebar-wrapper').classList.remove('fixed')
-        document.getElementById('nav-bar').style.top = '623px'
-        document.getElementById('sidebar-wrapper').style.top = this.sideTop
-      }
-    },
     topClick () {
       window.scrollTo(0, 0)
     }
-  },
-  destroyed () {
-    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -176,21 +155,6 @@ export default {
 
 .fixed {
   position: fixed !important;
-}
-
-.image {
-  height: 623px;
-  width: 100%;
-  background-image: url('/static/images/home.png');
-  background-size: cover;
-  background-position: 50% 50%;
-  text-align: center;
-  display: flex !important;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0;
-  box-shadow: 0 3px 7px rgb(20,20,50);
-  z-index:2;
 }
 
 .noto-sans {
@@ -221,10 +185,6 @@ export default {
   word-spacing: -3px;
 }
 
-.th {
-  font-size: 34px;
-}
-
 .container {
   width: 100% !important;
   max-width: 100% !important;
@@ -241,7 +201,7 @@ export default {
   width:100%;
   height: 144px;
   position: absolute;
-  top: 623px;
+  top: 0px;
   background-color: rgba(8,49,110,1);
   box-shadow: 0 3px 7px rgb(130,130,130);
   z-index:1;
@@ -315,11 +275,11 @@ export default {
 }
 
 .contents {
-  margin:144px auto 0 auto;
+  margin: 144px auto 0 auto;
   display: flex;
   justify-content: space-between;
   ddbackground-color: rgba(187,100,100,1);
-  min-height: 700px;
+  min-height: 1700px;
   width:1295px;
 }
 
