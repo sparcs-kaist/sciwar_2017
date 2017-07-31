@@ -102,7 +102,7 @@ class Supporter(models.Model):
         max_length = 8,
     )
     department = models.CharField()
-    size = model.IntegerField(
+    size = models.IntegerField(
         default = 0,
         choices = SIZE,
     )
