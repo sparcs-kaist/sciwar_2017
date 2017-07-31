@@ -7,11 +7,28 @@
     </div>
     <div id="nav-bar">
       <div class="block">
-        <router-link :to="{ name: 'home' }" class="button">Home</router-link>
-        <router-link :to="{ name: 'album' }" class="button">album</router-link>
-        <router-link :to="{ name: 'videos' }" class="button">videos</router-link>
-        <router-link :to="{ name: 'schedule' }" class="button">schedule</router-link>
-        <router-link :to="{ name: 'map' }" class="button">map</router-link>
+        <div class="navbar-name kaist">
+          KAIST
+        </div>
+        <p>1</p>
+        <div class="navbar-name postech">
+          POSTECH
+        </div>
+        <p>1</p>
+        <div class="navbar-name today">
+          TODAY
+        </div>
+        <div class="events">
+          <div class="navbar-name">
+            <i class="fa fa-chevron-left" aria-hidden="ture"></i>
+          </div>
+          <div class="navbar-event-name">
+            무슨무슨무 경기
+          </div>
+          <div class="navbar-name">
+            <i class="fa fa-chevron-right" aria-hidden="ture"></i>
+          </div>
+        </div>
       </div>
     </div>
     <div class="contents">
@@ -121,7 +138,7 @@ export default {
       } else {
         document.getElementById('nav-bar').classList.remove('fixed')
         document.getElementById('sidebar-wrapper').classList.remove('fixed')
-        document.getElementById('nav-bar').style.top = '630px'
+        document.getElementById('nav-bar').style.top = '623px'
         document.getElementById('sidebar-wrapper').style.top = this.sideTop
       }
     },
@@ -147,7 +164,7 @@ export default {
 }
 
 .image {
-  height: 630px;
+  height: 623px;
   width: 100%;
   background-image: url('/static/images/home.png');
   background-size: cover;
@@ -207,9 +224,9 @@ export default {
 #nav-bar {
   text-align: left;
   width:100%;
-  height: 120px;
+  height: 144px;
   position: absolute;
-  top: 630px;
+  top: 623px;
   background-color: rgba(8,49,110,1);
   box-shadow: 0 3px 7px rgb(130,130,130);
   z-index:1;
@@ -217,11 +234,72 @@ export default {
 
 .block {
   width: 1295px;
-  margin: 0 auto;
+  margin: 18px auto 0 auto;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.block > p {
+  margin: -30px 20px 0px 15px;
+  font-size: 100px;
+  font-weight: 700;
+}
+
+.navbar-name {
+  padding: 0px 12px 2px 12px;
+  background-color: rgb(6, 38, 86);
+  border-radius: 7px;
+  letter-spacing: 0.8px;
+}
+
+.navbar-name.kaist {
+  font-size: 37px;
+  font-weight: 300;
+  height: 58px;
+}
+
+.navbar-name.postech {
+  font-size: 37px;
+  font-weight: 300;
+  height: 58px;
+}
+
+.navbar-name.today {
+  font-size: 37px;
+  font-weight: 300;
+  height: 58px;
+  margin-left: 5px;
+}
+
+.events {
+  margin: 25px 0px 0px 12px;
+  display: flex;
+  flex-direction: row;
+}
+
+.events > .navbar-name {
+  width: 30px;
+  height: 55px;
+  margin-top: 10px;
+}
+
+.events > .navbar-name > .fa {
+  font-size: 25px;
+  margin: 14px 0 0 -6px;
+}
+
+.navbar-event-name {
+  margin: -15px 10px 0 10px;
+  width: 500px;
+  font-size: 60px;
+  text-align: center;
+  letter-spacing: -2px;
 }
 
 .contents {
-  margin:120px auto 0 auto;
+  margin:144px auto 0 auto;
   display: flex;
   justify-content: space-between;
   ddbackground-color: rgba(187,100,100,1);
