@@ -83,6 +83,8 @@ class SupporterReg(models.Model):
     )
     password = models.CharField(
         max_length = 12,
+        null = False,
+        default = '1234',
     )
 
 
@@ -101,7 +103,9 @@ class Supporter(models.Model):
     student_id = models.CharField(
         max_length = 8,
     )
-    department = models.CharField()
+    department = models.CharField(
+        max_length = 50,
+    )
     size = models.IntegerField(
         default = 0,
         choices = SIZE,
@@ -120,6 +124,8 @@ class TotoContent(models.Model):
     total = models.FloatField(default=0.0)
     password = models.CharField(
         max_length = 12,
+        null = False,
+        default = '1234',
     )
 
 
