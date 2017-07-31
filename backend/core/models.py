@@ -73,11 +73,54 @@ class CheerMessage(models.Model):
         return f'<{self.get_school_display()}>: {self.content}, {self.event.name_kor}'
 
 
+class SupporterReg(models.Model):
+    title = models.TextField()
+    nickname = models.CharField(
+        max_length = 30,
+    )
+    contact = models.CharField(
+        max_length = 11,
+    )
+    password = models.CharField(
+        max_length = 12,
+    )
+
+
+class Supporter(models.Model):
+    SIZE = (
+        (0, 'XS'),
+        (1, 'S'),
+        (2, 'M'),
+        (3, 'L'),
+        (4, 'XL'),
+        (5, 'XXL'),
+    )
+    name = models.CharField(
+        max_length = 30,
+    )
+    student_id = models.CharField(
+        max_length = 8,
+    )
+    department = models.CharField()
+    size = model.IntegerField(
+        default = 0,
+        choices = SIZE,
+    )
+    registry = models.ForeignKey(
+        'SupporterReg',
+        on_delete = models.CASCADE,
+        related_name = 'supporters',
+    )
+
+
 class TotoContent(models.Model):
     student_id = models.CharField(max_length=8)
     name = models.CharField(max_length=30)
     time = models.DateTimeField(auto_now_add = True)
     total = models.FloatField(default=0.0)
+    password = models.CharField(
+        max_length = 12,
+    )
 
 
 class BasketballToto(models.Model):
