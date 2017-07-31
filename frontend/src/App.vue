@@ -10,11 +10,11 @@
         <div class="navbar-name kaist">
           KAIST
         </div>
-        <p>1</p>
+        <p id="kaist-score"></p>
         <div class="navbar-name postech">
           POSTECH
         </div>
-        <p>1</p>
+        <p id="postech-score"></p>
         <div class="navbar-name today">
           TODAY
         </div>
@@ -117,8 +117,23 @@ export default {
     }
   },
   created () {
-    console.log(2)
     window.addEventListener('scroll', this.handleScroll)
+    this.$http.get('/api/events')
+      .then((response) => {
+        this.events = JSON.parse(response.data)
+        this.kaistScore = 0
+        this.postechScore = 0
+        for (let i in this.events) {
+          console.log('this.events[i]', this.events[i])
+          if (this.events[i].fields.winner === 1) {
+            this.kaistScore += 1
+          } else if (this.events[i].fields.winner === 2) {
+            this.postechScore += 1
+          }
+        }
+        document.getElementById('kaist-score').innerHTML = this.kaistScore
+        document.getElementById('postech-score').innerHTML = this.postechScore
+      })
   },
   mounted () {
     this.navTop = document.getElementById('nav-bar').offsetTop
@@ -283,6 +298,7 @@ export default {
   width: 30px;
   height: 55px;
   margin-top: 10px;
+  cursor: pointer; 
 }
 
 .events > .navbar-name > .fa {
@@ -303,7 +319,7 @@ export default {
   display: flex;
   justify-content: space-between;
   ddbackground-color: rgba(187,100,100,1);
-  height: 2000px;
+  min-height: 700px;
   width:1295px;
 }
 
@@ -413,5 +429,6 @@ a:hover > p > .fa {
   ddbackground-color: rgba(200,200,200,1);
   flex: auto;
   margin-left: 300px;
+  padding: 50px 0 0 50px;
 }
 </style>
