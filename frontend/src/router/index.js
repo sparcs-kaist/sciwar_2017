@@ -14,6 +14,7 @@ import SupportersCheck from '@/components/Internal/Supporters'
 import TotoCheck from '@/components/Internal/Toto'
 import StatusUpdate from '@/components/Internal/Events'
 import ScheduleUpdate from '@/components/Internal/Schedule'
+import CheerMessage from '@/components/CheerMessage'
 
 Vue.use(Router)
 
@@ -116,6 +117,13 @@ export default new Router({
       name: 'schedule_update',
       components: {
         contents: ScheduleUpdate
+      }
+    },
+    {
+      path: '/cheermessage',
+      name: 'cheermessage',
+      components: {
+        contents: CheerMessage
       }
     }
   ]
