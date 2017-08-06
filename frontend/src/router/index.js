@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Album from '@/components/Album'
+import Event from '@/components/Event'
 import Videos from '@/components/Videos'
 import Video from '@/components/Video'
 import Schedule from '@/components/Schedule'
@@ -31,6 +32,13 @@ export default new Router({
       name: 'album',
       components: {
         contents: Album
+      }
+    },
+    {
+      path: '/events/:id',
+      name: 'event',
+      components: {
+        contents: Event
       }
     },
     {

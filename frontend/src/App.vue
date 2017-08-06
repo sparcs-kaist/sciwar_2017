@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div id="nav-bar" class="fixed">
+    <div id="nav-bar">
       <div class="block">
         <div class="navbar-name kaist">
           KAIST
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="contents">
-      <div id="sidebar-wrapper" class="fixed">
+      <div id="sidebar-wrapper">
         <p id="menu">MENU</p>
         <div id="sidebar-left">
           <router-link :to="{ name: 'status_update' }" class="button">
@@ -48,7 +48,7 @@
             </p></router-link>
           <router-link :to="{ name: 'supporters' }" class="button">
             <div class="menu-images">
-              <img src="/static/images/supporters.png" width="50">
+              <img src="/static/images/supporters.svg" width="50">
             </div>
             <p>
             서포터즈
@@ -88,17 +88,24 @@
               </p>
             </div>
           </router-link>
-          <div v-on:click="topClick" id="top">
-            <i class="fa fa-chevron-up" aria-hidden="ture"></i>
-            <p style="margin-top: -24px;">TOP</p>
-          </div>
         </div>
+      </div>
+      <div id="submenu">
+        <div class="event-list" v-for="event in events">
+          <router-link :to="{ name: 'event', params: { id: event.fields.id } }">
+            <div class="menu-images">
+              <img src="" width="35">
+            </div>
+            <p>
+              {{ event.fields.name_kor }}
+              <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
+            </p> 
+          </router-link>
+        </div>  
       </div>
       <div class="main">
         <router-view name="contents"></router-view>
       </div>
-    </div>
-    <div class="footer">
     </div>
   </div>
 </template>
@@ -108,6 +115,7 @@ export default {
   name: 'app',
   data () {
     return {
+      events: []
     }
   },
   created () {
@@ -129,13 +137,13 @@ export default {
   },
   updated () {
     if (document.getElementsByClassName('image')[0]) {
+      document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
       console.log(document.getElementsByClassName('image'))
     } else {
+      document.getElementsByClassName('contents')[0].style.margin = '144px auto 0 auto'
       document.getElementById('nav-bar').style.top = '0px'
       console.log(1)
       document.getElementById('sidebar-wrapper').style.top = '144px'
-      document.getElementById('nav-bar').classList.add('fixed')
-      document.getElementById('sidebar-wrapper').classList.add('fixed')
     }
   },
   methods: {
@@ -153,13 +161,22 @@ export default {
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 @import url(//cdn.jsdelivr.net/font-kopub/1.0/kopubdotum.css);
 
+html {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+body { 
+  overflow-x: scroll;
+  height: 100%;
+}
+
 .fixed {
   position: fixed !important;
 }
 
 .noto-sans {
   font-family: 'Noto Sans KR', sans-serif;
-  color: white;
 }
 
 .noto-sans.big {
@@ -167,6 +184,7 @@ export default {
   font-weight: 900;
   letter-spacing: 10.3px;
   word-spacing: -3px;
+  color: white;
 }
 
 .kopub {
@@ -183,12 +201,14 @@ export default {
   font-weight: 900;
   letter-spacing: 0px;
   word-spacing: -3px;
+  color: white;
 }
 
 .container {
   width: 100% !important;
   max-width: 100% !important;
   min-width: 1295px;
+  height: 100%;
   margin: 0 !important;
   padding: 0 !important;
   display: flex;
@@ -275,17 +295,17 @@ export default {
 }
 
 .contents {
+  height: 100%;
   margin: 144px auto 0 auto;
   display: flex;
   justify-content: space-between;
   ddbackground-color: rgba(187,100,100,1);
-  min-height: 1700px;
   width:1295px;
 }
 
 #sidebar-wrapper {
   width: 300px;
-  margin-top: 70px;
+  margin-top: 50px;
   position: absolute;
 }
 
@@ -306,9 +326,26 @@ export default {
   font-size: 26px;
 }
 
+#home-top > a {
+  width: 50%;
+}
+
+#home-top > div {
+  width: 50%;
+}
+
 #home {
   margin-top: 15px;
   color: black;
+  width: 100%;
+}
+
+#home > p {
+  width: 100%;
+}
+
+#home > p > .fa {
+  width: 10%;
 }
 
 #home:hover > p > .fa {
@@ -381,14 +418,42 @@ a:hover > p > .fa {
   margin-left: -2px;
 }
 
+#submenu {
+  position: absolute;
+  left: 300px;
+  top: 242px;
+  padding: 20px 25px 5px 25px;
+  background-color: rgba(242,242,242,1);
+}
+
+.event-list {
+  width: 180px;
+}
+
+.event-list > a{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+}
+
+.event-list > a > p {
+  width: 100%;
+} 
+
+.event-list > a > p > .fa.menu{
+  float: right;
+}
+
 .menu-images {
   margin-top: 2px;
 }
 
 .main {
-  ddbackground-color: rgba(200,200,200,1);
-  flex: auto;
   margin-left: 300px;
   padding: 50px 0 0 50px;
+  width: 945px;
 }
+
 </style>

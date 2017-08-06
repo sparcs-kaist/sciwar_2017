@@ -101,6 +101,7 @@ export default {
 
 .select {
   margin: 0 20px;
+  z-index: 0;
 }
 
 </style>
