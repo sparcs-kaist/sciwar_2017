@@ -1,41 +1,86 @@
 <template>
-  <div id="support">
-    <div id="info" class="info">
+  <div id="cheermessage">
+    <div class="info noto-sans">
       <p class="info-head">응원의 메세지</p>
-      <img src="" width="200" height="100" class="info-img">
-      <p class="info-parag">어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구</p>
+      <img src="/static/images/message.png"  class="info-img">
+      <p class="info-parag">어어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌어쩌구쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구</p>
     </div>
-    <div id="board">
-      <
+    <table class="board noto-sans">
+      <thead>
+        <tr>
+          <th>경기</th>
+          <th>내용</th>
+          <th>팀</th>
+        </tr>
+      </thead>
+      <tbody v-for="message in messages">
+        <tr>
+          <td>{{ message.fields.event }}</td>
+          <td>{{ message.fields.content }}</td>
+          <td>{{ message.fields.school }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul class="paginator">
+      
+    </ul>
     </div>
   </div>
 </template>
 
-<style>
-.support{
-  padding-top: 15px;
+<script>
+export default {
+  name: 'cheermessage',
+  data () {
+    return {
+      messages: []
+    }
+  },
+  created () {
+    this.$http.get('/api/cheermessage')
+      .then((response) => {
+        this.messages = JSON.parse(response.data)
+        console.log(this.messages.length)
+      })
+    var len = this.messages.length
+  },
+  methods: {
+  }
 }
+</script>
 
+<style>
 .info{
 }
 
 .info-head{ 
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 48px;
-  font-weight: 500;
+  font-size: 64px;
+  font-weight: 700;
+  padding-bottom: 10px;
+  margin-bottom: 1.5rem;
 }
 
 .info-img{
   float: left;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-top: 20px;
+  margin-top: -50px;
+  margin-left: -30px;
+  margin-bottom: -100px;
+  padding-bottom: -100px;
+  width: 350px;
 }
 
 .info-parag{
-  margin-top: 15px;
-  font-family: 'Noto Sans KR', sans-serif;
+  display: inline;
+  font-size: 32px;
+}
+
+.board{
+  margin-top: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+}  
+
+.board > thead {
   font-size: 28px;
-  font-weight: 200;
 }
 </style>
