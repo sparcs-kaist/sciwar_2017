@@ -9,7 +9,6 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
