@@ -34,10 +34,9 @@ def event(request, event_id):
         return HttpResponse('')
 
 
-def messages(request, event_id):
+def messages(request):
     if request.method == "GET":
-        event = Event.objects.get(id = event_id)
-        messages = CheerMessage.objects.filter(event = event)
+        messages = CheerMessage.objects.all().order_by('-time')
 
         messages = serializers.serialize('json', messages)
 
