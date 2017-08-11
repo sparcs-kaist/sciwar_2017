@@ -30,14 +30,14 @@
       <div id="sidebar-wrapper">
         <p id="menu">MENU</p>
         <div id="sidebar-left">
-          <router-link :to="{ name: 'status_update' }" class="button">
+          <a class="button">
             <div class="menu-images">
               <img src="/static/images/sciwar.png" width="35">
             </div>
             <p>
             카포전이란
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
-            </p></router-link>
+            </p></a>
           <router-link :to="{ name: 'schedule' }" class="button">
             <div class="menu-images">
               <img src="/static/images/schedule.png" width="35">
@@ -92,9 +92,9 @@
       </div>
       <div id="submenu">
         <div class="event-list" v-for="event in events">
-          <router-link :to="{ name: 'event', params: { id: event.fields.id } }">
+          <router-link :to="{ name: 'event', params: { id: event.pk } }">
             <div class="menu-images">
-              <img src="" width="35">
+              <img v-bind:src="'/static/images/' + event.fields.name_eng + '.png'" width="25" style="margin:6px 10px 0 5px;">
             </div>
             <p>
               {{ event.fields.name_kor }}
@@ -119,6 +119,8 @@ export default {
     }
   },
   created () {
+    window.addEventListener('click', this.submenu)
+    window.addEventListener('resize', this.submenuLeft)
     this.$http.get('/api/events')
       .then((response) => {
         this.events = JSON.parse(response.data)
@@ -133,22 +135,36 @@ export default {
         }
         document.getElementById('kaist-score').innerHTML = this.kaistScore
         document.getElementById('postech-score').innerHTML = this.postechScore
+        console.log(this.events)
       })
   },
   updated () {
+    let left = document.getElementById('sidebar-wrapper').offsetLeft + 300 + 'px'
+    document.getElementById('submenu').style.left = left
     if (document.getElementsByClassName('image')[0]) {
       document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
-      console.log(document.getElementsByClassName('image'))
+      document.getElementById('submenu').style.top = '865px'
     } else {
       document.getElementsByClassName('contents')[0].style.margin = '144px auto 0 auto'
+      document.getElementById('submenu').style.top = '242px'
       document.getElementById('nav-bar').style.top = '0px'
-      console.log(1)
       document.getElementById('sidebar-wrapper').style.top = '144px'
     }
   },
   methods: {
-    topClick () {
-      window.scrollTo(0, 0)
+    submenu (event) {
+      let button = document.getElementsByClassName('button')[0]
+      console.log(document.getElementById('submenu').style.display)
+      console.log(document.getElementById('submenu').style.display === 'none')
+      if ((event.target === button || event.target.parentNode === button || event.target.parentNode.parentNode === button) && document.getElementById('submenu').style.display === 'none') {
+        document.getElementById('submenu').style.display = 'block'
+      } else {
+        document.getElementById('submenu').style.display = 'none'
+      }
+    },
+    submenuLeft (event) {
+      let left = document.getElementById('sidebar-wrapper').offsetLeft + 300 + 'px'
+      document.getElementById('submenu').style.left = left
     }
   }
 }
@@ -420,14 +436,16 @@ a:hover > p > .fa {
 
 #submenu {
   position: absolute;
+  display: none;
   left: 300px;
   top: 242px;
-  padding: 20px 25px 5px 25px;
+  padding: 15px 15px 5px 15px;
   background-color: rgba(242,242,242,1);
 }
 
 .event-list {
   width: 180px;
+  margin-bottom: 10px;
 }
 
 .event-list > a{
@@ -436,14 +454,20 @@ a:hover > p > .fa {
   display: flex;
   flex-direction: row;
   background-color: white;
+  font-size: 20px;
+  font-weight: 400;
+  color: black;
+  height: 40px;
 }
 
 .event-list > a > p {
   width: 100%;
+  margin-top: 5px;
 } 
 
 .event-list > a > p > .fa.menu{
   float: right;
+  margin-top: 4px;
 }
 
 .menu-images {
