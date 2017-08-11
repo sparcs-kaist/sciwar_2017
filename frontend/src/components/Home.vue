@@ -148,6 +148,10 @@ html, body {
   font-weight: 300;
 }
 
+.current-cheer-message > div > img{
+  height: 35px !important;
+}
+
 .current-cheer-message > p {
   font-size: 26px;
   font-weight: 300;
