@@ -177,6 +177,7 @@ html, body {
   font-size: 64px;
   font-weight: 700;
   padding-bottom: 10px;
+  color: black !important;
 }
 
 #to-cheer-message > p{

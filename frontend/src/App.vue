@@ -142,9 +142,18 @@ export default {
     let left = document.getElementById('sidebar-wrapper').offsetLeft + 300 + 'px'
     document.getElementById('submenu').style.left = left
     if (document.getElementsByClassName('image')[0]) {
+      console.log('if')
       document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
       document.getElementById('submenu').style.top = '865px'
+    } else if (this.$route.params.id) {
+      console.log('elseif')
+      document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
+      document.getElementsByClassName('contents')[0].style.margin = '244px auto 0 auto'
+      document.getElementById('submenu').style.top = '342px'
+      document.getElementById('nav-bar').style.top = '0px'
+      document.getElementById('sidebar-wrapper').style.top = '244px'
     } else {
+      console.log('else')
       document.getElementsByClassName('contents')[0].style.margin = '144px auto 0 auto'
       document.getElementById('submenu').style.top = '242px'
       document.getElementById('nav-bar').style.top = '0px'
@@ -156,7 +165,7 @@ export default {
       let button = document.getElementsByClassName('button')[0]
       console.log(document.getElementById('submenu').style.display)
       console.log(document.getElementById('submenu').style.display === 'none')
-      if ((event.target === button || event.target.parentNode === button || event.target.parentNode.parentNode === button) && document.getElementById('submenu').style.display === 'none') {
+      if ((event.target === button || event.target.parentNode === button || event.target.parentNode.parentNode === button)) {
         document.getElementById('submenu').style.display = 'block'
       } else {
         document.getElementById('submenu').style.display = 'none'
@@ -179,12 +188,14 @@ export default {
 
 html {
   height: 100%;
-  overflow-y: hidden;
+  overflow-y: hidden !important;
+  color: black;
 }
 
 body { 
-  overflow-x: scroll;
+  overflow-x: scroll !important;
   height: 100%;
+  color: black;
 }
 
 .fixed {
@@ -221,6 +232,7 @@ body {
 }
 
 .container {
+  overflow-y: initial;
   width: 100% !important;
   max-width: 100% !important;
   min-width: 1295px;
@@ -230,6 +242,7 @@ body {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  color: black;
 }
 
 #nav-bar {
@@ -315,14 +328,15 @@ body {
   margin: 144px auto 0 auto;
   display: flex;
   justify-content: space-between;
-  ddbackground-color: rgba(187,100,100,1);
   width:1295px;
+  color: black;
 }
 
 #sidebar-wrapper {
   width: 300px;
   margin-top: 50px;
   position: absolute;
+  color: black;
 }
 
 #menu {
