@@ -34,6 +34,24 @@ def event(request, event_id):
         return HttpResponse('')
 
 
+def event_players_k(request, event_id):
+    if request.method == "GET":
+        event = Event.objects.get(id = event_id)
+        players_k = Player.objects.filter(events_k = event)
+        players_k = serializers.serialize('json', players_k)
+        print(players_k)
+        return JsonResponse(players_k, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+
+def event_players_p(request, event_id):
+    if request.method == "GET":
+        event = Event.objects.get(id = event_id)
+        players_p = Player.objects.filter(events_p = event)
+        players_p = serializers.serialize('json', players_p)
+        print(players_p)
+        return JsonResponse(players_p, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+
 def messages(request):
     if request.method == "GET":
         messages = CheerMessage.objects.all().order_by('-time')
