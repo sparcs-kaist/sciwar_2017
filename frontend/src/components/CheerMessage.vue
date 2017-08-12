@@ -8,22 +8,24 @@
     <table class="board noto-sans">
       <thead>
         <tr>
-          <th>경기</th>
-          <th>내용</th>
-          <th>팀</th>
+          <th class="fc">경기</th>
+          <th class="sc">내용</th>
+          <th class="tc">팀</th>
         </tr>
       </thead>
-      <tbody v-for="message in messages">
-        <tr>
-          <td>{{ message.fields.event }}</td>
-          <td>{{ message.fields.content }}</td>
-          <td>{{ message.fields.school }}</td>
+      <tbody >
+        <tr v-for="message in messages_rendered">
+          <td class="fc">{{ message.fields.event }}</td>
+          <td class="sc">{{ message.fields.content }}</td>
+          <td class="tc">{{ message.fields.school }}</td>
         </tr>
       </tbody>
     </table>
-    <ul class="paginator">
-      
-    </ul>
+    <div class="paginator noto-sans">
+      <button v-on:click="page_turn(1)"><</button>
+      <button v-for="n in page_range" v-on:click="page_turn(n)">{{ n }}</button>
+      <button v-if="page_range[page_range.length - 1] < max_page" v-on:click="page_turn(page_range[page_range.length - 1] + 1)">...</button>
+      <button v-on:click="page_turn(max_page)">></button>
     </div>
   </div>
 </template>
@@ -33,7 +35,9 @@ export default {
   name: 'cheermessage',
   data () {
     return {
-      messages: []
+      messages: [],
+      messages_rendered: [],
+      page_range: []
     }
   },
   created () {
@@ -41,12 +45,55 @@ export default {
       .then((response) => {
         this.messages = JSON.parse(response.data)
         console.log(this.messages.length)
+        this.len = this.messages.length
+        this.current_page = 1
+        this.max_page = parseInt(this.len / 10) + 1
+        console.log(this.max_page)
+        this.page_turn(1)
       })
-    var len = this.messages.length
   },
   methods: {
+    page_turn: function (n) {
+      while (this.messages_rendered.length) {
+        this.messages_rendered.pop()
+      }
+      this.current_page = n
+      console.log(this.current_page)
+      if (this.len > this.current_page * 10) {
+        for (let i = this.current_page * 10 - 10; i < (this.current_page * 10); i++) {
+          this.messages_rendered.push(this.messages[i])
+        }
+      } else {
+        for (let i = this.current_page * 10 - 10; i < this.len; i++) {
+          this.messages_rendered.push(this.messages[i])
+        }
+      }
+      // this.messages_rendered = JSON.stringify(this.messages_rendered)
+      console.log(this.messages_rendered)
+      this.set_range()
+    },
+    set_range: function () {
+      while (this.page_range.length) {
+        this.page_range.pop()
+      }
+      var start = 0
+      if (this.current_page % 5) {
+        start = this.current_page - ((this.current_page % 5) - 1)
+      } else {
+        start = this.current_page - 4
+      }
+      for (let i = 0; i < 5; i++) {
+        if (start > this.max_page) {
+          break
+        }
+        this.page_range.push(start)
+        start++
+      }
+      console.log(this.page_range)
+    }
   }
 }
+
 </script>
 
 <style>
@@ -78,9 +125,42 @@ export default {
   margin-top: 50px;
   margin-left: 10px;
   margin-right: 10px;
-}  
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.6;
+  vertical-align: top;
+}
+
+.board .fc {
+  width: 200px;
+  padding-left: 15px;
+ }
+ 
+.board .tc {
+  width: 100px;
+}
 
 .board > thead {
   font-size: 28px;
+  padding-bottom: 10px;
+}
+
+.board > tbody {
+  font-size: 25px;
+  font-weight: 300;
+}
+
+.board > tbody > tr:nth-child(even) {
+  background: #efefef;
+}
+
+.paginator {
+  display: flex;
+  padding-top: 20px;
+}
+
+.paginator > button {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 </style>
