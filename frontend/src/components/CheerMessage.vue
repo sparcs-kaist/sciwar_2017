@@ -17,15 +17,20 @@
         <tr v-for="message in messages_rendered">
           <td class="fc">{{ message.fields.event }}</td>
           <td class="sc">{{ message.fields.content }}</td>
-          <td class="tc">{{ message.fields.school }}</td>
+          <td class="tc" v-if="message.fields.school === 1">KAIST</td>
+          <td class="tc" v-else-if="message.fields.school === 2">POSTECH</td>
         </tr>
       </tbody>
     </table>
     <div class="paginator noto-sans">
       <button v-on:click="page_turn(1)"><</button>
+      <button v-if="page_range[0] > 1" v-on:click="page_turn(page_range[0] - 1)">... </button> 
       <button v-for="n in page_range" v-on:click="page_turn(n)">{{ n }}</button>
       <button v-if="page_range[page_range.length - 1] < max_page" v-on:click="page_turn(page_range[page_range.length - 1] + 1)">...</button>
       <button v-on:click="page_turn(max_page)">></button>
+      <router-link :to="{ name: 'cheermessage-write' }">
+        <span class="write noto-sans">쓰기</span>
+      </router-link>
     </div>
   </div>
 </template>
@@ -138,6 +143,7 @@ export default {
  
 .board .tc {
   width: 100px;
+  padding-right: 15px;
 }
 
 .board > thead {
@@ -155,12 +161,27 @@ export default {
 }
 
 .paginator {
-  display: flex;
+  display: table;
   padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 0 auto;
 }
 
 .paginator > button {
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 1px;
+  margin-right: 2px;
+  background: #555555;
+  border: none;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  padding: 5px 10px;
+}
+
+.write {
+  float: right;
+  font-size: 18px;
+  color: black;
 }
 </style>
