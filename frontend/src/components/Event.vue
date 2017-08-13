@@ -28,14 +28,38 @@
     </div>
     <div class="location"><i class="fa fa-map-marker"></i>위치<span>{{ event.fields.location }}</span>
       <div class="chevron" v-on:click="location()"><i class="fa fa-chevron-down"></i></div> 
-      <img class="location-picture" width="500">
+      <img class="location-picture" width="700">
     </div>
     <div class="player"><i class="fa fa-user"></i>선수단 목록
-      <div class="chevron"><i class="fa fa-chevron-down"></i></div>
-      <div class="team-kaist">KAIST</div>
-      <p v-for="player in playersK" class="player-list">{{ player.fields.name }}</p>
-      <div class="team-postech">POSTECH</div>
-      <p v-for="player in playersP" class="player-list">{{ player.fields.name }}</p>
+      <div v-on:click="player()" class="chevron"><i class="fa fa-chevron-down"></i></div>
+      <div class="player-detail">
+        <div class="team-kaist">KAIST</div>
+        <div class="players-list">
+          <p v-for="player in playersK" class="">{{ player.fields.name }}</p>
+        </div>
+        <div class="team-postech">POSTECH</div>
+        <div class="players-list">
+          <p v-for="player in playersP" class="">{{ player.fields.name }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="cheer-message">
+      <p>응원의 메시지</p>
+      <router-link :to="{ name: 'cheermessage' }"><p>나도 한 마디<img src="/static/images/message.png" width="60"></p></router-link>
+      <div class="messages">
+        <p v-if="messages[0]">{{ messages[0].fields.content }}
+        <span v-if="messages[0].fields.school == 1">to. KAIST</span>
+        <span v-if="messages[0].fields.school == 2">to. POSTECH</span>
+        </p>
+        <p v-if="messages[1]">{{ messages[1].fields.content }}
+        <span v-if="messages[1].fields.school == 1">to. KAIST</span>
+        <span v-if="messages[1].fields.school == 2">to. POSTECH</span>
+        </p>
+        <p v-if="messages[2]">{{ messages[2].fields.content }}
+        <span v-if="messages[2].fields.school == 1">to. KAIST</span>
+        <span v-if="messages[2].fields.school == 2">to. POSTECH</span>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -47,12 +71,12 @@ export default {
     return {
       event: {},
       playersK: [],
-      playersP: []
+      playersP: [],
+      messages: []
     }
   },
   created () {
     this.fetchData()
-    console.log(document.getElementsByClassName('fa-chevron-down'))
   },
   watch: {
     '$route': 'fetchData'
@@ -85,15 +109,27 @@ export default {
               this.playersP = JSON.parse(response.data)
               console.log('playersP', this.playersP)
             })
+          this.$http.get('/api/events/' + this.$route.params.id + '/messages')
+            .then((response) => {
+              this.messages = JSON.parse(response.data)
+              console.log(this.messages)
+            })
         })
     },
     location () {
-      if (document.getElementsByClassName('location-picture')[0].style.height === '400px') {
+      if (document.getElementsByClassName('location-picture')[0].style.height === '500px') {
         document.getElementsByClassName('location-picture')[0].style.height = '0'
         document.getElementsByClassName('location-picture')[0].style.display = 'none'
       } else {
-        document.getElementsByClassName('location-picture')[0].style.height = '400px'
+        document.getElementsByClassName('location-picture')[0].style.height = '500px'
         document.getElementsByClassName('location-picture')[0].style.display = 'block'
+      }
+    },
+    player () {
+      if (document.getElementsByClassName('player-detail')[0].style.display === 'none') {
+        document.getElementsByClassName('player-detail')[0].style.display = 'block'
+      } else {
+        document.getElementsByClassName('player-detail')[0].style.display = 'none'
       }
     }
   }
@@ -113,6 +149,7 @@ html, body {
   background-color: rgb(149, 179, 215);
   text-align: center;
   font-size: 67px;
+  font-weight: 700;
   color: white;
   box-shadow: 0 3px 7px rgb(130 ,130, 130);
 }
@@ -120,19 +157,19 @@ html, body {
 .team {
   display: flex;
   flex-direction: row;
-  margin-left: 80px;
+  margin-left: 100px;
 }
 
 .team > p {
-  font-size: 24px;
+  font-size: 36px;
 }
 
 .team > p:nth-child(1) {
-  margin-right: 25px;
+  margin-right: 30px;
 }
 
 .team > p:nth-child(2) {
-  margin-left: 25px;
+  margin-left: 30px;
 }
 
 .score {
@@ -142,29 +179,30 @@ html, body {
 
 .vs {
   color: rgb(149, 179, 215);
-  font-size: 72px;
+  font-size: 110px;
   margin: 0 11px;
 }
 
 .score > div {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   background-color: rgb(242, 242, 242);
   border-radius: 20px;
   text-align: center;
-  line-height: 135px;
-  font-size: 96px;
+  line-height: 180px;
+  font-size: 140px;
   font-weight: 800;
 }
 
 .winner-is {
+  margin-top: -30px;
   margin-left: 30px;
-  width: 200px;
-  font-size: 26px;
+  width: 300px;
+  font-size: 40px;
 }
 
 .winner-team {
-  font-size: 48px;
+  font-size: 72px;
   font-weight: 800;
 }
 
@@ -189,7 +227,7 @@ html, body {
 
 .time {
   margin-top: 30px;
-  font-size: 26px;
+  font-size: 40px;
   font-weight: 500;
 }
 
@@ -203,7 +241,7 @@ html, body {
 }
 
 .location {
-  font-size: 26px;
+  font-size: 40px;
   font-weight: 500;
 }
 
@@ -218,7 +256,7 @@ html, body {
 }
 
 .player {
-  font-size: 26px;
+  font-size: 40px;
   font-weight: 500;
 }
 
@@ -230,14 +268,85 @@ html, body {
 
 .chevron {
   text-align: right;
-  margin-top: -35px;
+  margin-top: -50px;
   margin-bottom: -5px;
-  width: 500px;
+  width: 700px;
   cursor: pointer;
 }
 
 .location-picture {
   height: 0px;
   display: none;
+}
+
+.team-kaist {
+  color: rgb(42, 158, 229);
+  padding: 0 5px;
+}
+
+.team-postech {
+  color: rgb(255, 87, 151);
+  padding: 0 5px;
+}
+
+.players-list {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(242, 242, 242);
+  padding: 0 5px;
+}
+
+.players-list:nth-child(4) {
+  border-radius: 0 0 10px 10px;
+}
+
+.players-list > p {
+  margin-right: 10px;
+  background-color: rgb(242, 242, 242);
+}
+
+.player-detail {
+  display: none;
+  border: 2px solid rgb(242, 242, 242);
+  border-radius: 10px;
+  width: 700px;
+  font-size: 30px;
+}
+
+.cheer-message > p:nth-child(1) {
+  font-size: 40px;
+}
+
+.cheer-message > a > p {
+  font-size: 30px;
+  float: right;
+  margin-top: -50px;
+  margin-right: 100px;
+  color: black;
+  width: 230px;
+}
+
+.cheer-message > a > p > img {
+  margin: 0 0 -15px 0;
+}
+
+.messages {
+  margin-top: 10px;
+}
+
+.messages > p {
+  font-size: 30px;
+  padding: 0 10px;
+  width: 780px;
+}
+
+.messages > p:nth-child(odd) {
+  background-color: rgb(242, 242, 242);
+  border-radius: 10px;
+}
+
+.messages > p > span{
+  float: right;
+  width: 200px;
 }
 </style>

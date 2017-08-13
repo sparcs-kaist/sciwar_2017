@@ -17,7 +17,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>Football</td>
+						<td>Soccer</td>
 						<td><input name="score1_1" placeholder="ex)4" onchange="get_winner1()"></td>
 						<td><input name="score1_2" placeholder="ex)0" onchange="get_winner1()"></td>
 						<td class="winner"><span name="winner1">NONE</span></td>
