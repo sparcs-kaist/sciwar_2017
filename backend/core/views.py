@@ -52,6 +52,15 @@ def event_players_p(request, event_id):
         return JsonResponse(players_p, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
+def event_messages(request, event_id):
+    if request.method == "GET":
+        event = Event.objects.get(id = event_id)
+        messages = CheerMessage.objects.filter(event = event).order_by('-time')
+        messages = serializers.serialize('json', messages)
+        print(messages)
+        return JsonResponse(messages, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+
 def messages(request):
     if request.method == "GET":
         messages = CheerMessage.objects.all().order_by('-time')

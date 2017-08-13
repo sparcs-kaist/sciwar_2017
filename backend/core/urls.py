@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^events/(?P<event_id>\d+)/$', views.event), # GET + POST
     url(r'^events/(?P<event_id>\d+)/players-k/$', views.event_players_k),
     url(r'^events/(?P<event_id>\d+)/players-p/$', views.event_players_p),
-    #url(r'^events/(?P<event_id>\d+)/messages/$', views.messages),
+    url(r'^events/(?P<event_id>\d+)/messages/$', views.event_messages),
     url(r'^videos/$', views.videos),
     url(r'^videos/(?P<pk>\d+)/$', views.video),
     url(r'^cheermessage/$', views.messages),
