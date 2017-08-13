@@ -15,7 +15,8 @@
       </thead>
       <tbody >
         <tr v-for="message in messages_rendered">
-          <td class="fc">{{ message.fields.event }}</td>
+          <td class="fc" v-if="message.fields.event === 1">축구</td>
+          <td class="fc" v-if="message.fields.event === 7">야구</td>
           <td class="sc">{{ message.fields.content }}</td>
           <td class="tc" v-if="message.fields.school === 1">KAIST</td>
           <td class="tc" v-else-if="message.fields.school === 2">POSTECH</td>
@@ -23,11 +24,21 @@
       </tbody>
     </table>
     <div class="paginator noto-sans">
-      <button v-on:click="page_turn(1)"><</button>
-      <button v-if="page_range[0] > 1" v-on:click="page_turn(page_range[0] - 1)">... </button> 
-      <button v-for="n in page_range" v-on:click="page_turn(n)">{{ n }}</button>
-      <button v-if="page_range[page_range.length - 1] < max_page" v-on:click="page_turn(page_range[page_range.length - 1] + 1)">...</button>
-      <button v-on:click="page_turn(max_page)">></button>
+      <div>
+        <select id="event-type">
+          <option value="0" selected>모두보기</option>
+          <option value="1">축구</option>
+          <option value="7">야구</option>
+        </select>
+        <span class="write" v-on:click="select_event()">확인</span>
+      </div>
+      <div>
+        <button v-on:click="page_turn(1)"><</button>
+        <button v-if="page_range[0] > 1" v-on:click="page_turn(page_range[0] - 1)">... </button> 
+        <button v-for="n in page_range" v-on:click="page_turn(n)">{{ n }}</button>
+        <button v-if="page_range[page_range.length - 1] < max_page" v-on:click="page_turn(page_range[page_range.length - 1] + 1)">...</button>
+        <button v-on:click="page_turn(max_page)">></button>
+      </div>
       <router-link :to="{ name: 'cheermessage-write' }">
         <span class="write noto-sans">쓰기</span>
       </router-link>
@@ -41,6 +52,7 @@ export default {
   data () {
     return {
       messages: [],
+      messages_event: [],
       messages_rendered: [],
       page_range: []
     }
@@ -50,11 +62,9 @@ export default {
       .then((response) => {
         this.messages = JSON.parse(response.data)
         console.log(this.messages.length)
-        this.len = this.messages.length
         this.current_page = 1
-        this.max_page = parseInt(this.len / 10) + 1
-        console.log(this.max_page)
-        this.page_turn(1)
+        this.event_type = 0
+        this.select_event(0)
       })
   },
   methods: {
@@ -64,13 +74,13 @@ export default {
       }
       this.current_page = n
       console.log(this.current_page)
-      if (this.len > this.current_page * 10) {
+      if (this.messages_event.length > this.current_page * 10) {
         for (let i = this.current_page * 10 - 10; i < (this.current_page * 10); i++) {
-          this.messages_rendered.push(this.messages[i])
+          this.messages_rendered.push(this.messages_event[i])
         }
       } else {
-        for (let i = this.current_page * 10 - 10; i < this.len; i++) {
-          this.messages_rendered.push(this.messages[i])
+        for (let i = this.current_page * 10 - 10; i < this.messages_event.length; i++) {
+          this.messages_rendered.push(this.messages_event[i])
         }
       }
       // this.messages_rendered = JSON.stringify(this.messages_rendered)
@@ -95,10 +105,30 @@ export default {
         start++
       }
       console.log(this.page_range)
+    },
+    select_event: function () {
+      var eventID = parseInt(document.getElementById('event-type').value)
+      while (this.messages_event.length) {
+        this.messages_event.pop()
+      }
+      console.log(eventID)
+      if (eventID === 0) {
+        for (let i = 0; i < this.messages.length; i++) {
+          this.messages_event.push(this.messages[i])
+        }
+      } else {
+        for (let i = 0; i < this.messages.length; i++) {
+          if (this.messages[i].fields.event === eventID) {
+            this.messages_event.push(this.messages[i])
+          }
+        }
+      }
+      console.log(this.messages_event)
+      this.max_page = parseInt(this.messages_event.length / 10) + 1
+      this.page_turn(1)
     }
   }
 }
-
 </script>
 
 <style>
@@ -161,13 +191,15 @@ export default {
 }
 
 .paginator {
-  display: table;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding-top: 20px;
   padding-bottom: 20px;
-  margin: 0 auto;
+  width: 100%;
 }
 
-.paginator > button {
+.paginator > div > button {
   margin-left: 1px;
   margin-right: 2px;
   background: #555555;
@@ -181,7 +213,7 @@ export default {
 
 .write {
   float: right;
-  font-size: 18px;
+  font-size: 20px;
   color: black;
 }
 </style>
