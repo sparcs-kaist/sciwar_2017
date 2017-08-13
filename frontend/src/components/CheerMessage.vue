@@ -33,11 +33,11 @@
         <span class="write" v-on:click="select_event()">확인</span>
       </div>
       <div>
-        <button v-on:click="page_turn(1)"><</button>
-        <button v-if="page_range[0] > 1" v-on:click="page_turn(page_range[0] - 1)">... </button> 
-        <button v-for="n in page_range" v-on:click="page_turn(n)">{{ n }}</button>
-        <button v-if="page_range[page_range.length - 1] < max_page" v-on:click="page_turn(page_range[page_range.length - 1] + 1)">...</button>
-        <button v-on:click="page_turn(max_page)">></button>
+        <button class="pg" v-on:click="page_turn(1)"><</button>
+        <button class="pg" v-if="page_range[0] > 1" v-on:click="page_turn(page_range[0] - 1)">... </button> 
+        <button class="pg" v-for="n in page_range" v-on:click="page_turn(n)">{{ n }}</button>
+        <button class="pg" v-if="page_range[page_range.length - 1] < max_page" v-on:click="page_turn(page_range[page_range.length - 1] + 1)">...</button>
+        <button class="pg" v-on:click="page_turn(max_page)">></button>
       </div>
       <router-link :to="{ name: 'cheermessage-write' }">
         <span class="write noto-sans">쓰기</span>
@@ -199,7 +199,7 @@ export default {
   width: 100%;
 }
 
-.paginator > div > button {
+.pg {
   margin-left: 1px;
   margin-right: 2px;
   background: #555555;
@@ -209,11 +209,14 @@ export default {
   display: inline-block;
   font-size: 20px;
   padding: 5px 10px;
+  cursor: pointer;
 }
 
 .write {
   float: right;
   font-size: 20px;
   color: black;
+  padding-left: 10px;
+  cursor: pointer;
 }
 </style>
