@@ -8,15 +8,15 @@
     <div class="current-cheer-message noto-sans">
       <div>
         <img src="/static/images/quote1.png" width="35" height="35">
-        <p>꺄아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아악</p>
+        <p>{{ messageContent }}</p>
         <img src="/static/images/quote2.png" width="35" height="35">
       </div>
-      <p><span>to. </span>KAIST</p>
-      <p><span>about. </span> 야구</p>
+      <p><span>to. </span>{{ messageTeam }}</p>
+      <p><span>about. </span>{{ messageEvent }}</p>
     </div>
     <div class="events-status noto-sans">
       <p class="title">경기 현황</p>
-      <router-link :to="{ name: 'home' }" id="to-cheer-message">
+      <router-link :to="{ name: 'cheermessage' }" id="to-cheer-message">
         <p>응원메시지 남기러 가기<img src="/static/images/message.png" width="35"></p>
         
       </router-link>
@@ -65,7 +65,10 @@ export default {
   data () {
     return {
       scrolled: false,
-      events: []
+      events: [],
+      messageContent: '',
+      messageTeam: '',
+      messageEvent: ''
     }
   },
   created () {
@@ -73,6 +76,23 @@ export default {
       .then((response) => {
         this.events = JSON.parse(response.data)
         console.log(this.events)
+      })
+    this.$http.get('/api/cheermessage')
+      .then((response) => {
+        this.message = JSON.parse(response.data)[0]
+        console.log(this.message)
+        console.log(this.message.fields.school)
+        this.messageContent = this.message.fields.content
+        if (this.message.fields.school === 1) {
+          this.messageTeam = 'KAIST'
+        } else {
+          this.messageTeam = 'POSTECH'
+        }
+        if (this.message.fields.event === 1) {
+          this.messageEvent = '축구'
+        } else if (this.message.fields.event === 2) {
+          this.messageEvent = '야구'
+        }
       })
   },
   mounted () {
