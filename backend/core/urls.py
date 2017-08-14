@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^cheermessage/$', views.messages),
 
     # PUT
+    url(r'^supporters/$', views.supporters),
     #url(r'^toto/$', views.toto),
     #url(r'^events/(?P<event_id>\d+/message/$', views.message),
 ]

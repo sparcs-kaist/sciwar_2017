@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from core.models import *
 from django.http import JsonResponse, HttpResponse
@@ -14,6 +15,7 @@ def events(request):
         return JsonResponse(events, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
+@csrf_exempt
 def event(request, event_id):
     if request.method == "GET":
         event = Event.objects.get(id = event_id)
@@ -23,10 +25,11 @@ def event(request, event_id):
 
     if request.method == "POST":
         event = Event.objects.get(id = event_id)
-        live = request.POST.dict()
+        live = request.POST
         live = list(live.keys())[0]
         live = json.loads(live)
         live = live['live']
+        print(live)
         event.live = live
         event.save()
         print(event)
@@ -84,3 +87,19 @@ def video(request, pk):
         video = serializers.serialize('json', [video])
 
         return JsonResponse(video, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+
+@csrf_exempt
+def supporters(request):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        print(data)
+        print(data['teamName'])
+        supporterReg = SupporterReg(nickname = data['teamName'], contact = data['contact'], password = data['password'])
+        supporterReg.save()
+        for sup in data['supporters']:
+            print(sup)
+            supporter = Supporter(name = sup['name'], student_id = sup['studentID'], department = sup['department'], size = sup['size'], registry = supporterReg)
+            supporter.save()
+
+        return HttpResponse('')

@@ -74,7 +74,6 @@ class CheerMessage(models.Model):
 
 
 class SupporterReg(models.Model):
-    title = models.TextField()
     nickname = models.CharField(
         max_length = 30,
     )
@@ -86,6 +85,8 @@ class SupporterReg(models.Model):
         null = False,
         default = '1234',
     )
+    def __str__(self):
+        return f'{self.nickname}'
 
 
 class Supporter(models.Model):
@@ -115,6 +116,8 @@ class Supporter(models.Model):
         on_delete = models.CASCADE,
         related_name = 'supporters',
     )
+    def __str__(self):
+        return f'{self.name}'
 
 
 class TotoContent(models.Model):

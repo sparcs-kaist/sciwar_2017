@@ -52,6 +52,7 @@ export default {
   methods: {
     selectClick (event) {
       let options = document.getElementsByClassName('select-options')
+      console.log(event.target)
       let select = options[event.target.name]
       if (select.selectedIndex === 2) {
         options[event.target.name].disabled = true
