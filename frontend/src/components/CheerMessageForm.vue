@@ -39,7 +39,7 @@ export default {
         return 1
       }
       return 0
-    }
+    },
     submit: function () {
       if (this.lengthCheck()) {
         return
