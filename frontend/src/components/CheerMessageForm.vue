@@ -54,7 +54,7 @@ export default {
       console.log(data)
       data = JSON.stringify(data)
       this.$http.put('/api/cheermessage', data)
-        .then((response => {
+        .then((response) => {
           console.log('success')
         })
     }
