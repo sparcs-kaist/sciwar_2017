@@ -16,6 +16,7 @@ import TotoCheck from '@/components/Internal/Toto'
 import StatusUpdate from '@/components/Internal/Events'
 import ScheduleUpdate from '@/components/Internal/Schedule'
 import CheerMessage from '@/components/CheerMessage'
+import CheerMessageForm from '@/components/CheerMessageForm'
 
 Vue.use(Router)
 
@@ -132,6 +133,13 @@ export default new Router({
       name: 'cheermessage',
       components: {
         contents: CheerMessage
+      }
+    },
+    {
+      path: '/cheermessage/write',
+      name: 'cheermessage-write',
+      components: {
+        contents: CheerMessageForm
       }
     }
   ]
