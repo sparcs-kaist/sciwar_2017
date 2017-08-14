@@ -1,6 +1,6 @@
 <template>
   <div class="supporters">
-    Supporters
+    <router-link :to="{ name: 'supporters_write' }">쓰기</router-link>
   </div>
 </template>
 

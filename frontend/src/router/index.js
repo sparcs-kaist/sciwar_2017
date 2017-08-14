@@ -8,6 +8,7 @@ import Video from '@/components/Video'
 import Schedule from '@/components/Schedule'
 import Map from '@/components/Map'
 import Supporters from '@/components/Supporters'
+import SupportersWrite from '@/components/SupportersWrite'
 import Toto from '@/components/Toto'
 import Login from '@/components/Login'
 import SupportersCheck from '@/components/Internal/Supporters'
@@ -82,6 +83,13 @@ export default new Router({
       name: 'supporters',
       components: {
         contents: Supporters
+      }
+    },
+    {
+      path: '/supporters/write',
+      name: 'supporters_write',
+      components: {
+        contents: SupportersWrite
       }
     },
     {
