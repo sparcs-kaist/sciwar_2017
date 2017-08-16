@@ -65,6 +65,7 @@ export default {
         this.current_page = 1
         this.event_type = 0
         this.select_event(0)
+        this.max_page = parseInt((this.messages.length - 1) / 10) + 1
       })
   },
   methods: {
@@ -124,7 +125,7 @@ export default {
         }
       }
       console.log(this.messages_event)
-      this.max_page = parseInt(this.messages_event.length / 10) + 1
+      this.max_page = parseInt((this.messages_event.length - 1) / 10) + 1
       this.page_turn(1)
     }
   }
