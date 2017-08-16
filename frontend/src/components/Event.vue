@@ -33,13 +33,17 @@
     <div class="player"><i class="fa fa-user"></i>선수단 목록
       <div v-on:click="player()" class="chevron"><i class="fa fa-chevron-down"></i></div>
       <div class="player-detail">
-        <div class="team-kaist">KAIST</div>
-        <div class="players-list">
-          <p v-for="player in playersK" class="">{{ player.fields.name }}</p>
+        <div>
+          <div class="team-kaist">KAIST</div>
+          <div class="players-list">
+            <p v-for="player in playersK" class="">{{ player.fields.name }}</p>
+          </div>
         </div>
-        <div class="team-postech">POSTECH</div>
-        <div class="players-list">
-          <p v-for="player in playersP" class="">{{ player.fields.name }}</p>
+        <div>
+          <div class="team-postech">POSTECH</div>
+          <div class="players-list">
+            <p v-for="player in playersP" class="">{{ player.fields.name }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -127,7 +131,7 @@ export default {
     },
     player () {
       if (document.getElementsByClassName('player-detail')[0].style.display === 'none') {
-        document.getElementsByClassName('player-detail')[0].style.display = 'block'
+        document.getElementsByClassName('player-detail')[0].style.display = 'flex'
       } else {
         document.getElementsByClassName('player-detail')[0].style.display = 'none'
       }
@@ -282,35 +286,57 @@ html, body {
 .team-kaist {
   color: rgb(42, 158, 229);
   padding: 0 5px;
+  background-color: white;
 }
 
 .team-postech {
   color: rgb(255, 87, 151);
+  text-align: right;
   padding: 0 5px;
+  background-color: white;
 }
 
 .players-list {
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   background-color: rgb(242, 242, 242);
   padding: 0 5px;
+  width: 100%;
+  font-size: 25px; 
 }
 
-.players-list:nth-child(4) {
-  border-radius: 0 0 10px 10px;
+.player-detail > div:nth-child(1) > .players-list {
+  border-radius: 0 0 0 5px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.player-detail > div:nth-child(2) > .players-list {
+  border-radius: 0 0 5px 0;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .players-list > p {
-  margin-right: 10px;
-  background-color: rgb(242, 242, 242);
+  margin: 0 5px;
 }
 
 .player-detail {
   display: none;
   border: 2px solid rgb(242, 242, 242);
+  background-color: rgb(242, 242, 242);
   border-radius: 10px;
   width: 700px;
   font-size: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+.player-detail > div{
+  width: 50%;
 }
 
 .cheer-message > p:nth-child(1) {
