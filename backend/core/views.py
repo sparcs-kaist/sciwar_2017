@@ -103,6 +103,12 @@ def video(request, pk):
 
 @csrf_exempt
 def supporters(request):
+    if request.method == "GET":
+        supporters = Supporter.objects.all()
+        supporters = serializers.serialize('json', supporters)
+        
+        return JsonResponse(supporters, safe = False, json_dumps_params = {'ensure_ascii': False})
+
     if request.method == "PUT":
         data = json.loads(request.body)
         print(data)
@@ -115,3 +121,11 @@ def supporters(request):
             supporter.save()
 
         return HttpResponse('')
+
+
+def supporterReg(request):
+    if request.method == "GET":
+        supporters = SupporterReg.objects.all()
+        supporters = serializers.serialize('json', supporters)
+        
+        return JsonResponse(supporters, safe = False, json_dumps_params = {'ensure_ascii': False})
