@@ -1,14 +1,25 @@
 <template>
-  <div class="supporters-write">
-    <label>팀 이름</label>
-    <input name="team-name"><br>
-    <label>대표자 연락처</label>
-    <input name="contact"><br>
-    <label>비밀번호</label>
-    <input name="password" type="password"><br>
-    <button v-on:click="addClick()" class="member-add">멤버 추가</button>
-    <button v-on:click="deleteClick()" class="member-add">멤버 삭제</button></button>
-    {{ click }}명
+  <div class="supporters-write noto-sans">
+    <div class="head">서포터즈 신청하기
+      <p>아래의 칸을 채워주세요</p>
+    </div>
+    <div class="team-name">
+      <label>팀 이름</label>
+      <input name="team-name">
+    </div>
+    <div class="team-contact">
+      <label>대표자 연락처</label>
+      <input name="contact">
+    </div>
+    <div class="team-password">
+      <label>비밀번호</label>
+      <input name="password" type="password">
+    </div>
+    <div class="member">
+      <button v-on:click="addClick()" class="member-add">멤버 추가</button>
+      <button v-on:click="deleteClick()" class="member-add">멤버 삭제</button>
+      <p class="count">{{ click }}명</p>
+    </div>
     <div v-for="n in click" v-bind:style="styleSupporter" class="supporter">
       <label>이름</label>
       <input name="name"><br>
@@ -26,7 +37,7 @@
         <option>XXL</option>
       </select>
     </div>
-    <button v-on:click="submit">submit</button>
+    <button class="submit" v-on:click="submit">제출</button>
   </div>
 </template>
 
@@ -92,4 +103,92 @@ export default {
 </script>
 
 <style>
+.head {
+  font-size: 64px;
+  font-weight: 700;
+  padding-bottom: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.head > p {
+  font-size: 32px;
+  font-weight: 300;
+}
+
+.team-name {
+  padding-bottom: 15px;
+}
+
+.team-name > label {
+  font-size: 28px;
+  margin-right: 20px;
+  width: 200px;
+  display: inline-block;
+}
+
+.team-name > input {
+  font-size: 24px;
+  font-weight: 200;
+}
+
+.team-contact {
+  padding-bottom: 15px;
+}
+
+.team-contact > label {
+  font-size: 28px;
+  margin-right: 20px;
+  display: inline-block;
+  width: 200px;
+}
+
+.team-contact > input {
+  font-size: 24px;
+  font-weight: 200;
+}
+
+.team-password {
+  padding-bottom: 15px;
+}
+
+.team-password > label {
+  font-size: 28px;
+  margin-right: 20px;
+  width: 200px;
+  display: inline-block;
+}
+
+.team-password > input {
+   font-size: 24px;
+   font-weight: 200;
+}
+
+.supporters-write button {
+  background-color: #555555;
+  text-align: center;
+  font-size: 20px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px 11px;
+  margin-bottom: 10px;
+}
+
+.member {
+  display: flex;
+}
+
+.member > button {
+  margin-right: 15px;
+}
+
+.member > p {
+  margin-left: 10px;
+  margin-top: -2px;
+  font-size: 28px;
+}
+
+.submit {
+  margin-top: 20px;
+}
 </style>
