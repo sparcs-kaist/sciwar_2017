@@ -158,6 +158,10 @@ html, body {
   box-shadow: 0 3px 7px rgb(130 ,130, 130);
 }
 
+.event {
+  padding-left: 15px;
+}
+
 .team {
   display: flex;
   flex-direction: row;
@@ -169,7 +173,7 @@ html, body {
 }
 
 .team > p:nth-child(1) {
-  margin-right: 30px;
+  margin-right: 50px;
 }
 
 .team > p:nth-child(2) {
@@ -184,7 +188,7 @@ html, body {
 .vs {
   color: rgb(149, 179, 215);
   font-size: 110px;
-  margin: 0 11px;
+  margin: 0 20px;
 }
 
 .score > div {
@@ -200,12 +204,13 @@ html, body {
 
 .winner-is {
   margin-top: -30px;
-  margin-left: 30px;
+  margin-left: 50px;
   width: 300px;
   font-size: 40px;
 }
 
 .winner-team {
+  margin-top: -50px;
   font-size: 72px;
   font-weight: 800;
 }
@@ -242,24 +247,28 @@ html, body {
 
 .time > span {
   margin-left: 30px;
+  font-weight: 400;
 }
 
 .location {
+  padding-top: 10px;
   font-size: 40px;
   font-weight: 500;
 }
 
 .location > i {
   margin-top: 8px;
-  margin-left: 4px;
+  margin-left: 7px;
   margin-right: 13px;
 }
 
 .location > span {
   margin-left: 30px;
+  font-weight: 400;
 }
 
 .player {
+  padding-top: 5px;
   font-size: 40px;
   font-weight: 500;
 }
@@ -274,13 +283,15 @@ html, body {
   text-align: right;
   margin-top: -50px;
   margin-bottom: -5px;
-  width: 700px;
+  width: 800px;
   cursor: pointer;
 }
 
 .location-picture {
   height: 0px;
   display: none;
+  margin: 0 0 0 40px;
+  margin-bottom: 20px;
 }
 
 .team-kaist {
@@ -303,7 +314,7 @@ html, body {
   background-color: rgb(242, 242, 242);
   padding: 0 5px;
   width: 100%;
-  font-size: 25px; 
+  font-size: 30px; 
 }
 
 .player-detail > div:nth-child(1) > .players-list {
@@ -329,14 +340,18 @@ html, body {
   border: 2px solid rgb(242, 242, 242);
   background-color: rgb(242, 242, 242);
   border-radius: 10px;
-  width: 700px;
+  width: 800px;
   font-size: 30px;
-  display: flex;
   flex-direction: row;
 }
 
 .player-detail > div{
   width: 50%;
+}
+
+.cheer-message {
+  padding-top: 40px;
+  width: 800px;
 }
 
 .cheer-message > p:nth-child(1) {
@@ -347,7 +362,6 @@ html, body {
   font-size: 30px;
   float: right;
   margin-top: -50px;
-  margin-right: 100px;
   color: black;
   width: 230px;
 }
@@ -358,6 +372,7 @@ html, body {
 
 .messages {
   margin-top: 10px;
+  font-weight: 200;
 }
 
 .messages > p {

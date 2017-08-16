@@ -13,7 +13,7 @@
           <th class="tc">팀</th>
         </tr>
       </thead>
-      <tbody >
+      <tbody>
         <tr v-for="message in messages_rendered">
           <td class="fc" v-if="message.fields.event === 1">축구</td>
           <td class="fc" v-if="message.fields.event === 7">야구</td>
@@ -160,7 +160,6 @@ export default {
   margin-top: 50px;
   margin-left: 10px;
   margin-right: 10px;
-  border-collapse: collapse;
   text-align: left;
   line-height: 1.6;
   vertical-align: top;
@@ -188,6 +187,16 @@ export default {
 
 .board > tbody > tr:nth-child(even) {
   background: #efefef;
+}
+
+.board > tbody > tr > td:first-child {
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.board > tbody > tr > td:last-child {
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .paginator {
