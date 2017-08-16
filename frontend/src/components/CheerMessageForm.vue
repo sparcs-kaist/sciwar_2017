@@ -19,7 +19,9 @@
         <option value="7">야구</option>
       </select>
     </div>
-    <button class="submit-button" v-on:click="submit()">쓰기</button>
+    <router-link :to="{ name: 'cheermessage' }">
+      <button class="submit-button" v-on:click="submit()">쓰기</button>
+    </router-link>
   </div>
 </template>
 
@@ -53,7 +55,7 @@ export default {
       let data = { 'content': content, 'school': school, 'event': event }
       console.log(data)
       data = JSON.stringify(data)
-      this.$http.put('/api/cheermessage', data)
+      this.$http.put('/api/cheermessage/', data)
         .then((response) => {
           console.log('success')
         })

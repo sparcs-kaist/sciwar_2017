@@ -64,6 +64,7 @@ def event_messages(request, event_id):
         return JsonResponse(messages, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
+@csrf_exempt
 def messages(request):
     if request.method == "GET":
         messages = CheerMessage.objects.all().order_by('-time')
@@ -71,6 +72,17 @@ def messages(request):
         messages = serializers.serialize('json', messages)
 
         return JsonResponse(messages, safe = False, json_dumps_params = {'ensure_ascii': False})
+    
+
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        print(data['content'])
+        cheerMessage = CheerMessage(content = data['content'], school = data['school'])
+        cheerMessage.event_id = data['event']
+        print(cheerMessage.event)
+        cheerMessage.save()
+
+        return HttpResponse('')
 
 
 def videos(request):
