@@ -3,12 +3,20 @@
     <div class="supporters-title">
       서포터즈가 되면...
     </div>
-    <div class="supporters-todo">
-      <p>- 티셔츠를 나누어 드립니다.</p>
-      <p>- 서포터즈 교육을 받아야 합니다.</p>
-      <p>- 카포전 당일 참석을 해야 합니다.</p>
-      <p>- 서포터즈 정원은 150명 입니다.</p>
-    </div>
+    <table class="supporters-todo">
+      <tr>
+        <th>하나,</th><td>티셔츠를 나누어 드립니다.</td>
+      </tr>
+      <tr>
+        <th>둘,</th><td>서포터즈 교육을 받아야 합니다.</td>
+      </tr>
+      <tr>
+        <th>셋,</th><td>카포전 당일 참석을 해야 합니다.</td>
+      </tr>
+      <tr>
+        <th>넷,</th><td>서포터즈 정원은 150명 입니다.</td>
+      </tr>
+    </table>
     <table class="board">
       <thead>
         <tr>
@@ -116,11 +124,19 @@ export default {
 
 <style>
 .supporters-title {
-  font-size: 60px;
+  font-size: 64px;
+  font-weight: 700;
+  padding-bottom: 10px;
 }
 
 .supporters-todo {
-  font-size: 27px;
+  margin-left: 20px;
+  font-size: 28px;
+}
+
+.supporters-todo > tr > th {
+  font-weight: 400;
+  color: black;
 }
 
 .board{
@@ -155,6 +171,16 @@ export default {
 
 .board > tbody > tr:nth-child(even) {
   background: #efefef;
+}
+
+.board > tbody > tr > td:first-child {
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.board > tbody > tr > td:last-child {
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .paginator {

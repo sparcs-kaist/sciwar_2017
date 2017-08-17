@@ -20,22 +20,24 @@
       <button v-on:click="deleteClick()" class="member-add">멤버 삭제</button>
       <p class="count">{{ click }}명</p>
     </div>
-    <div v-for="n in click" v-bind:style="styleSupporter" class="supporter">
-      <label>이름</label>
-      <input name="name"><br>
-      <label>학번</label>
-      <input name="studentID"><br>
-      <label>학과</label>
-      <input name="department"><br>
-      <label>티셔츠 사이즈</label>
-      <select class="T-shirt">
-        <option>XS</option>
-        <option>S</option>
-        <option>M</option>
-        <option>L</option>
-        <option>XL</option>
-        <option>XXL</option>
-      </select>
+    <div class="supporter-block">
+      <div v-for="n in click" v-bind:style="styleSupporter" class="supporter">
+        <label>이름</label>
+        <input name="name" v-bind:style="styleInput"><br>
+        <label>학번</label>
+        <input name="studentID" v-bind:style="styleInput"><br>
+        <label>학과</label>
+        <input name="department" v-bind:style="styleInput"><br>
+        <label>티셔츠 사이즈</label>
+        <select class="T-shirt">
+          <option>XS</option>
+          <option>S</option>
+          <option>M</option>
+          <option>L</option>
+          <option>XL</option>
+          <option>XXL</option>
+        </select>
+      </div>
     </div>
     <button class="submit" v-on:click="submit">제출</button>
   </div>
@@ -48,11 +50,18 @@ export default {
     return {
       click: 0,
       styleSupporter: {
-        border: '2px solid rgb(149, 179, 215)',
+        backgroundColor: '#efefef',
         borderRadius: '5px',
-        width: '200px',
-        margin: '10px 0 0 0',
-        padding: '3px'
+        width: '230px',
+        margin: '15px 15px 0 0',
+        padding: '10px 7px 10px 17px',
+        fontSize: '24px'
+      },
+      styleInput: {
+        margin: '-10px 0 0 10px',
+        width: '130px',
+        fontSize: '15px',
+        display: 'inline-block'
       }
     }
   },
@@ -112,7 +121,7 @@ export default {
 
 .head > p {
   font-size: 32px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .team-name {
@@ -148,7 +157,7 @@ export default {
 }
 
 .team-password {
-  padding-bottom: 15px;
+  padding-bottom: 20px;
 }
 
 .team-password > label {
@@ -189,6 +198,12 @@ export default {
 }
 
 .submit {
-  margin-top: 20px;
+  margin-top: 30px;
+}
+
+.supporter-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 </style>
