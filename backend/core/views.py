@@ -129,3 +129,11 @@ def supporterReg(request):
         supporters = serializers.serialize('json', supporters)
         
         return JsonResponse(supporters, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+
+def totoContent(request):
+    if request.method == "GET":
+        toto = TotoContent.objects.all()
+        toto = serializers.serialize('json', toto)
+
+        return JsonResponse(toto, safe = False, json_dumps_params = {'ensure_ascii': False})
