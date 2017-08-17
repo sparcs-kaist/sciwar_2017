@@ -64,7 +64,7 @@
             </p></router-link>
           <router-link :to="{ name: 'map' }" class="button">
             <div class="menu-images">
-              <img src="/static/images/map.png" width="35">
+              <img src="/static/images/map.png" width="50">
             </div>
             <p>
             지도
@@ -445,6 +445,14 @@ a:hover > p > .fa {
 }
 
 #sidebar-left > a:nth-child(3) > div {
+  margin-left: -2px;
+}
+
+#sidebar-left > a:nth-child(5) > p {
+  margin-left: 0px;
+}
+
+#sidebar-left > a:nth-child(5) > div {
   margin-left: -2px;
 }
 

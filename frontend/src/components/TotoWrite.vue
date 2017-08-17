@@ -1,9 +1,9 @@
 <template>
   <div class="toto noto-sans">
     <label class="control-label">Student ID</label>
-    <input name="student_id" class="form-controll-small" onchange="show_formbutton()" placeholder="ex)20999999">
+    <input v-model="studentId" name="student_id" class="form-controll-small" v-on:keyup="showFormButton()" placeholder="ex)20999999">
     <label class="control-label">Name</label>
-    <input name="name" class="form-controll-small" onchange="show_formbutton()" placeholder="ex)김카이">
+    <input v-model="name" name="name" class="form-controll-small" v-on:keyup="showFormButton()" placeholder="ex)김카이">
 		<div class="toto-content">
 			<h2 class="table-title">스포츠 종목 점수맞추기</h2>
 			<table class="toto-table board-table">
@@ -18,27 +18,27 @@
 				<tbody>
 					<tr>
 						<td>Soccer</td>
-						<td><input name="score1_1" placeholder="ex)4" onchange="get_winner1()"></td>
-						<td><input name="score1_2" placeholder="ex)0" onchange="get_winner1()"></td>
-						<td class="winner"><span name="winner1">NONE</span></td>
+						<td><input v-model="scoreSoccerK" name="score1_1" placeholder="ex)4" v-on:keyup="getWinnerSoccer()"></td>
+						<td><input v-model="scoreSoccerP" name="score1_2" placeholder="ex)0" v-on:keyup="getWinnerSoccer()"></td>
+            <td class="winner"><span name="winnerSoccer">{{ winnerSoccer }}</span></td>
 					</tr>
 					<tr>
 						<td>Baseball</td>
-						<td><input name="score2_1" placeholder="ex)12" onchange="get_winner2()"></td>
-						<td><input name="score2_2" placeholder="ex)1" onchange="get_winner2()"></td>
-						<td class="winner"><span name="winner2">NONE</span></td>
+						<td><input v-model="scoreBaseballK" name="score2_1" placeholder="ex)12" v-on:keyup="getWinnerBaseball()"></td>
+						<td><input v-model="scoreBaseballP" name="score2_2" placeholder="ex)1" v-on:keyup="getWinnerBaseball()"></td>
+						<td class="winner"><span name="winnerBaseball">{{ winnerBaseball }}</span></td>
 					</tr>
 					<tr>
 						<td>Basketball</td>
-						<td><input name="score3_1" placeholder="ex)67" onchange="get_winner3()"></td>
-						<td><input name="score3_2" placeholder="ex)51" onchange="get_winner3()"></td>
-						<td class="winner"><span name="winner3">NONE</span></td>
+						<td><input v-model="scoreBasketballK" name="score3_1" placeholder="ex)67" v-on:keyup="getWinnerBasketball()"></td>
+						<td><input v-model="scoreBasketballP" name="score3_2" placeholder="ex)51" v-on:keyup="getWinnerBasketball()"></td>
+						<td class="winner"><span name="winnerBasketball">{{ winnerBasketball }}</span></td>
 					</tr>
 					<tr>
 						<td>League of Legend</td>
-						<td><input name="score4_1" placeholder="ex)3" onchange="get_winner4()"></td>
-						<td><input name="score4_2" placeholder="ex)0" onchange="get_winner4()"></td>
-						<td class="winner"><span name="winner4">NONE</span></td>
+						<td><input v-model="scoreLolK" name="score4_1" placeholder="ex)3" v-on:keyup="getWinnerLol()"></td>
+						<td><input v-model="scoreLolP" name="score4_2" placeholder="ex)0" v-on:keyup="getWinnerLol()"></td>
+            <td class="winner"><span name="winnerLol">{{ winnerLol }}</span></td>
 					</tr>
 				</tbody>
 			</table>
@@ -54,18 +54,18 @@
 				<tbody>
 					<tr>
 						<td>Science Quiz</td>
-						<td><input type="radio" class="radio-button" name="winner5" value="1"></td>
-						<td><input type="radio" class="radio-button" name="winner5" value="2"></td>
+						<td><input v-model="winnerQuiz" type="radio" class="radio-button" name="winner5" value="KAIST"></td>
+						<td><input v-model="winnerQuiz" type="radio" class="radio-button" name="winner5" value="POSTECH"></td>
 					</tr>
 					<tr>
 						<td>AI</td>
-						<td><input type="radio" class="radio-button" name="winner6" value="1"></td>
-						<td><input type="radio" class="radio-button" name="winner6" value="2"></td>
+						<td><input v-model="winnerAI" type="radio" class="radio-button" name="winner6" value="KAIST"></td>
+						<td><input v-model="winnerAI" type="radio" class="radio-button" name="winner6" value="POSTECH"></td>
 					</tr>
 					<tr>
 						<td>Hacking Contest</td>
-						<td><input type="radio" class="radio-button" name="winner7" value="1"></td>
-						<td><input type="radio" class="radio-button" name="winner7" value="2"></td>
+						<td><input v-model="winnerHacking" type="radio" class="radio-button" name="winner7" value="KAIST"></td>
+						<td><input v-model="winnerHacking" type="radio" class="radio-button" name="winner7" value="POSTECH"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -76,7 +76,82 @@
 
 <script>
 export default {
-  name: 'toto'
+  name: 'toto',
+  data () {
+    return {
+      studentId: '',
+      name: '',
+      scoreSoccerK: '',
+      scoreSoccerP: '',
+      scoreBaseballK: '',
+      scoreBaseballP: '',
+      scoreBasketballK: '',
+      scoreBasketballP: '',
+      scoreLolK: '',
+      scoreLolP: '',
+      winnerSoccer: 'None',
+      winnerBaseball: 'None',
+      winnerBasketball: 'None',
+      winnerLol: 'None',
+      winnerQuiz: 'KAIST',
+      winnerAI: 'KAIST',
+      winnerHacking: 'KAIST'
+    }
+  },
+  methods: {
+    getWinnerSoccer () {
+      if (parseInt(this.scoreSoccerK) > parseInt(this.scoreSoccerP)) {
+        this.winnerSoccer = 'KAIST'
+      } else if (parseInt(this.scoreSoccerK) < parseInt(this.scoreSoccerP)) {
+        this.winnerSoccer = 'POSTECH'
+      } else {
+        this.winnerSoccer = 'None'
+      }
+      this.showFormButton()
+    },
+    getWinnerBaseball () {
+      if (parseInt(this.scoreBaseballK) > parseInt(this.scoreBaseballP)) {
+        this.winnerBaseball = 'KAIST'
+      } else if (parseInt(this.scoreBaseballK) < parseInt(this.scoreBaseballP)) {
+        this.winnerBaseball = 'POSTECH'
+      } else {
+        this.winnerBaseball = 'None'
+      }
+      this.showFormButton()
+    },
+    getWinnerBasketball () {
+      if (parseInt(this.scoreBasketballK) > parseInt(this.scoreBasketballP)) {
+        this.winnerBasketball = 'KAIST'
+      } else if (parseInt(this.scoreBasketballK) < parseInt(this.scoreBasketballP)) {
+        this.winnerBasketball = 'POSTECH'
+      } else {
+        this.winnerBasketball = 'None'
+      }
+      this.showFormButton()
+    },
+    getWinnerLol () {
+      if (parseInt(this.scoreLolK) > parseInt(this.scoreLolP)) {
+        this.winnerLol = 'KAIST'
+      } else if (parseInt(this.scoreLolK) < parseInt(this.scoreLolP)) {
+        this.winnerLol = 'POSTECH'
+      } else {
+        this.winnerLol = 'None'
+      }
+      this.showFormButton()
+    },
+    showFormButton () {
+      if (this.winnerSoccer !== 'None' &&
+        this.winnerBaseball !== 'None' &&
+        this.winnerBasketball !== 'None' &&
+        this.winnerLol !== 'None' &&
+        this.studentId.length === 8 &&
+        this.name !== '') {
+        document.getElementsByClassName('form-button')[0].disabled = false
+      } else {
+        document.getElementsByClassName('form-button')[0].disabled = true
+      }
+    }
+  }
 }
 </script>
 
