@@ -135,25 +135,21 @@ export default {
         }
         document.getElementById('kaist-score').innerHTML = this.kaistScore
         document.getElementById('postech-score').innerHTML = this.postechScore
-        console.log(this.events)
       })
   },
   updated () {
     let left = document.getElementById('sidebar-wrapper').offsetLeft + 300 + 'px'
     document.getElementById('submenu').style.left = left
     if (document.getElementsByClassName('image')[0]) {
-      console.log('if')
       document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
       document.getElementById('submenu').style.top = '865px'
-    } else if (this.$route.params.id) {
-      console.log('elseif')
+    } else if (this.$route.params.id && this.$route.name === 'event') {
       document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
       document.getElementsByClassName('contents')[0].style.margin = '244px auto 0 auto'
       document.getElementById('submenu').style.top = '342px'
       document.getElementById('nav-bar').style.top = '0px'
       document.getElementById('sidebar-wrapper').style.top = '244px'
     } else {
-      console.log('else')
       document.getElementsByClassName('contents')[0].style.margin = '144px auto 0 auto'
       document.getElementById('submenu').style.top = '242px'
       document.getElementById('nav-bar').style.top = '0px'
@@ -163,8 +159,6 @@ export default {
   methods: {
     submenu (event) {
       let button = document.getElementsByClassName('button')[0]
-      console.log(document.getElementById('submenu').style.display)
-      console.log(document.getElementById('submenu').style.display === 'none')
       if ((event.target === button || event.target.parentNode === button || event.target.parentNode.parentNode === button)) {
         document.getElementById('submenu').style.display = 'block'
       } else {
