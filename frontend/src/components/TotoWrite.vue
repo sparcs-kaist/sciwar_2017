@@ -70,7 +70,9 @@
 				</tbody>
 			</table>
 		</div>
-		<input class="board-button right form-button button is-primary" type="submit" value="Apply" disabled/>
+    <router-link :to="{ name: 'toto' }">
+      <button v-on:click="submit()" class="board-button right form-button button is-primary" disabled>제출</button>
+    </router-link>
   </div>
 </template>
 
@@ -150,6 +152,17 @@ export default {
       } else {
         document.getElementsByClassName('form-button')[0].disabled = true
       }
+    },
+    submit () {
+      let data = { 'studentID': this.studentId, 'name': this.name, 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'scoreLolK': this.scoreLolK, 'scoreLolP': this.scoreLolP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'winnerAI': this.winnerAI, 'winnerHacking': this.winnerHacking }
+      console.log(data)
+      data = JSON.stringify(data)
+      console.log(data)
+      let url = '/api/toto/'
+      this.$http.put(url, data)
+        .then((response) => {
+          console.log('save successfully')
+        })
     }
   }
 }
