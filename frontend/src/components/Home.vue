@@ -25,9 +25,11 @@
           <div v-if="event.fields.winner == 1 && event.fields.type == 0" class="kaist-win">
             <p class="status-event-name">{{ event.fields.name_kor }}</p>
             <div class="status-event-score">
-              <p class="status-event-kaist-score">{{ event.fields.score_k }}</p>
+              <p v-if="event.fields.score_k < 100" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
+              <p v-else style="font-size:36px;" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
               <p>:</p>
-              <p class="status-event-postech-score">{{ event.fields.score_p }}</p>
+              <p v-if="event.fields.score_p < 100" class="status-event-postech-score">{{ event.fields.score_p }}</p>
+              <p v-else style="font-size:36px;" class="status-event-postech-score">{{ event.fields.score_p }}</p>
             </div>
           </div>
           <div v-else-if="event.fields.winner == 2 && event.fields.type == 0" class="postech-win">
@@ -41,9 +43,11 @@
           <div v-else-if="event.fields.type == 0" class="none-win">
             <p class="status-event-name">{{ event.fields.name_kor }}</p>
             <div class="status-event-score">
-              <p class="status-event-kaist-score">{{ event.fields.score_k }}</p>
+              <p v-if="event.fields.score_k < 100" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
+              <p v-else style="font-size:36px;" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
               <p>:</p>
-              <p class="status-event-postech-score">{{ event.fields.score_p }}</p>
+              <p v-if="event.fields.score_p < 100" class="status-event-postech-score">{{ event.fields.score_p }}</p>
+              <p v-else style="font-size:36px;" class="status-event-postech-score">{{ event.fields.score_p }}</p>
             </div>
           </div>
         </div>
@@ -216,11 +220,13 @@ html, body {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .status-event {
   width: 20%;
   margin-right: 5px;
+  margin-bottom: 10px;
 }
 
 .status-event > div{
@@ -251,6 +257,7 @@ html, body {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   font-size: 60px;
 }
 
