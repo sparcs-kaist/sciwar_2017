@@ -9,6 +9,7 @@ import Schedule from '@/components/Schedule'
 import Map from '@/components/Map'
 import Supporters from '@/components/Supporters'
 import SupportersWrite from '@/components/SupportersWrite'
+import SupportersView from '@/components/SupportersView'
 import Toto from '@/components/Toto'
 import TotoWrite from '@/components/TotoWrite'
 import Login from '@/components/Login'
@@ -92,6 +93,13 @@ export default new Router({
       name: 'supporters_write',
       components: {
         contents: SupportersWrite
+      }
+    },
+    {
+      path: '/supporters/:id',
+      name: 'supporters_view',
+      components: {
+        contents: SupportersView
       }
     },
     {
