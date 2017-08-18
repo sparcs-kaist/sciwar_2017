@@ -179,6 +179,7 @@ export default {
 .board > tbody {
   font-size: 25px;
   font-weight: 300;
+  color: black;
 }
 
 .board > tbody > tr:nth-child(even) {
@@ -197,6 +198,7 @@ export default {
 
 .board > tbody > tr > td > a {
   width: 100%;
+  color: black;
 }
 
 .paginator {

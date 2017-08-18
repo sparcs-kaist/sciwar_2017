@@ -1,12 +1,12 @@
 <template>
   <div class="supporters-view noto-sans">
     <div class="head">서포터즈 조회하기</div>
-    <div class="classified">
+    <div v-if="!certified" class="classified">
       <label>작성하실 때 사용하신 비밀번호를 입력해주세요</label><br>
       <input type="password" name="password">
       <button v-on:click="show()">확인</button>
     </div>
-    <div class="supporter-reg">
+    <div v-if="certified" class="supporter-reg">
       <table class="team-info">
         <tr>
           <th>팀 이름</th>
@@ -41,7 +41,8 @@ export default {
   data () {
     return {
       supporterReg: {},
-      supporters: []
+      supporters: [],
+      certified: false
     }
   },
   created () {
@@ -50,14 +51,12 @@ export default {
       .then((response) => {
         this.supporterReg = JSON.parse(response.data['reg'])[0]
         this.supporters = JSON.parse(response.data['supporters'])
-        console.log(this.supporterReg)
       })
   },
   methods: {
     show: function () {
       if (document.getElementsByName('password')[0].value === this.supporterReg.fields.password) {
-        document.getElementsByClassName('supporter-reg')[0].style.display = 'block'
-        document.getElementsByClassName('classified')[0].style.display = 'none'
+        this.certified = true
       } else {
         alert('비밀번호가 틀렸습니다.')
       }
@@ -71,16 +70,26 @@ export default {
 .head {
   font-size: 64px;
   font-weight: 700;
-  padding-bottom: 10px;
   margin-bottom: 1.5rem;
 }
 
 .classified {
   display: block;
+  font-size: 28px;
 }
 
-.supporter-reg {
-  display: none;
+.classified > input {
+  font-size: 20px;
+}
+
+.classified > button {
+  background-color: #555555;
+  text-align: center;
+  font-size: 20px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px 11px;
 }
 
 .team-info > tr {
