@@ -39,13 +39,15 @@
         </select>
       </div>
     </div>
-    <button class="submit" v-on:click="submit">제출</button>
+    <router-link :to="{ name: 'supporters' }">
+      <button class="submit" v-on:click="submit">제출</button>
+    </router-link>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'supporters',
+  name: 'supporters_write',
   data () {
     return {
       click: 0,

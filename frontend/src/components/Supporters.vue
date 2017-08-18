@@ -27,9 +27,21 @@
       </thead>
       <tbody>
         <tr v-for="supporter in supportersRendered">
-          <td class="fc">{{ supporter.pk }}</td>
-          <td class="sc">{{ supporter.fields.nickname }}</td>
-          <td class="tc">{{ supporter.num }}</td>
+          <td class="fc">
+            <router-link :to="{ name: 'supporters_view', params: { id:supporter.pk } }">
+              <div>{{ supporter.pk }}</div>
+            </router-link>
+          </td>
+          <td class="sc">
+            <router-link :to="{ name: 'supporters_view', params: { id:supporter.pk } }">
+              <div>{{ supporter.fields.nickname }}</div>
+            </router-link>
+          </td>
+          <td class="tc">
+            <router-link :to="{ name: 'supporters_view', params: { id:supporter.pk } }">
+              <div>{{ supporter.num }}</div>
+            </router-link>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -181,6 +193,10 @@ export default {
 .board > tbody > tr > td:last-child {
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
+}
+
+.board > tbody > tr > td > a {
+  width: 100%;
 }
 
 .paginator {

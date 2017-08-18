@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^cheermessage/$', views.messages),
     url(r'^supporter-reg/$', views.supporterReg),
     url(r'^toto-content/$', views.TotoContent),
+    url(r'^supporters/(?P<reg_id>\d+)/', views.supportersView),
 
     # PUT
     url(r'^supporters/$', views.supporters), # GET + PUT
