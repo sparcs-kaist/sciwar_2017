@@ -4,9 +4,11 @@
       {{ date.split('-')[1] }}-{{ date.split('-')[2] }}
       <div v-for="event in events" class="events-schedule">
         <div v-if="event.fields.start_time.split('T')[0] == date" class="event-schedule">
-          <div class="event-name">
+          <router-link :to="{ name: 'event', params: { id: event.pk } }">
+            <div class="event-name">
             {{ event.fields.name_eng }}
-          </div>
+            </div>
+          </router-link>
           <div class="time-location">
             <div class="event-time">
               {{ event.fields.start_time.split('T')[1].split('Z')[0].split(':')[0] }}:{{ event.fields.start_time.split('T')[1].split('Z')[0].split(':')[1] }}
@@ -63,6 +65,7 @@ export default {
 }
 
 .event-name {
+  color: black;
 }
 
 .time-location {
