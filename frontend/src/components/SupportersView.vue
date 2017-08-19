@@ -40,26 +40,36 @@ export default {
   name: 'supporters_view',
   data () {
     return {
+      theRightPassword: '',
+      certified: false,
       supporterReg: {},
-      supporters: [],
-      certified: false
+      supporters: []
     }
   },
   created () {
     let uri = '/api/supporters/' + this.$route.params.id
     this.$http.get(uri)
       .then((response) => {
-        this.supporterReg = JSON.parse(response.data['reg'])[0]
-        this.supporters = JSON.parse(response.data['supporters'])
+        this.theRightPassword = JSON.parse(response.data)[0]
+        this.theRightPassword = this.theRightPassword.fields.password
       })
   },
   methods: {
     show: function () {
-      if (document.getElementsByName('password')[0].value === this.supporterReg.fields.password) {
+      if (document.getElementsByName('password')[0].value === this.theRightPassword) {
         this.certified = true
+        this.loadComplete()
       } else {
         alert('비밀번호가 틀렸습니다.')
       }
+    },
+    loadComplete: function () {
+      let uri = '/api/supporters/complete/' + this.$route.params.id
+      this.$http.get(uri)
+        .then((response) => {
+          this.supporterReg = JSON.parse(response.data['reg'])[0]
+          this.supporters = JSON.parse(response.data['supporters'])
+        })
     }
   }
 }
@@ -130,7 +140,7 @@ export default {
 .link {
   background-color: #555555;
   text-align: center;
-  font-size: 20px;
+  font-size: 22px;
   border: none;
   color: white;
   cursor: pointer;
