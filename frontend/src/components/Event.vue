@@ -32,7 +32,7 @@
     </div>
     <div class="time"><i class="fa fa-clock-o"></i>일시<span>{{ day }} {{ startTimeH }}:{{ startTimeM }} - {{ endTimeH }}:{{ endTimeM }}</span>
     </div>
-    <div class="location"><i class="fa fa-map-marker"></i>위치<span>{{ event.fields.location }}</span>
+    <div class="location"><i class="fa fa-map-marker"></i>위치<span>{{ locations[event.fields.location] }}</span>
       <div class="chevron" v-on:click="location()"><i class="fa fa-chevron-down"></i></div> 
       <img class="location-picture" width="700">
     </div>
@@ -82,11 +82,13 @@ export default {
       event: {},
       playersK: [],
       playersP: [],
-      messages: []
+      messages: [],
+      locations: []
     }
   },
   created () {
     this.fetchData()
+    this.locations = ['Creative Learning Building', 'Outdoor Theater', 'Sports Complex', 'Stadium', 'Main Playground']
   },
   watch: {
     '$route': 'fetchData'
