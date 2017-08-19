@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^supporter-reg/$', views.supporterReg),
     url(r'^toto-content/$', views.totoContent),
     url(r'^supporters/(?P<reg_id>\d+)/', views.supportersView),
+    url(r'^supporters/complete/(?P<reg_id>\d+)/', views.SupportersViewComplete),
 
     # PUT
     url(r'^supporters/$', views.supporters), # GET + PUT

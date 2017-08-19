@@ -143,7 +143,7 @@ export default {
 
 .supporters-todo {
   margin-left: 20px;
-  font-size: 28px;
+  font-size: 32px;
 }
 
 .supporters-todo > tr > th {
@@ -206,6 +206,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  margin-top: 20px;
 }
 
 .pg {

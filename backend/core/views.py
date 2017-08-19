@@ -133,14 +133,21 @@ def supporterReg(request):
 
 def supportersView(request, reg_id):
     if request.method == "GET":
-        print(reg_id)
-        data = {
-            'reg' : serializers.serialize('json', [SupporterReg.objects.get(id = reg_id)]),
-            'supporters' : serializers.serialize('json', SupporterReg.objects.get(id = reg_id).supporters.all())
-        }
+        data = serializers.serialize('json', [SupporterReg.objects.get(id = reg_id)], fields=('password'))
         print(data)
 
         return JsonResponse(data, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+
+def SupportersViewComplete(request, reg_id):
+    if request.method == "GET":
+        data = {
+            'reg': serializers.serialize('json', [SupporterReg.objects.get(id = reg_id)]),
+            'supporters': serializers.serialize('json', SupporterReg.objects.get(id = reg_id).supporters.all())
+        }
+        print(data)
+
+    return JsonResponse(data, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
 def totoContent(request):
