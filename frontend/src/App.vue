@@ -457,6 +457,7 @@ a:hover > p > .fa {
   top: 242px;
   padding: 15px 15px 5px 15px;
   background-color: rgba(242,242,242,1);
+  z-index:1;
 }
 
 .event-list {
