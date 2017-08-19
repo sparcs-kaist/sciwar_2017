@@ -34,7 +34,7 @@
     </div>
     <div class="location"><i class="fa fa-map-marker"></i>위치<span>{{ locations[event.fields.location] }}</span>
       <div class="chevron" v-on:click="location()"><i class="fa fa-chevron-down"></i></div> 
-      <img class="location-picture" width="700">
+      <div class="location-picture"></div>
     </div>
     <div class="player"><i class="fa fa-user"></i>선수단 목록
       <div v-on:click="player()" class="chevron"><i class="fa fa-chevron-down"></i></div>
@@ -83,12 +83,14 @@ export default {
       playersK: [],
       playersP: [],
       messages: [],
-      locations: []
+      locations: [],
+      mapList: []
     }
   },
   created () {
     this.fetchData()
     this.locations = ['Creative Learning Building', 'Outdoor Theater', 'Sports Complex', 'Stadium', 'Main Playground']
+    this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png']
   },
   watch: {
     '$route': 'fetchData'
@@ -125,15 +127,16 @@ export default {
             .then((response) => {
               this.messages = JSON.parse(response.data)
               console.log(this.messages)
+              document.getElementsByClassName('location-picture')[0].style.background = "url('/static/images/" + this.mapList[this.event.fields.location] + "')"
             })
         })
     },
     location () {
-      if (document.getElementsByClassName('location-picture')[0].style.height === '500px') {
+      if (document.getElementsByClassName('location-picture')[0].style.height === '280px') {
         document.getElementsByClassName('location-picture')[0].style.height = '0'
         document.getElementsByClassName('location-picture')[0].style.display = 'none'
       } else {
-        document.getElementsByClassName('location-picture')[0].style.height = '500px'
+        document.getElementsByClassName('location-picture')[0].style.height = '280px'
         document.getElementsByClassName('location-picture')[0].style.display = 'block'
       }
     },
@@ -296,6 +299,7 @@ html, body {
 }
 
 .location-picture {
+  width: 628px;
   height: 0px;
   display: none;
   margin: 0 0 0 40px;
