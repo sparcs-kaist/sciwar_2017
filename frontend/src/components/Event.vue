@@ -8,11 +8,17 @@
       <p>POSTECH</p>
     </div>
     <div class="score">
-      <div class="kaist-score">
+      <div v-if="event.fields.score_k < 100" class="kaist-score">
+        {{ event.fields.score_k }}
+      </div>
+      <div v-else style="font-size:70px;" class="kaist-score">
         {{ event.fields.score_k }}
       </div>
       <p class="vs">:</p>
-      <div class="postech-score">
+      <div v-if="event.fields.score_p < 100" class="postech-score">
+        {{ event.fields.score_p }}
+      </div>
+      <div v-else style="font-size:70px;" class="postech-score">
         {{ event.fields.score_p }}
       </div>
       <p class="winner-is">winner is...
