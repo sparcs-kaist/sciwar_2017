@@ -29,7 +29,7 @@
       </table>
       <div class="link-container">
         <router-link :to="{ name: 'supporters' }" class="link link1">목록으로</router-link>
-        <router-link :to="{ name: 'supporters-mod' }" class="link link2">수정하기</router-link>
+        <router-link :to="{ name: 'supporters_mod', params: { id: supporterReg.pk } }" class="link link2">수정하기</router-link>
       </div>
     </div>
   </div>
