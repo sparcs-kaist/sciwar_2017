@@ -497,4 +497,7 @@ a:hover > p > .fa {
   width: 945px;
 }
 
+img {
+  filter: grayscale(100%);
+}
 </style>
