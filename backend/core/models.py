@@ -52,7 +52,7 @@ class Video(models.Model):
     )
     link = models.CharField(max_length=300)
     name = models.CharField(max_length=100)
-    time = models.DateTimeField()
+    time = models.DateTimeField(auto_now_add=True)
     event = models.ManyToManyField(Event)
     type = models.IntegerField(
         default = 0,
