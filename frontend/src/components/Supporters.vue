@@ -77,7 +77,7 @@ export default {
         this.supporterRegs = JSON.parse(response.data)
         this.max_page = parseInt((this.supporterRegs.length - 1) / 10) + 1
         this.supportersNum = new Array(this.supporterRegs.length).fill(0)
-        this.$http.get('/api/supporters')
+        this.$http.get('/api/supporters/')
           .then((response) => {
             this.supporters = JSON.parse(response.data)
             for (let i in this.supporters) {

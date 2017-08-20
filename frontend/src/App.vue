@@ -121,7 +121,7 @@ export default {
   created () {
     window.addEventListener('click', this.submenu)
     window.addEventListener('resize', this.submenuLeft)
-    this.$http.get('/api/events')
+    this.$http.get('/api/events/')
       .then((response) => {
         this.events = JSON.parse(response.data)
         this.kaistScore = 0

@@ -47,7 +47,7 @@ export default {
     }
   },
   created () {
-    let uri = '/api/supporters/' + this.$route.params.id
+    let uri = '/api/supporters/' + this.$route.params.id + '/'
     this.$http.get(uri)
       .then((response) => {
         this.theRightPassword = JSON.parse(response.data)[0]
@@ -64,7 +64,7 @@ export default {
       }
     },
     loadComplete: function () {
-      let uri = '/api/supporters/complete/' + this.$route.params.id
+      let uri = '/api/supporters/complete/' + this.$route.params.id + '/'
       this.$http.get(uri)
         .then((response) => {
           this.supporterReg = JSON.parse(response.data['reg'])[0]

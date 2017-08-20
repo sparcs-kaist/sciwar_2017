@@ -24,7 +24,7 @@ export default {
     }
   },
   created () {
-    this.$http.get('/api/events')
+    this.$http.get('/api/events/')
       .then((response) => {
         this.events = JSON.parse(response.data)
       })

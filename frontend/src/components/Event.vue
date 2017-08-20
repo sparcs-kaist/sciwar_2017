@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     fetchData () {
-      let uri = '/api/events/' + this.$route.params.id
+      let uri = '/api/events/' + this.$route.params.id + '/'
       console.log(uri)
       this.$http.get(uri)
         .then((response) => {
@@ -113,17 +113,17 @@ export default {
           this.startTimeM = res[1].split('Z')[0].split(':')[1]
           this.endTimeH = this.event.fields.end_time.split('T')[1].split('Z')[0].split(':')[0]
           this.endTimeM = this.event.fields.end_time.split('T')[1].split('Z')[0].split(':')[1]
-          this.$http.get('/api/events/' + this.$route.params.id + '/players-k')
+          this.$http.get('/api/events/' + this.$route.params.id + '/players-k/')
             .then((response) => {
               this.playersK = JSON.parse(response.data)
               console.log('playersK', this.playersK)
             })
-          this.$http.get('/api/events/' + this.$route.params.id + '/players-p')
+          this.$http.get('/api/events/' + this.$route.params.id + '/players-p/')
             .then((response) => {
               this.playersP = JSON.parse(response.data)
               console.log('playersP', this.playersP)
             })
-          this.$http.get('/api/events/' + this.$route.params.id + '/messages')
+          this.$http.get('/api/events/' + this.$route.params.id + '/messages/')
             .then((response) => {
               this.messages = JSON.parse(response.data)
               console.log(this.messages)

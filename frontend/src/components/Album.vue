@@ -17,7 +17,7 @@
 export default {
   name: 'album',
   created () {
-    this.$http.get('/api/videos')
+    this.$http.get('/api/videos/')
       .then((response) => {
         this.videos = JSON.parse(response.data).slice(0, 3)
       })

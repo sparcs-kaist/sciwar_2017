@@ -10,7 +10,7 @@ export default {
   name: 'video',
   created: function () {
     let id = this.$route.params.id
-    this.$http.get(`/api/videos/${id}`)
+    this.$http.get(`/api/videos/${id}/`)
       .then((response) => {
         this.video = JSON.parse(response.data)[0]
         console.log(this.video)

@@ -58,7 +58,7 @@ export default {
     }
   },
   created () {
-    this.$http.get('/api/cheermessage')
+    this.$http.get('/api/cheermessage/')
       .then((response) => {
         this.messages = JSON.parse(response.data)
         console.log(this.messages.length)

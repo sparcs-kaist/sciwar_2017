@@ -76,12 +76,12 @@ export default {
     }
   },
   created () {
-    this.$http.get('/api/events')
+    this.$http.get('/api/events/')
       .then((response) => {
         this.events = JSON.parse(response.data)
         console.log(this.events)
       })
-    this.$http.get('/api/cheermessage')
+    this.$http.get('/api/cheermessage/')
       .then((response) => {
         this.message = JSON.parse(response.data)[0]
         console.log(this.message)

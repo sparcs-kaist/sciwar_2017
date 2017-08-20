@@ -87,7 +87,7 @@ export default {
     }
   },
   created () {
-    let uri = '/api/supporters/complete/' + this.$route.params.id
+    let uri = '/api/supporters/complete/' + this.$route.params.id + '/'
     this.$http.get(uri)
       .then((response) => {
         this.reg = JSON.parse(response.data['reg'])[0]
