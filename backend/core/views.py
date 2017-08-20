@@ -85,12 +85,28 @@ def messages(request):
         return HttpResponse('')
 
 
+@csrf_exempt
 def videos(request):
     if request.method == "GET":
         videos = Video.objects.all().order_by('-time')
         videos = serializers.serialize('json', videos)
         
         return JsonResponse(videos, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        events = [] 
+        for i in data['event']:
+            events.append(Event.objects.get(id = i))
+        video = Video()
+        video.link = data['source']
+        video.name = data['title']
+        video.type = int(data['type'])
+        video.save()
+        video.event = events
+        video.save()
+
+        return HttpResponse('')
 
 
 def video(request, pk):

@@ -14,6 +14,7 @@ import os
 from django.conf.locale.es import formats as es_formats
 
 CSRF_COOKIE_NAME = "XCSRF-TOKEN"
+APPEND_SLASH = False
 es_formats.DATETIME_FORMAT = "d M Y H:i:s"
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

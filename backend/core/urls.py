@@ -19,11 +19,9 @@ from . import views
 urlpatterns = [
     # GET
     url(r'^events/$', views.events),
-    url(r'^events/(?P<event_id>\d+)/$', views.event), # GET + POST
     url(r'^events/(?P<event_id>\d+)/players-k/$', views.event_players_k),
     url(r'^events/(?P<event_id>\d+)/players-p/$', views.event_players_p),
     url(r'^events/(?P<event_id>\d+)/messages/$', views.event_messages),
-    url(r'^videos/$', views.videos),
     url(r'^videos/(?P<pk>\d+)/$', views.video),
     url(r'^cheermessage/$', views.messages),
     url(r'^supporter-reg/$', views.supporterReg),
@@ -32,7 +30,15 @@ urlpatterns = [
     url(r'^supporters/complete/(?P<reg_id>\d+)/', views.SupportersViewComplete),
 
     # PUT
-    url(r'^supporters/$', views.supporters), # GET + PUT
     url(r'^toto/$', views.toto),
     #url(r'^events/(?P<event_id>\d+/message/$', views.message),
+
+    # GET + POST
+    url(r'^events/(?P<event_id>\d+)/$', views.event),
+
+    # GET + PUT
+    url(r'^videos/$', views.videos),
+
+    # GET + POST + PUT
+    url(r'^supporters/$', views.supporters),
 ]
