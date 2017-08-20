@@ -70,12 +70,12 @@
             지도
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
-          <router-link :to="{ name: 'album' }" class="button">
+          <router-link :to="{ name: 'videos' }" class="button">
             <div class="menu-images">
               <img src="/static/images/image.png" width="35">
             </div>
             <p>
-            사진&비디오
+            비디오
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
         </div>
