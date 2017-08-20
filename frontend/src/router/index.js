@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Album from '@/components/Album'
 import Event from '@/components/Event'
 import Videos from '@/components/Videos'
+import VideosAdd from '@/components/Internal/Videos'
 import Video from '@/components/Video'
 import Schedule from '@/components/Schedule'
 import Map from '@/components/Map'
@@ -59,6 +60,13 @@ export default new Router({
       name: 'video',
       components: {
         contents: Video
+      }
+    },
+    {
+      path: '/internal/videos',
+      name: 'videos_add',
+      components: {
+        contents: VideosAdd
       }
     },
     {
