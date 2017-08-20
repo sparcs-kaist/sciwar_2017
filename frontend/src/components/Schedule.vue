@@ -6,7 +6,8 @@
         <div v-if="event.fields.start_time.split('T')[0] == date" class="event-schedule">
           <router-link :to="{ name: 'event', params: { id: event.pk } }">
             <div class="event-name">
-            {{ event.fields.name_eng }}
+              {{ event.fields.name_eng }}
+              <i class="fa fa-chevron-right"></i>
             </div>
           </router-link>
           <div class="time-location">
@@ -66,6 +67,12 @@ export default {
 
 .event-name {
   color: black;
+}
+
+.event-name > i {
+  margin-top: 20px;
+  font-size: 30px;
+  color: rgb(70, 122, 184)
 }
 
 .time-location {
