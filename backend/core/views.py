@@ -138,6 +138,18 @@ def supporters(request):
 
         return HttpResponse('')
 
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print(data)
+        SupporterReg.objects.get(id = data['pk']).supporters.all().delete()
+        supporterReg = SupporterReg(id = data['pk'], nickname = data['nickname'], contact = data['contact'], password = data['password'])
+        supporterReg.save()
+        for instance in data['supporters']:
+            supporter = Supporter(name = instance['name'], student_id = instance['studentID'], department = instance['department'], size = instance['size'], registry = supporterReg)
+            supporter.save()
+
+        return HttpResponse('')
+
 
 def supporterReg(request):
     if request.method == "GET":
