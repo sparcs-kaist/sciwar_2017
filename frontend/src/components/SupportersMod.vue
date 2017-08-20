@@ -1,7 +1,7 @@
 <template>
   <div class="supporters-write noto-sans">
-    <div class="head">서포터즈 신청하기
-      <p>아래의 칸을 채워주세요</p>
+    <div class="head">서포터즈 신청 수정
+      <p>양식의 내용을 확인해주세요</p>
     </div>
     <div class="team-name">
       <label>팀 이름</label>
@@ -18,9 +18,26 @@
     <div class="member">
       <button v-on:click="addClick()" class="member-add">멤버 추가</button>
       <button v-on:click="deleteClick()" class="member-add">멤버 삭제</button>
-      <p class="count">{{ click }}명</p>
+      <p class="count">{{ click + supporters.length }}명</p>
     </div>
     <div class="supporter-block">
+      <div v-for="supporter in supporters" v-bind:style="styleSupporter" class="supporter">
+        <label>이름</label>
+        <input name="name" v-bind:style="styleInput" v-bind:value="supporter.fields.name"><br>
+        <label>학번</label>
+        <input name="studentID" v-bind:style="styleInput" v-bind:value="supporter.fields.student_id"><br>
+        <label>학과</label>
+        <input name="department" v-bind:style="styleInput" v-bind:value="supporter.fields.department"><br>
+        <label>티셔츠 사이즈</label>
+        <select class="T-shirt">
+          <option :selected="supporter.fields.size === 1">XS</option>
+          <option :selected="supporter.fields.size === 2">S</option>
+          <option :selected="supporter.fields.size === 3">M</option>
+          <option :selected="supporter.fields.size === 4">L</option>
+          <option :selected="supporter.fields.size === 5">XL</option>
+          <option :selected="supporter.fields.size === 6">XXL</option>
+        </select>
+      </div>
       <div v-for="n in click" v-bind:style="styleSupporter" class="supporter">
         <label>이름</label>
         <input name="name" v-bind:style="styleInput"><br>
@@ -80,16 +97,52 @@ export default {
       })
   },
   methods: {
+    addClick: function () {
+      this.click++
+    },
+    deleteClick: function () {
+      if (this.click > 0) {
+        this.click--
+      } else if (this.click === 0 && this.supporters.length > 0) {
+        this.supporters.pop()
+      }
+    },
+    submit: function () {
+      let nickname = document.getElementsByName('team-name')[0].value
+      let contact = document.getElementsByName('contact')[0].value
+      let password = document.getElementsByName('password')[0].value
+      console.log(password)
+      let nameList = document.getElementsByName('name')
+      let studentIDList = document.getElementsByName('studentID')
+      let departmentList = document.getElementsByName('department')
+      let sizeList = document.getElementsByClassName('T-shirt')
+      console.log(sizeList)
+      let supporterList = []
+      for (let i = 0; i < nameList.length; i++) {
+        let name = nameList[i].value
+        let studentID = studentIDList[i].value
+        let department = departmentList[i].value
+        let size = sizeList[i].selectedIndex
+        let supporter = { 'name': name, 'studentID': studentID, 'department': department, 'size': size }
+        supporterList.push(supporter)
+      }
+      console.log(supporterList)
+      let data = { 'pk': this.reg.pk, 'nickname': nickname, 'contact': contact, 'password': password, 'supporters': supporterList }
+      data = JSON.stringify(data)
+      this.$http.post('/api/supporters/', data)
+        .then((response) => {
+          console.log('successful')
+        })
+    }
   }
 }
 </script>
-
 
 <style>
 .head {
   font-size: 64px;
   font-weight: 700;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   margin-bottom: 1.5rem;
 }
 
@@ -159,6 +212,7 @@ export default {
 
 .member {
   display: flex;
+  margin-bottom: 10px;
 }
 
 .member > button {
