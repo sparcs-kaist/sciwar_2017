@@ -98,7 +98,8 @@ export default {
 
 <style>
 .toto-title {
-  font-size: 60px;
+  font-size: 64px;
+  font-weight: 700;
 }
 
 .board{
