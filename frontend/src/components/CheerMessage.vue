@@ -164,6 +164,8 @@ export default {
   text-align: left;
   line-height: 1.6;
   vertical-align: top;
+  position: relative;
+  z-index:1;
 }
 
 .board .fc {
