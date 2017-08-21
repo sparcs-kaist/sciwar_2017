@@ -52,10 +52,8 @@ export default {
     filterChange (event) {
       console.log(event)
       if (event === 1) {
-        console.log('if')
         this.videosRendered = JSON.parse(JSON.stringify(this.videos))
       } else {
-        console.log('else')
         this.videosRendered = []
         for (let i of this.videos) {
           if (i.fields.event.indexOf(event.pk) !== -1) {

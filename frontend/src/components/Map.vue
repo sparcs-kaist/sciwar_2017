@@ -31,7 +31,6 @@ export default {
     this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png']
   },
   updated () {
-    console.log(document.getElementsByClassName('event')[0])
     document.getElementsByName('event')[0].click()
   },
   methods: {
