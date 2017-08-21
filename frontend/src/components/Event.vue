@@ -1,5 +1,5 @@
 <template>
-  <div class="event noto-sans">
+  <div id="event" class="noto-sans">
     <div id="event-name">
       {{ event.fields.name_kor }} {{ event.fields.name_eng }}
     </div> 
@@ -169,7 +169,7 @@ html, body {
   box-shadow: 0 3px 7px rgb(130 ,130, 130);
 }
 
-.event {
+#event {
   padding-left: 15px;
 }
 
