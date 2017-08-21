@@ -24,7 +24,7 @@
       <p class="winner-is">winner is...
       <span v-if="event.fields.winner == 1" class="winner-team kaist">KAIST</span>
       <span v-else-if="event.fields.winner == 2" class="winner-team postech">POSTECH</span> 
-      <router-link :to="{ name: 'album' }" class="to-video">
+      <router-link :to="{ name: 'videos' }" class="to-video">
         <br>경기 보러가기
         <i class="fa fa-youtube-play"></i>
       </router-link>
