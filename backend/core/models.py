@@ -81,12 +81,15 @@ class SupporterReg(models.Model):
         max_length = 11,
     )
     password = models.CharField(
-        max_length = 12,
+        max_length = 64,
         null = False,
         default = '1234',
     )
     def __str__(self):
         return f'{self.nickname}'
+
+    class Meta:
+        ordering = ['-id']
 
 
 class Supporter(models.Model):
@@ -126,7 +129,7 @@ class TotoContent(models.Model):
     time = models.DateTimeField(auto_now_add = True)
     total = models.FloatField(default=0.0)
     password = models.CharField(
-        max_length = 12,
+        max_length = 64,
         null = False,
         default = '1234',
     )
