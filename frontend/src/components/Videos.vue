@@ -91,6 +91,7 @@ export default {
   border: 0;
   border-radius: 0;
   margin-right: 5px;
+  background: rgb(242, 242, 242);
 }
 
 .event > .radio {
