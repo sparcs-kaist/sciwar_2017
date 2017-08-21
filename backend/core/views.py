@@ -159,12 +159,20 @@ def supporterReg(request):
         return JsonResponse(supporters, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
+@csrf_exempt
 def supportersView(request, reg_id):
     if request.method == "GET":
         data = serializers.serialize('json', [SupporterReg.objects.get(id = reg_id)], fields=('password'))
         print(data)
 
         return JsonResponse(data, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+    if request.method == "DELETE":
+        reg = SupporterReg.objects.get(id = reg_id)
+        reg.supporters.all().delete()
+        reg.delete()
+
+        return HttpResponse('')
 
 
 def SupportersViewComplete(request, reg_id):

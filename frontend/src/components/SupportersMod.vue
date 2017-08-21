@@ -13,7 +13,7 @@
     </div>
     <div class="team-password">
       <label>비밀번호</label>
-      <input name="password" type="password" v-bind:value="reg.fields.password">
+      <input name="password" type="password" placeholder="기본값: 1234">
     </div>
     <div class="member">
       <button v-on:click="addClick()" class="member-add">멤버 추가</button>
@@ -58,6 +58,9 @@
     </div>
     <router-link :to="{ name: 'supporters' }">
       <button class="submit" v-on:click="submit">제출</button>
+    </router-link>
+    <router-link :to="{ name: 'supporters' }">
+      <button class="del" v-on:click="del">삭제</button>
     </router-link>
   </div>
 </template>
@@ -134,6 +137,12 @@ export default {
       let data = { 'pk': this.reg.pk, 'nickname': nickname, 'contact': contact, 'password': password, 'supporters': supporterList }
       data = JSON.stringify(data)
       this.$http.post('/api/supporters/', data)
+        .then((response) => {
+          console.log('successful')
+        })
+    },
+    del: function () {
+      this.$http.delete('/api/supporters/' + this.$route.params.id + '/')
         .then((response) => {
           console.log('successful')
         })
@@ -237,5 +246,10 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.del {
+  margin-left: 10px;
+  margin-top: 30px;
 }
 </style>
