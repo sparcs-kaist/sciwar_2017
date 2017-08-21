@@ -56,7 +56,12 @@ export default {
   },
   methods: {
     show: function () {
-      if (document.getElementsByName('password')[0].value === this.theRightPassword) {
+      let crypto = require('crypto')
+      let shasum = crypto.createHash('sha256')
+      let password = document.getElementsByName('password')[0].value
+      shasum.update(password)
+      password = shasum.digest('hex')
+      if (password === this.theRightPassword) {
         this.certified = true
         this.loadComplete()
       } else {

@@ -67,6 +67,8 @@ export default {
       }
     }
   },
+  created () {
+  },
   methods: {
     addClick () {
       this.click++
@@ -99,6 +101,10 @@ export default {
         let supporter = { 'name': name, 'studentID': studentID, 'department': department, 'size': size }
         supporters.push(supporter)
       }
+      let crypto = require('crypto')
+      let shasum = crypto.createHash('sha256')
+      shasum.update(password)
+      password = shasum.digest('hex')
       let data = { 'teamName': teamName, 'contact': contact, 'password': password, 'supporters': supporters }
       console.log(data)
       data = JSON.stringify(data)
