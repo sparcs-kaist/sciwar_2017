@@ -71,7 +71,7 @@ export default {
 
 .events-date > p {
   font-size: 30px;
-  font-weight: 500;
+  font-weight: 600;
   margin-left: 3px;
 }
 
