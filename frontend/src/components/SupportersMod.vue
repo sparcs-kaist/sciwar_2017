@@ -130,6 +130,10 @@ export default {
         supporterList.push(supporter)
       }
       console.log(supporterList)
+      let crypto = require('crypto')
+      let shasum = crypto.createHash('sha256')
+      shasum.update(password)
+      password = shasum.digest('hex')
       let data = { 'pk': this.reg.pk, 'nickname': nickname, 'contact': contact, 'password': password, 'supporters': supporterList }
       data = JSON.stringify(data)
       this.$http.post('/api/supporters/', data)
