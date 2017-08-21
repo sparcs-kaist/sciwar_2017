@@ -134,6 +134,9 @@ class TotoContent(models.Model):
         default = '1234',
     )
 
+    class Meta:
+        ordering = ['-id']
+
 
 class BasketballToto(models.Model):
     event = models.ForeignKey(

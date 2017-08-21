@@ -4,6 +4,8 @@
     <input v-model="studentId" name="student_id" class="form-controll-small" v-on:keyup="showFormButton()" placeholder="ex)20999999">
     <label class="control-label">Name</label>
     <input v-model="name" name="name" class="form-controll-small" v-on:keyup="showFormButton()" placeholder="ex)김카이">
+    <label class="control-label">Password</label>
+    <input v-model="password" type="password" name="password" class="form-controll-small" v-on:keyup="showFormButton()">
 		<div class="toto-content">
 			<h2 class="table-title">스포츠 종목 점수맞추기</h2>
 			<table class="toto-table board-table">
@@ -147,14 +149,18 @@ export default {
         this.winnerBasketball !== 'None' &&
         this.winnerLol !== 'None' &&
         this.studentId.length === 8 &&
-        this.name !== '') {
+        this.name !== '' &&
+        this.password !== '') {
         document.getElementsByClassName('form-button')[0].disabled = false
       } else {
         document.getElementsByClassName('form-button')[0].disabled = true
       }
     },
     submit () {
-      let data = { 'studentID': this.studentId, 'name': this.name, 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'scoreLolK': this.scoreLolK, 'scoreLolP': this.scoreLolP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'winnerAI': this.winnerAI, 'winnerHacking': this.winnerHacking }
+      let crypto = require('crypto')
+      let shasum = crypto.createHash('sha256')
+      shasum.update(this.password)
+      let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'scoreLolK': this.scoreLolK, 'scoreLolP': this.scoreLolP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'winnerAI': this.winnerAI, 'winnerHacking': this.winnerHacking }
       console.log(data)
       data = JSON.stringify(data)
       console.log(data)

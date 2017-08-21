@@ -14,11 +14,11 @@ import SupportersView from '@/components/SupportersView'
 import SupportersMod from '@/components/SupportersMod'
 import Toto from '@/components/Toto'
 import TotoWrite from '@/components/TotoWrite'
+import TotoView from '@/components/TotoView'
 import Login from '@/components/Login'
 import SupportersCheck from '@/components/Internal/Supporters'
 import TotoCheck from '@/components/Internal/Toto'
 import StatusUpdate from '@/components/Internal/Events'
-import ScheduleUpdate from '@/components/Internal/Schedule'
 import CheerMessage from '@/components/CheerMessage'
 import CheerMessageForm from '@/components/CheerMessageForm'
 
@@ -140,6 +140,13 @@ export default new Router({
       }
     },
     {
+      path: '/toto/:id',
+      name: 'toto_view',
+      components: {
+        contents: TotoView
+      }
+    },
+    {
       path: '/internal/toto',
       name: 'toto_check',
       components: {
@@ -151,13 +158,6 @@ export default new Router({
       name: 'status_update',
       components: {
         contents: StatusUpdate
-      }
-    },
-    {
-      path: '/internal/schedule',
-      name: 'schedule_update',
-      components: {
-        contents: ScheduleUpdate
       }
     },
     {

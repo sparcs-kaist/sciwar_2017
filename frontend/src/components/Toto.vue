@@ -13,9 +13,21 @@
       </thead>
       <tbody>
         <tr v-for="toto in totoRendered">
-          <td class="fc">{{ toto.pk }}</td>
-          <td class="sc">{{ toto.fields.name }}</td>
-          <td class="tc">{{ toto.fields.total }}</td>
+          <td class="fc">
+            <router-link :to="{ name: 'toto_view', params: { id: toto.pk } }">
+              <div>{{ toto.pk }}</div>
+            </router-link>
+          </td>
+          <td class="sc">
+            <router-link :to="{ name: 'toto_view', params: { id: toto.pk } }">
+              <div>{{ toto.fields.name }}</div>
+            </router-link>
+          </td>
+          <td class="tc">
+            <router-link :to="{ name: 'toto_view', params: { id: toto.pk } }">
+              <div>{{ toto.fields.total }}</div>
+            </router-link>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -134,6 +146,11 @@ export default {
 
 .board > tbody > tr:nth-child(even) {
   background: #efefef;
+}
+
+.board > tbody > tr > td > a {
+  width: 100%;
+  color: black;
 }
 
 .paginator {

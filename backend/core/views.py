@@ -194,6 +194,33 @@ def totoContent(request):
         return JsonResponse(toto, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
+def totoView(request, pk):
+    if request.method == "GET":
+        toto = TotoContent.objects.get(id = pk)
+        data = {}
+        data['studentId'] = toto.student_id
+        data['name'] = toto.name
+        data['scoreSoccerK'] = toto.soccer_toto.all()[0].score_k
+        data['scoreSoccerP'] = toto.soccer_toto.all()[0].score_p
+        data['scoreBaseballK'] = toto.baseball_toto.all()[0].score_k
+        data['scoreBaseballP'] = toto.baseball_toto.all()[0].score_p
+        data['scoreBasketballK'] = toto.basketball_toto.all()[0].score_k
+        data['scoreBasketballP'] = toto.basketball_toto.all()[0].score_p
+        data['scoreLolK'] = toto.esports_toto.all()[0].score_k
+        data['scoreLolP'] = toto.esports_toto.all()[0].score_p
+        data['winnerSoccer'] = toto.soccer_toto.all()[0].winner
+        data['winnerBaseball'] = toto.baseball_toto.all()[0].winner
+        data['winnerBasketball'] = toto.basketball_toto.all()[0].winner
+        data['winnerLol'] = toto.esports_toto.all()[0].winner
+        data['winnerQuiz'] = toto.quiz_toto.all()[0].winner
+        data['winnerAI'] = toto.ai_toto.all()[0].winner
+        data['winnerHacking'] = toto.hacking_toto.all()[0].winner
+        
+        data = json.dumps(data)
+
+        return JsonResponse(data, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+
 @csrf_exempt
 def toto(request):
     if request.method == "PUT":
@@ -208,7 +235,7 @@ def toto(request):
         hacking = Event.objects.get(name_kor = '해킹')
         school = {'KAIST': 1, 'POSTECH': 2}
 
-        totoContent = TotoContent(student_id = data['studentID'], name = data['name'], total = 0)
+        totoContent = TotoContent(student_id = data['studentID'], name = data['name'], password = data['password'], total = 0)
         totoContent.save()
 
         soccerToto = SoccerToto(event = soccer, bet = totoContent, score_k = data['scoreSoccerK'], score_p = data['scoreSoccerP'], winner = school[data['winnerSoccer']])
