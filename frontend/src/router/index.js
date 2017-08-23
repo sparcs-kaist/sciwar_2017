@@ -15,12 +15,14 @@ import SupportersMod from '@/components/SupportersMod'
 import Toto from '@/components/Toto'
 import TotoWrite from '@/components/TotoWrite'
 import TotoView from '@/components/TotoView'
+import InternalTotoView from '@/components/Internal/TotoView'
 import Login from '@/components/Login'
 import SupportersCheck from '@/components/Internal/Supporters'
 import TotoCheck from '@/components/Internal/Toto'
 import StatusUpdate from '@/components/Internal/Events'
 import CheerMessage from '@/components/CheerMessage'
 import CheerMessageForm from '@/components/CheerMessageForm'
+import InternalHome from '@/components/Internal/Home'
 
 Vue.use(Router)
 
@@ -154,6 +156,13 @@ export default new Router({
       }
     },
     {
+      path: '/internal/toto/:id',
+      name: 'internal_toto_view',
+      components: {
+        contents: InternalTotoView
+      }
+    },
+    {
       path: '/internal/events',
       name: 'status_update',
       components: {
@@ -169,9 +178,16 @@ export default new Router({
     },
     {
       path: '/cheermessage/write',
-      name: 'cheermessage-write',
+      name: 'cheermessage_write',
       components: {
         contents: CheerMessageForm
+      }
+    },
+    {
+      path: '/internal',
+      name: 'internal_home',
+      components: {
+        contents: InternalHome
       }
     }
   ]
