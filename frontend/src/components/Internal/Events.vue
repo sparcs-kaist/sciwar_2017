@@ -1,5 +1,6 @@
 <template>
   <div id="events">
+    <p class="head">이벤트 현황 수정</p>
     <div v-for="event in events" class="event">
       <div class="event-name">{{ event.fields.name_kor }}</div>
       <div class="event-status">
@@ -20,7 +21,7 @@
 export default {
   name: 'events',
   created () {
-    this.$http.get('/api/events')
+    this.$http.get('/api/events/')
       .then((response) => {
         this.events = JSON.parse(response.data)
         console.log(this.events)
@@ -76,8 +77,14 @@ export default {
 #events {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   margin-top:10px;
+}
+
+.head {
+  font-size: 64px;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .event {
@@ -89,11 +96,10 @@ export default {
 }
 
 .event-name {
-  margin-left: 150px;
 }
 
 .event-status {
-  margin-right: 150px;
+  margin-right: 300px;
 }
 
 .input {

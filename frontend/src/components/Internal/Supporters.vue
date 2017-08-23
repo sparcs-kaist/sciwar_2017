@@ -1,5 +1,5 @@
 <template>
-  <div class="internal-supporters">
+  <div class="internal-supporters noto-sans">
     Internal Supporters
   </div>
 </template>

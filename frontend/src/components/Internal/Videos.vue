@@ -1,5 +1,6 @@
 <template>
   <div class="videos-add noto-sans">
+    <div class="head">비디오 추가</div>
     <label>title</label>
     <input class="input" name="title" type="text">
     <label>source</label>
@@ -14,8 +15,6 @@
       <input type="checkbox" :value="event.pk" v-model="checkedEvents">
       <label>{{ event.fields.name_kor }}</label>
     </div>
-    {{ live }}
-    {{ checkedEvents }}
     <button class="button is-primary submit" v-on:click=submitClick()>제출</button>
   </div>
 </template>
@@ -41,9 +40,7 @@ export default {
       let title = document.getElementsByName('title')[0].value
       let source = document.getElementsByName('source')[0].value
       let data = { 'title': title, 'source': source, 'event': this.checkedEvents, 'type': this.live }
-      console.log(this.checkedEvents)
       data = JSON.stringify(data)
-      console.log(data)
       this.$http.put('/api/videos/', data)
         .then((response) => {
           console.log('save successfully')
@@ -54,6 +51,12 @@ export default {
 </script>
 
 <style>
+.head {
+  font-size: 64px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
 .input {
   margin-bottom: 10px;
 }
