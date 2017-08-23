@@ -15,7 +15,7 @@
       <input type="checkbox" :value="event.pk" v-model="checkedEvents">
       <label>{{ event.fields.name_kor }}</label>
     </div>
-    <button class="button is-primary submit" v-on:click=submitClick()>제출</button>
+    <router-link :to="{ name: 'videos' }"><button class="button is-primary submit" v-on:click=submitClick()>제출</button></router-link>
   </div>
 </template>
 
@@ -41,10 +41,12 @@ export default {
       let source = document.getElementsByName('source')[0].value
       let data = { 'title': title, 'source': source, 'event': this.checkedEvents, 'type': this.live }
       data = JSON.stringify(data)
-      this.$http.put('/api/videos/', data)
-        .then((response) => {
-          console.log('save successfully')
-        })
+      if (title && source) {
+        this.$http.put('/api/videos/', data)
+          .then((response) => {
+            console.log('save successfully')
+          })
+      }
     }
   }
 }
