@@ -1,9 +1,13 @@
 <template>
   <div class="map noto-sans">
     <div class="map-title">지도</div>
-    <p class="description">카이스트 전체지도</p>
-    <div class="event-map"></div>
-    <p class="dexription">경기별 위치</p>
+    <p>카이스트 전체지도</p>
+    <div class="event-map">
+      <i class="fa fa-map-pin pin" aria-hidden="true"></i>
+    </div>
+    <div class="description">
+      <p>경기별 위치</p><label>{{ location }}</label>
+    </div>
     <div class="event-select">
       <div v-for="event in events" v-on:click="mapChange(event)" class="event button is-large">
         <label class="radio">
@@ -13,7 +17,6 @@
       </div>
     </div>
     <div class="event-detail-map"></div>
-    <label class="location-text">{{ location }}</label>
   </div>
 </template>
 
@@ -48,6 +51,22 @@ export default {
       document.getElementsByClassName('event-detail-map')[0].style.background = "url('/static/images/" + this.mapList[event.fields.location] + "')"
       console.log(event.fields.location)
       this.location = this.locations[event.fields.location]
+      if (event.fields.location === 2) {
+        document.getElementsByClassName('pin')[0].style.paddingLeft = '315px'
+        document.getElementsByClassName('pin')[0].style.paddingTop = '200px'
+      } else if (event.fields.location === 0) {
+        document.getElementsByClassName('pin')[0].style.paddingLeft = '310px'
+        document.getElementsByClassName('pin')[0].style.paddingTop = '270px'
+      } else if (event.fields.location === 1) {
+        document.getElementsByClassName('pin')[0].style.paddingLeft = '145px'
+        document.getElementsByClassName('pin')[0].style.paddingTop = '240px'
+      } else if (event.fields.location === 3) {
+        document.getElementsByClassName('pin')[0].style.paddingLeft = '555px'
+        document.getElementsByClassName('pin')[0].style.paddingTop = '350px'
+      } else if (event.fields.location === 4) {
+        document.getElementsByClassName('pin')[0].style.paddingLeft = '270px'
+        document.getElementsByClassName('pin')[0].style.paddingTop = '200px'
+      }
     },
     radioClick () {
       for (let i of document.getElementsByClassName('event')) {
@@ -69,7 +88,24 @@ export default {
 
 .map > p {
   font-size: 40px;
+  font-weight: 500;
   margin-bottom: 20px;
+}
+
+.description {
+  margin-top: 30px;
+  font-size: 40px;
+  display: flex;
+}
+
+.description > p {
+  font-weight: 500;
+  width: 300px;
+}
+
+.description > label {
+  font-weight: 300;
+  width: 100%;
 }
 
 .event-select {
@@ -102,12 +138,6 @@ input[type="radio"] {
   display: none;
 }
 
-.location-text {
-  font-size: 40px;
-  font-weight: 300;
-  margin-bottom: 0px;
-}
-
 .event-detail-map {
   width: 628px;
   margin-top: 0;
@@ -119,5 +149,14 @@ input[type="radio"] {
   height: 492px;
   margin: auto;
   margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.pin {
+  position: relative;
+  z-index: 2;
+  color: red;
+  font-size: 30px;
 }
 </style>
