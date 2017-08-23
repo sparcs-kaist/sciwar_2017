@@ -39,7 +39,7 @@
         <button class="pg" v-if="page_range[page_range.length - 1] < max_page" v-on:click="page_turn(page_range[page_range.length - 1] + 1)">...</button>
         <button class="pg" v-on:click="page_turn(max_page)">></button>
       </div>
-      <router-link :to="{ name: 'cheermessage-write' }">
+      <router-link :to="{ name: 'cheermessage_write' }">
         <span class="write noto-sans">쓰기</span>
       </router-link>
     </div>
@@ -200,6 +200,10 @@ export default {
 .board > tbody > tr > td:last-child {
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
+}
+
+.board .sc {
+  padding-right: 10px;
 }
 
 .paginator {
