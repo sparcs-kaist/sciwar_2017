@@ -25,15 +25,59 @@ def event(request, event_id):
 
     if request.method == "POST":
         event = Event.objects.get(id = event_id)
-        live = request.POST
-        live = list(live.keys())[0]
-        live = json.loads(live)
-        live = live['live']
-        print(live)
+        data = request.POST
+        data = list(data.keys())[0]
+        data = json.loads(data)
+        live = data['live']
+        score_k = int(data['score_k'])
+        score_p = int(data['score_p'])
+        pk = data['pk']
+        winner = data['winner']
         event.live = live
+        event.score_k = score_k
+        event.score_p = score_p
         event.save()
-        print(event)
-        print('saved')
+
+        events = Event.objects.all()
+        event_dict = {}
+        for event in events:
+            event_dict[event.id] = event.name_eng.lower()
+        if live == 2:
+            # Toto score update
+            event = Event.objects.get(id = pk) 
+            if event_dict[pk] == 'ai':
+                event_totoes = event.ai_toto.all()
+            elif event_dict[pk] == 'quiz':
+                event_totoes = event.quiz_toto.all()
+            elif event_dict[pk] == 'hacking':
+                event_totoes = event.hacking_toto.all()
+            else:
+                if event_dict[pk] == 'baseball':
+                    event_totoes = event.baseball_toto.all()
+                elif event_dict[pk] == 'basketball':
+                    event_totoes = event.basketball_toto.all()
+                elif event_dict[pk] == 'soccer':
+                    event_totoes = event.soccer_toto.all()
+                elif event_dict[pk] == 'lol':
+                    event_totoes = event.esports_toto.all()
+                for toto in event_totoes:
+                    if score_k == toto.score_k and score_p == toto.score_p:
+                        toto.bet.total += 0.1
+            for toto in event_totoes:
+                if winner == toto.winner:
+                    toto.bet.total += 1
+                toto.bet.save()
+            # Live video
+            videos = Video.objects.all()
+            for video in videos:
+                live = 1
+                for event in video.event.all():
+                    if event.live == 1 and event.pk != pk:
+                        live = 0
+                        break
+                video.type = live
+                video.save()
+
         return HttpResponse('')
 
 

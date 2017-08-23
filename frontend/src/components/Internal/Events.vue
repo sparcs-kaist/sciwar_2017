@@ -1,17 +1,17 @@
 <template>
   <div id="events">
     <p class="head">이벤트 현황 수정</p>
-    <div v-for="event in events" class="event">
+    <div v-for="event in events" class="internal-event">
       <div class="event-name">{{ event.fields.name_kor }}</div>
       <div class="event-status">
-        <input class="input" v-if="event.fields.score_k" type="text" :placeholder="event.fields.score_k">
-        <input class="input" v-if="event.fields.score_p" type="text" :placeholder="event.fields.score_p">
+        <input class="input" v-if="event.fields.score_k" type="text" :value="event.fields.score_k" :name="'kaist' + event.pk">
+        <input class="input" v-if="event.fields.score_p" type="text" :value="event.fields.score_p" :name="'postech' + event.pk">
         <div class="select">
           <select class="select-options">
             <option v-for="option in options" :value="option.value" :selected="option.value == event.fields.live">{{ option.text }}</option>
           </select>
         </div>
-        <button class="button is-primary submit" v-on:click = selectClick($event)>Submit</button>
+        <button class="button is-primary submit" v-on:click = selectClick($event) name="button">Submit</button>
       </div>
     </div>
   </div>
@@ -24,7 +24,6 @@ export default {
     this.$http.get('/api/events/')
       .then((response) => {
         this.events = JSON.parse(response.data)
-        console.log(this.events)
       })
   },
   data () {
@@ -39,9 +38,10 @@ export default {
   },
   updated () {
     let e = document.getElementsByClassName('select-options')
-    for (let select of e) {
-      if (select.selectedIndex === 2) {
-        select.disabled = true
+    for (let select in e) {
+      if (e[select].selectedIndex === 2) {
+        e[select].disabled = true
+        document.getElementsByName('button')[select].disabled = true
       }
     }
     let buttons = document.getElementsByTagName('button')
@@ -57,12 +57,23 @@ export default {
       let select = options[event.target.name]
       if (select.selectedIndex === 2) {
         options[event.target.name].disabled = true
+        event.target.disabled = true
       }
       let targetName = event.target.name
-      let url = '/api/events/' + this.events[targetName].pk + '/'
+      let pk = this.events[targetName].pk
+      let url = '/api/events/' + pk + '/'
+      let kaistpk = 'kaist' + pk
+      let postechpk = 'postech' + pk
+      let kaist = document.getElementsByName(kaistpk)[0].value
+      let postech = document.getElementsByName(postechpk)[0].value
       let live = select.selectedIndex
+      console.log(kaist, postech, live)
       this.$http.post(url, JSON.stringify({
-        'live': live
+        'live': live,
+        'score_k': kaist,
+        'score_p': postech,
+        'pk': pk,
+        'winner': kaist > postech ? 1 : 2
       }))
         .then((response) => {
           console.log('save successfully')
@@ -87,7 +98,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.event {
+.internal-event {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
