@@ -196,6 +196,14 @@ def totoContent(request):
 
 def totoView(request, pk):
     if request.method == "GET":
+        data = serializers.serialize('json', [TotoContent.objects.get(id = pk)], fields=('password'))
+        print(data)
+
+        return JsonResponse(data, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+
+def totoViewComplete(request, pk):
+    if request.method == "GET":
         toto = TotoContent.objects.get(id = pk)
         data = {}
         data['studentId'] = toto.student_id
