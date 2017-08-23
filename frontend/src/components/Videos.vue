@@ -3,31 +3,31 @@
     <p class="videos-title">비디오 목록</p>
     <p class="videos-sub-title">현재 라이브 중인 동영상</p>
     <div class="live-videos">
-      <div v-for="video in videoLive" class="video">
+      <div v-for="video in videoLive" class="video-element">
         <div>
           <iframe width="280" height="250" :src="video.fields.link" frameborder="0" allowfullscreen></iframe>
-          <p class="video-name"><router-link :to="{ name: 'video', params: { id: video.pk }}">{{ video.fields.name }}</router-link></p>
+          <p class="video-name" v-bind:title="video.fields.name"><router-link :to="{ name: 'video', params: { id: video.pk }}">{{ abbreviate(video.fields.name) }}</router-link></p>
         </div>
       </div>
     </div>
     <p class="videos-sub-title">경기별 동영상</p>
-    <div v-on:click="filterChange(1)" class="event button is-large">
+    <div v-on:click="filterChange(1)" class="videos-event button is-large">
       <label class="radio">
-        <input v-on:click="radioClick(event)" type="radio" name="event" value=0>
+        <input v-on:click="radioClick()" type="radio" name="videos-event" value=0>
         전체
       </label>
     </div>
-    <div v-for="event in events" v-on:click="filterChange(event)" class="event button is-large">
+    <div v-for="event in events" v-on:click="filterChange(event)" class="videos-event button is-large">
       <label class="radio">
-        <input v-on:click="radioClick(event)" type="radio" name="event" :value="event.pk">
+        <input v-on:click="radioClick()" type="radio" name="videos-event" :value="event.pk">
         {{ event.fields.name_kor }}
       </label>
     </div>
     <div class="video-list">
-      <div v-for="video in videosRendered" class="video">
+      <div v-for="video in videosRendered" class="video-element">
         <div>
           <iframe width="280" height="250" :src="video.fields.link" frameborder="0" allowfullscreen></iframe>
-          <p class="video-name"><router-link :to="{ name: 'video', params: { id: video.pk }}">{{ video.fields.name }}</router-link></p>
+          <p class="video-name" v-bind:title="video.fields.name"><router-link :to="{ name: 'video', params: { id: video.pk }}">{{ abbreviate(video.fields.name) }}</router-link></p>
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@ export default {
       })
   },
   mounted () {
-    document.getElementsByName('event')[0].click()
+    document.getElementsByName('videos-event')[0].click()
   },
   methods: {
     filterChange (event) {
@@ -80,10 +80,19 @@ export default {
       }
     },
     radioClick () {
-      for (let i of document.getElementsByClassName('event')) {
+      for (let i of document.getElementsByClassName('videos-event')) {
         i.style.background = 'rgb(242,242,242)'
       }
       event.target.parentNode.parentNode.style.background = 'rgb(149,179,215)'
+    },
+    abbreviate (name) {
+      console.log(name)
+      if (name.length > 18) {
+        name = name.slice(0, 16)
+        name = name + '...'
+        console.log(name)
+      }
+      return name
     }
   }
 }
@@ -113,7 +122,7 @@ export default {
   padding-bottom: 1.5rem;
 }
 
-.event {
+.videos-event {
   padding: 0;
   border: 0;
   border-top-left-radius: 10px;
@@ -122,7 +131,7 @@ export default {
   background: rgb(242, 242, 242);
 }
 
-.event > .radio {
+.videos-event > .radio {
   padding: 8px 18px;
   width: 100%;
   height: 100%;
@@ -147,12 +156,12 @@ input[type="radio"] {
   margin-top: 10px;
 }
 
-.video {
+.video-element {
   width: 290px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.video > div {
+.video-element > div {
   margin-right: 10px;
 }
 </style>

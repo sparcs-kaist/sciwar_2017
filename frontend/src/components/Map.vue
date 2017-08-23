@@ -9,9 +9,9 @@
       <p>경기별 위치</p><label>{{ location }}</label>
     </div>
     <div class="event-select">
-      <div v-for="event in events" v-on:click="mapChange(event)" class="event button is-large">
+      <div v-for="event in events" v-on:click="mapChange(event)" class="map-event button is-large">
         <label class="radio">
-          <input v-on:click="radioClick()" type="radio" name="event" :value="event.pk" v-model="clicked">
+          <input v-on:click="radioClick()" type="radio" name="map-event" :value="event.pk" v-model="clicked">
           {{ event.fields.name_kor }}
         </label>
       </div>
@@ -69,7 +69,7 @@ export default {
       }
     },
     radioClick () {
-      for (let i of document.getElementsByClassName('event')) {
+      for (let i of document.getElementsByClassName('map-event')) {
         i.style.background = 'rgb(242,242,242)'
       }
       event.target.parentNode.parentNode.style.background = 'rgb(149, 179, 215)'
@@ -114,7 +114,7 @@ export default {
   flex-direction: row;
 }
 
-.event {
+.map-event {
   padding: 0;
   border: 0;
   border-top-left-radius: 10px;
@@ -123,11 +123,11 @@ export default {
   background: rgb(242, 242, 242);
 }
 
-.event-select > .event:nth-child(1) {
+.event-select > .map-event:nth-child(1) {
   background: rgb(149, 179, 215);
 }
 
-.event > .radio {
+.map-event > .radio {
   padding: 8px 18px;
   width: 100%;
   height: 100%;

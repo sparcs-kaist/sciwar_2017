@@ -14,13 +14,14 @@
           TODAY
         </div>
         <div class="events">
-          <div class="navbar-name">
+          <div class="navbar-name" v-on:click="moveLeft()">
             <i class="fa fa-chevron-left" aria-hidden="ture"></i>
           </div>
           <div class="navbar-event-name">
-            무슨무슨무 경기
+            {{ eventsRendered[currentIndex].fields.name_kor }}
+            <button v-if="eventsRendered[currentIndex].fields.live == 1" class="to-streaming">LIVE</button>
           </div>
-          <div class="navbar-name">
+          <div class="navbar-name" v-on:click="moveRight()">
             <i class="fa fa-chevron-right" aria-hidden="ture"></i>
           </div>
         </div>
@@ -115,7 +116,9 @@ export default {
   name: 'app',
   data () {
     return {
-      events: []
+      events: [],
+      eventsRendered: [],
+      currentIndex: 0
     }
   },
   created () {
@@ -126,15 +129,31 @@ export default {
         this.events = JSON.parse(response.data)
         this.kaistScore = 0
         this.postechScore = 0
+        this.today = new Date()
+        this.dd = this.today.getDate()
+        this.mm = this.today.getMonth() + 1
+        this.yyyy = this.today.getFullYear()
+        if (this.dd < 10) {
+          this.dd = '0' + this.dd
+        }
+        if (this.mm < 10) {
+          this.mm = '0' + this.mm
+        }
+        this.today = this.yyyy + '-' + this.mm + '-' + this.dd
+        this.today = '2017-09-22'
+        console.log(this.today)
         for (let i in this.events) {
-          if (this.events[i].fields.winner === 1) {
+          if (this.events[i].fields.winner === 1 && this.events[i].fields.live === 2) {
             this.kaistScore += 1
-          } else if (this.events[i].fields.winner === 2) {
+          } else if (this.events[i].fields.winner === 2 && this.events[i].fields.live === 2) {
             this.postechScore += 1
           }
+          if (this.today === this.events[i].fields.start_time.slice(0, 10)) {
+            this.eventsRendered.push(this.events[i])
+          }
         }
-        document.getElementById('kaist-score').innerHTML = this.kaistScore
-        document.getElementById('postech-score').innerHTML = this.postechScore
+        console.log(this.eventsRendered)
+        console.log(this.kaistScore)
       })
   },
   updated () {
@@ -155,6 +174,9 @@ export default {
       document.getElementById('nav-bar').style.top = '0px'
       document.getElementById('sidebar-wrapper').style.top = '144px'
     }
+    document.getElementById('kaist-score').innerHTML = this.kaistScore
+    document.getElementById('postech-score').innerHTML = this.postechScore
+    console.log(1)
   },
   methods: {
     submenu (event) {
@@ -168,6 +190,20 @@ export default {
     submenuLeft (event) {
       let left = document.getElementById('sidebar-wrapper').offsetLeft + 300 + 'px'
       document.getElementById('submenu').style.left = left
+    },
+    moveLeft () {
+      if (this.currentIndex > 0) {
+        this.currentIndex--
+      } else if (this.currentIndex === 0) {
+        this.currentIndex = this.eventsRendered.length - 1
+      }
+    },
+    moveRight () {
+      if (this.currentIndex < this.eventsRendered.length - 1) {
+        this.currentIndex++
+      } else if (this.currentIndex === this.eventsRendered.length - 1) {
+        this.currentIndex = 0
+      }
     }
   }
 }
@@ -284,11 +320,28 @@ body {
   height: 58px;
 }
 
+.events {
+  width: 50%;
+}
+
 .navbar-name.today {
   font-size: 37px;
   font-weight: 300;
   height: 58px;
   margin-left: 5px;
+}
+
+.to-streaming {
+  border: none;
+  font-size: 35px;
+  padding: 5px 12px 5px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: rgb(188, 77, 77);
+  color: white;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-top: -5px;
 }
 
 .events {

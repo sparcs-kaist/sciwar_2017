@@ -22,7 +22,7 @@
       </router-link>
       <div>
         <div v-for="event in events" class="status-event">
-          <div v-if="event.fields.winner == 1 && event.fields.type == 0" class="kaist-win">
+          <div v-if="event.fields.winner == 1 && event.fields.type == 0 && event.fields.live == 2" class="kaist-win">
             <p class="status-event-name">{{ event.fields.name_kor }}</p>
             <div class="status-event-score">
               <p v-if="event.fields.score_k < 100" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
@@ -32,7 +32,7 @@
               <p v-else style="font-size:36px;" class="status-event-postech-score">{{ event.fields.score_p }}</p>
             </div>
           </div>
-          <div v-else-if="event.fields.winner == 2 && event.fields.type == 0" class="postech-win">
+          <div v-else-if="event.fields.winner == 2 && event.fields.type == 0 && event.fields.live == 2" class="postech-win">
             <p class="status-event-name">{{ event.fields.name_kor }}</p>
             <div class="status-event-score">
               <p class="status-event-kaist-score">{{ event.fields.score_k }}</p>
