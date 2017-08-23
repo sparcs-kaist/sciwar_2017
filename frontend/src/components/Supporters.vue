@@ -80,9 +80,11 @@ export default {
         this.$http.get('/api/supporters/')
           .then((response) => {
             this.supporters = JSON.parse(response.data)
+            let base = this.supporters[0].fields.registry
             for (let i in this.supporters) {
-              this.supportersNum[this.supporters[i].fields.registry - 1]++
+              this.supportersNum[this.supporters[i].fields.registry - base]++
             }
+            this.supportersNum.reverse()
             for (let i in this.supporterRegs) {
               this.supporterRegs[i]['num'] = this.supportersNum[i]
             }
