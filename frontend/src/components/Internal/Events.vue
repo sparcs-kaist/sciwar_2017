@@ -68,12 +68,21 @@ export default {
       let postech = document.getElementsByName(postechpk)[0].value
       let live = select.selectedIndex
       console.log(kaist, postech, live)
+      let winner = 0
+      if (live === 2) {
+        console.log('live')
+        if (kaist > postech) {
+          winner = 1
+        } else {
+          winner = 2
+        }
+      }
       this.$http.post(url, JSON.stringify({
         'live': live,
         'score_k': kaist,
         'score_p': postech,
         'pk': pk,
-        'winner': kaist > postech ? 1 : 2
+        'winner': winner
       }))
         .then((response) => {
           console.log('save successfully')

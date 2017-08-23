@@ -36,6 +36,7 @@ def event(request, event_id):
         event.live = live
         event.score_k = score_k
         event.score_p = score_p
+        event.winner = winner
         event.save()
 
         events = Event.objects.all()
