@@ -12,6 +12,7 @@ import Supporters from '@/components/Supporters'
 import SupportersWrite from '@/components/SupportersWrite'
 import SupportersView from '@/components/SupportersView'
 import SupportersMod from '@/components/SupportersMod'
+import InternalSupportersView from '@/components/Internal/SupportersView'
 import Toto from '@/components/Toto'
 import TotoWrite from '@/components/TotoWrite'
 import TotoView from '@/components/TotoView'
@@ -125,6 +126,13 @@ export default new Router({
       name: 'supporters_check',
       components: {
         contents: SupportersCheck
+      }
+    },
+    {
+      path: '/internal/supporters/:id',
+      name: 'internal_supporters_view',
+      components: {
+        contents: InternalSupportersView
       }
     },
     {
