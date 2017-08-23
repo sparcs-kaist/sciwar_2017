@@ -61,6 +61,9 @@ export default {
     this.$http.get('/api/toto-content/')
       .then((response) => {
         this.totoContents = JSON.parse(response.data)
+        for (let toto of this.totoContents) {
+          toto.fields.name = toto.fields.name.substr(0, 1) + '*' + toto.fields.name.substr(2)
+        }
         this.max_page = parseInt((this.totoContents.length - 1) / 10) + 1
         this.totoNum = new Array(this.totoContents.length).fill(0)
         this.page_turn(1)
@@ -72,7 +75,6 @@ export default {
         this.totoRendered.pop()
       }
       this.current_page = n
-      console.log(this.current_page)
       if (this.totoContents.length > this.current_page * 10) {
         for (let i = this.current_page * 10 - 10; i < (this.current_page * 10); i++) {
           this.totoRendered.push(this.totoContents[i])
@@ -82,7 +84,6 @@ export default {
           this.totoRendered.push(this.totoContents[i])
         }
       }
-      console.log(this.totoContents)
       this.set_range()
     },
     set_range: function () {
@@ -102,7 +103,6 @@ export default {
         this.page_range.push(start)
         start++
       }
-      console.log(this.page_range)
     }
   }
 }

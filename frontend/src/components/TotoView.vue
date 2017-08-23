@@ -1,12 +1,12 @@
 <template>
   <div class="toto-view noto-sans">
     <div class="head">토토 조회하기</div>
-    <div v-if="certified" class="classified">
+    <div v-if="!certified" class="classified">
       <label>작성하실 때 사용하신 비밀번호를 입력해주세요</label><br>
       <input type="password" name="password">
       <button v-on:click="show()">확인</button>
     </div>
-    <div v-if="!certified" class="toto-content-view">
+    <div v-if="certified" class="toto-content-view">
       <label class="control-label">Student ID</label>
       <input v-model="studentId" name="student_id" class="form-controll-small" v-on:keyup="showFormButton()" disabled>
       <label class="control-label">Name</label>
@@ -86,6 +86,7 @@ export default {
   name: 'toto',
   data () {
     return {
+      certified: false,
       studentId: '',
       name: '',
       scoreSoccerK: '',
@@ -108,32 +109,60 @@ export default {
   created () {
     this.$http.get('/api/toto/' + this.$route.params.id + '/')
       .then((response) => {
-        let data = JSON.parse(response.data)
-        console.log(data)
-        let schools = ['None', 'KAIST', 'POSTECH']
-        this.studentId = data.studentId
-        this.name = data.name
-        this.scoreSoccerK = data.scoreSoccerK
-        this.scoreSoccerP = data.scoreSoccerP
-        this.scoreBaseballK = data.scoreBaseballK
-        this.scoreBaseballP = data.scoreBaseballP
-        this.scoreBasketballK = data.scoreBasketballK
-        this.scoreBasketballP = data.scoreBasketballP
-        this.scoreLolK = data.scoreLolK
-        this.scoreLolP = data.scoreLolP
-        this.winnerSoccer = schools[data.winnerSoccer]
-        this.winnerBaseball = schools[data.winnerBaseball]
-        this.winnerBasketball = schools[data.winnerBasketball]
-        this.winnerLol = schools[data.winnerLol]
-        this.winnerQuiz = schools[data.winnerQuiz]
-        this.winnerAI = schools[data.winnerAI]
-        this.winnerHacking = schools[data.winnerHacking]
+        this.theRightPassword = JSON.parse(response.data)[0]
+        this.theRightPassword = this.theRightPassword.fields.password
       })
+  },
+  methods: {
+    show () {
+      let crypto = require('crypto')
+      let shasum = crypto.createHash('sha256')
+      let password = document.getElementsByName('password')[0].value
+      shasum.update(password)
+      password = shasum.digest('hex')
+      if (password === this.theRightPassword) {
+        this.certified = true
+        this.loadComplete()
+      } else {
+        alert('비밀번호가 틀렸습니다.')
+      }
+    },
+    loadComplete () {
+      this.$http.get('/api/toto/complete/' + this.$route.params.id + '/')
+        .then((response) => {
+          let data = JSON.parse(response.data)
+          console.log(data)
+          let schools = ['None', 'KAIST', 'POSTECH']
+          this.studentId = data.studentId
+          this.name = data.name
+          this.scoreSoccerK = data.scoreSoccerK
+          this.scoreSoccerP = data.scoreSoccerP
+          this.scoreBaseballK = data.scoreBaseballK
+          this.scoreBaseballP = data.scoreBaseballP
+          this.scoreBasketballK = data.scoreBasketballK
+          this.scoreBasketballP = data.scoreBasketballP
+          this.scoreLolK = data.scoreLolK
+          this.scoreLolP = data.scoreLolP
+          this.winnerSoccer = schools[data.winnerSoccer]
+          this.winnerBaseball = schools[data.winnerBaseball]
+          this.winnerBasketball = schools[data.winnerBasketball]
+          this.winnerLol = schools[data.winnerLol]
+          this.winnerQuiz = schools[data.winnerQuiz]
+          this.winnerAI = schools[data.winnerAI]
+          this.winnerHacking = schools[data.winnerHacking]
+        })
+    }
   }
 }
 </script>
 
 <style>
+.head {
+  font-size: 64px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
 .toto-content {
   width:100%;
 }
