@@ -76,19 +76,21 @@ export default {
       .then((response) => {
         this.supporterRegs = JSON.parse(response.data)
         this.max_page = parseInt((this.supporterRegs.length - 1) / 10) + 1
-        this.supportersNum = new Array(this.supporterRegs.length).fill(0)
+        this.supportersNum = new Array(this.supporterRegs[0].pk + 1).fill(0)
         this.$http.get('/api/supporters/')
           .then((response) => {
             this.supporters = JSON.parse(response.data)
-            let base = this.supporters[0].fields.registry
             for (let i in this.supporters) {
-              this.supportersNum[this.supporters[i].fields.registry - base]++
+              this.supportersNum[this.supporters[i].fields.registry]++
             }
             this.supportersNum.reverse()
+            let j = 0
             for (let i in this.supporterRegs) {
-              this.supporterRegs[i]['num'] = this.supportersNum[i]
+              if (this.supportersNum[i] > 0) {
+                this.supporterRegs[j]['num'] = this.supportersNum[i]
+                j++
+              }
             }
-            console.log(this.supporterRegs)
             this.page_turn(1)
           })
       })
