@@ -22,7 +22,6 @@ urlpatterns = [
     url(r'^events/(?P<event_id>\d+)/players-k/$', views.event_players_k),
     url(r'^events/(?P<event_id>\d+)/players-p/$', views.event_players_p),
     url(r'^events/(?P<event_id>\d+)/messages/$', views.event_messages),
-    url(r'^videos/(?P<pk>\d+)/$', views.video),
     url(r'^cheermessage/$', views.messages),
     url(r'^supporter-reg/$', views.supporterReg),
     url(r'^toto/(?P<pk>\d+)/$', views.totoView),
@@ -40,6 +39,9 @@ urlpatterns = [
 
     # GET + PUT
     url(r'^videos/$', views.videos),
+
+    # GET + POST + DELETE
+    url(r'^videos/(?P<pk>\d+)/$', views.video),
 
     # GET + POST + PUT
     url(r'^supporters/$', views.supporters),
