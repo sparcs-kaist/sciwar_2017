@@ -4,14 +4,15 @@ import Home from '@/components/Home'
 import Album from '@/components/Album'
 import Event from '@/components/Event'
 import Videos from '@/components/Videos'
-import VideosAdd from '@/components/Internal/Videos'
+import VideosCheck from '@/components/Internal/VideosCheck'
+import VideoUpdate from '@/components/Internal/VideoUpdate'
+import VideoAdd from '@/components/Internal/VideoAdd'
 import Video from '@/components/Video'
 import Schedule from '@/components/Schedule'
 import Map from '@/components/Map'
 import Supporters from '@/components/Supporters'
 import SupportersWrite from '@/components/SupportersWrite'
 import SupportersView from '@/components/SupportersView'
-import SupportersMod from '@/components/SupportersMod'
 import InternalSupportersView from '@/components/Internal/SupportersView'
 import Toto from '@/components/Toto'
 import TotoWrite from '@/components/TotoWrite'
@@ -67,9 +68,23 @@ export default new Router({
     },
     {
       path: '/internal/videos',
-      name: 'videos_add',
+      name: 'videos_check',
       components: {
-        contents: VideosAdd
+        contents: VideosCheck
+      }
+    },
+    {
+      path: '/internal/videos/:id',
+      name: 'video_update',
+      components: {
+        contents: VideoUpdate
+      }
+    },
+    {
+      path: '/internal/videos/add',
+      name: 'video_add',
+      components: {
+        contents: VideoAdd
       }
     },
     {
@@ -112,13 +127,6 @@ export default new Router({
       name: 'supporters_view',
       components: {
         contents: SupportersView
-      }
-    },
-    {
-      path: '/supporters/mod/:id',
-      name: 'supporters_mod',
-      components: {
-        contents: SupportersMod
       }
     },
     {
