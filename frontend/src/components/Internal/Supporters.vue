@@ -104,7 +104,7 @@ export default {
             }
             let j = 0
             this.supportersNum.reverse()
-            for (let i in this.supporterRegs) {
+            for (let i in this.supportersNum) {
               if (this.supportersNum[i] > 0) {
                 this.supporterRegs[j]['num'] = this.supportersNum[i]
                 j++
