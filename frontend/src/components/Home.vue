@@ -50,6 +50,11 @@
               <p v-else style="font-size:36px;" class="status-event-postech-score">{{ event.fields.score_p }}</p>
             </div>
           </div>
+          <div v-else-if="event.fields.type == 0 && event.fields.live == 0" class="not-yet">
+            <p class="status-event-name">{{ event.fields.name_kor }}</p>
+            <p class="not-yet-date">{{ event.fields.start_time[6] }}월 {{ event.fields.start_time.slice(8,10) }}일</p>
+            <p class="not-yet-time">{{ event.fields.start_time.slice(11,13) }}시 {{ event.fields.start_time.slice(14,16) }}분</p>
+          </div>
         </div>
       </div>
     </div>
@@ -233,6 +238,7 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  height: 144px;
 }
 
 .kaist-win {
@@ -245,6 +251,22 @@ html, body {
 
 .none-win {
   background-color: rgb(242, 242, 242);
+}
+
+.not-yet {
+  background-color: rgb(242, 242, 242);
+}
+
+.not-yet-date {
+  margin-top: 5px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.not-yet-time {
+  font-size: 30px;
+  text-align: center;
+  margin-top: -10px;
 }
 
 .status-event-name {
