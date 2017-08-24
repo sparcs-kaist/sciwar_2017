@@ -259,8 +259,6 @@ def totoViewComplete(request, pk):
         data['scoreBaseballP'] = toto.baseball_toto.all()[0].score_p
         data['scoreBasketballK'] = toto.basketball_toto.all()[0].score_k
         data['scoreBasketballP'] = toto.basketball_toto.all()[0].score_p
-        data['scoreLolK'] = toto.esports_toto.all()[0].score_k
-        data['scoreLolP'] = toto.esports_toto.all()[0].score_p
         data['winnerSoccer'] = toto.soccer_toto.all()[0].winner
         data['winnerBaseball'] = toto.baseball_toto.all()[0].winner
         data['winnerBasketball'] = toto.basketball_toto.all()[0].winner
@@ -301,7 +299,7 @@ def toto(request):
         basketballToto = BasketballToto(event = basketball, bet = totoContent, score_k = data['scoreBasketballK'], score_p = data['scoreBasketballP'], winner = school[data['winnerBasketball']])
         basketballToto.save()
 
-        LOLToto = EsportsToto(event = LOL, bet = totoContent, score_k = data['scoreLolK'], score_p = data['scoreLolP'], winner = school[data['winnerLol']])
+        LOLToto = EsportsToto(event = LOL, bet = totoContent, winner = school[data['winnerLol']])
         LOLToto.save()
 
         quizToto = QuizToto(event = quiz, bet = totoContent, winner = school[data['winnerQuiz']])

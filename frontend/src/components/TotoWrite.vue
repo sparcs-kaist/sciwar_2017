@@ -36,12 +36,6 @@
 						<td><input v-model="scoreBasketballP" name="score3_2" placeholder="ex)51" v-on:keyup="getWinnerBasketball()"></td>
 						<td class="winner"><span name="winnerBasketball">{{ winnerBasketball }}</span></td>
 					</tr>
-					<tr>
-						<td>League of Legend</td>
-						<td><input v-model="scoreLolK" name="score4_1" placeholder="ex)3" v-on:keyup="getWinnerLol()"></td>
-						<td><input v-model="scoreLolP" name="score4_2" placeholder="ex)0" v-on:keyup="getWinnerLol()"></td>
-            <td class="winner"><span name="winnerLol">{{ winnerLol }}</span></td>
-					</tr>
 				</tbody>
 			</table>
 			<h2 class="table-title">과학경기 승패 맞추기</h2>
@@ -55,19 +49,24 @@
 				</thead>
 				<tbody>
 					<tr>
+						<td>LOL</td>
+						<td><input v-model="winnerLol" type="radio" class="radio-button" value="KAIST"></td>
+						<td><input v-model="winnerLol" type="radio" class="radio-button" value="POSTECH"></td>
+					</tr>
+					<tr>
 						<td>Science Quiz</td>
-						<td><input v-model="winnerQuiz" type="radio" class="radio-button" name="winner5" value="KAIST"></td>
-						<td><input v-model="winnerQuiz" type="radio" class="radio-button" name="winner5" value="POSTECH"></td>
+						<td><input v-model="winnerQuiz" type="radio" class="radio-button" value="KAIST"></td>
+						<td><input v-model="winnerQuiz" type="radio" class="radio-button" value="POSTECH"></td>
 					</tr>
 					<tr>
 						<td>AI</td>
-						<td><input v-model="winnerAI" type="radio" class="radio-button" name="winner6" value="KAIST"></td>
-						<td><input v-model="winnerAI" type="radio" class="radio-button" name="winner6" value="POSTECH"></td>
+						<td><input v-model="winnerAI" type="radio" class="radio-button" value="KAIST"></td>
+						<td><input v-model="winnerAI" type="radio" class="radio-button" value="POSTECH"></td>
 					</tr>
 					<tr>
 						<td>Hacking Contest</td>
-						<td><input v-model="winnerHacking" type="radio" class="radio-button" name="winner7" value="KAIST"></td>
-						<td><input v-model="winnerHacking" type="radio" class="radio-button" name="winner7" value="POSTECH"></td>
+						<td><input v-model="winnerHacking" type="radio" class="radio-button" value="KAIST"></td>
+						<td><input v-model="winnerHacking" type="radio" class="radio-button" value="POSTECH"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -91,12 +90,10 @@ export default {
       scoreBaseballP: '',
       scoreBasketballK: '',
       scoreBasketballP: '',
-      scoreLolK: '',
-      scoreLolP: '',
       winnerSoccer: 'None',
       winnerBaseball: 'None',
       winnerBasketball: 'None',
-      winnerLol: 'None',
+      winnerLol: 'KAIST',
       winnerQuiz: 'KAIST',
       winnerAI: 'KAIST',
       winnerHacking: 'KAIST'
@@ -133,21 +130,10 @@ export default {
       }
       this.showFormButton()
     },
-    getWinnerLol () {
-      if (parseInt(this.scoreLolK) > parseInt(this.scoreLolP)) {
-        this.winnerLol = 'KAIST'
-      } else if (parseInt(this.scoreLolK) < parseInt(this.scoreLolP)) {
-        this.winnerLol = 'POSTECH'
-      } else {
-        this.winnerLol = 'None'
-      }
-      this.showFormButton()
-    },
     showFormButton () {
       if (this.winnerSoccer !== 'None' &&
         this.winnerBaseball !== 'None' &&
         this.winnerBasketball !== 'None' &&
-        this.winnerLol !== 'None' &&
         this.studentId.length === 8 &&
         this.name !== '' &&
         this.password !== '') {
@@ -160,7 +146,7 @@ export default {
       let crypto = require('crypto')
       let shasum = crypto.createHash('sha256')
       shasum.update(this.password)
-      let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'scoreLolK': this.scoreLolK, 'scoreLolP': this.scoreLolP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'winnerAI': this.winnerAI, 'winnerHacking': this.winnerHacking }
+      let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'winnerAI': this.winnerAI, 'winnerHacking': this.winnerHacking }
       console.log(data)
       data = JSON.stringify(data)
       console.log(data)
