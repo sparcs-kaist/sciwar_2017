@@ -18,9 +18,9 @@
             <i class="fa fa-chevron-left" aria-hidden="ture"></i>
           </div>
           <div class="navbar-event-name">
-            <div v-if="eventsRendered[0]">
-              {{ eventsRendered[currentIndex].fields.name_kor }}
-              <button v-if="eventsRendered[currentIndex].fields.live == 1" class="to-streaming">LIVE</button>
+            <div v-if="eventsRendered[currentIndex]">
+              <router-link :to="{ name: 'event', params: { id: eventsRendered[currentIndex].pk } }">{{ eventsRendered[currentIndex].fields.name_kor }}</router-link>
+              <router-link v-if="eventsRendered[currentIndex].fields.live == 1" :to="{ name: 'video', params: { id: videosRendered[currentIndex].pk } }" class="to-streaming">LIVE</router-link>
             </div>
           </div>
           <div class="navbar-name" v-on:click="moveRight()">
@@ -120,6 +120,8 @@ export default {
     return {
       events: [],
       eventsRendered: [],
+      videos: [],
+      videosRendered: [],
       currentIndex: 0
     }
   },
@@ -131,30 +133,7 @@ export default {
         this.events = JSON.parse(response.data)
         this.kaistScore = 0
         this.postechScore = 0
-        this.today = new Date()
-        this.dd = this.today.getDate()
-        this.mm = this.today.getMonth() + 1
-        this.yyyy = this.today.getFullYear()
-        if (this.dd < 10) {
-          this.dd = '0' + this.dd
-        }
-        if (this.mm < 10) {
-          this.mm = '0' + this.mm
-        }
-        this.today = this.yyyy + '-' + this.mm + '-' + this.dd
-        this.today = '2017-09-22'
-        console.log(this.today)
-        for (let i in this.events) {
-          if (this.events[i].fields.winner === 1 && this.events[i].fields.live === 2) {
-            this.kaistScore += 1
-          } else if (this.events[i].fields.winner === 2 && this.events[i].fields.live === 2) {
-            this.postechScore += 1
-          }
-          if (this.today === this.events[i].fields.start_time.slice(0, 10)) {
-            this.eventsRendered.push(this.events[i])
-          }
-        }
-        console.log(this.eventsRendered)
+        this.renderEvent()
       })
   },
   updated () {
@@ -191,6 +170,45 @@ export default {
     submenuLeft (event) {
       let left = document.getElementById('sidebar-wrapper').offsetLeft + 300 + 'px'
       document.getElementById('submenu').style.left = left
+    },
+    renderEvent () {
+      this.today = new Date()
+      this.dd = this.today.getDate()
+      this.mm = this.today.getMonth() + 1
+      this.yyyy = this.today.getFullYear()
+      if (this.dd < 10) {
+        this.dd = '0' + this.dd
+      }
+      if (this.mm < 10) {
+        this.mm = '0' + this.mm
+      }
+      this.today = this.yyyy + '-' + this.mm + '-' + this.dd
+      this.today = '2017-09-22'
+      console.log(this.today)
+      for (let i in this.events) {
+        if (this.events[i].fields.winner === 1 && this.events[i].fields.live === 2) {
+          this.kaistScore += 1
+        } else if (this.events[i].fields.winner === 2 && this.events[i].fields.live === 2) {
+          this.postechScore += 1
+        }
+        if (this.today === this.events[i].fields.start_time.slice(0, 10)) {
+          this.eventsRendered.push(this.events[i])
+        }
+      }
+      console.log(this.eventsRendered)
+      this.$http.get('/api/videos/')
+        .then((response) => {
+          this.videos = JSON.parse(response.data)
+          for (let i in this.eventsRendered) {
+            for (let video of this.videos) {
+              if (video.fields.event.indexOf(this.eventsRendered[i].pk) > -1 && video.fields.type === 0) {
+                this.videosRendered.push(video)
+                break
+              }
+            }
+          }
+        })
+      console.log(this.videosRendered)
     },
     moveLeft () {
       if (this.currentIndex > 0) {
@@ -364,7 +382,7 @@ body {
   width: 30px;
   height: 55px;
   margin-top: 10px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .events > .navbar-name > .fa {
@@ -378,6 +396,10 @@ body {
   font-size: 60px;
   text-align: center;
   letter-spacing: -2px;
+}
+
+.navbar-event-name > div > a {
+  color: white;
 }
 
 .contents {
@@ -520,7 +542,7 @@ a:hover > p > .fa {
   top: 242px;
   padding: 15px 15px 5px 15px;
   background-color: rgba(242,242,242,1);
-  z-index:1;
+  z-index: 10;
 }
 
 .event-list {

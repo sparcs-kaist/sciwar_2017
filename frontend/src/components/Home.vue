@@ -40,7 +40,7 @@
               <p class="status-event-postech-score">{{ event.fields.score_p }}</p>
             </div>
           </div>
-          <div v-else-if="event.fields.type == 0" class="none-win">
+          <div v-else-if="event.fields.type == 0 && event.fields.live == 1" class="none-win">
             <p class="status-event-name">{{ event.fields.name_kor }}</p>
             <div class="status-event-score">
               <p v-if="event.fields.score_k < 100" class="status-event-kaist-score">{{ event.fields.score_k }}</p>

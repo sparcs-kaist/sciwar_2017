@@ -36,14 +36,10 @@
 export default {
   name: 'video',
   created: function () {
-    let videoId = this.$route.params.id
-    this.$http.get(`/api/videos/${videoId}/`)
-      .then((response) => {
-        this.video = JSON.parse(response.data)[0]
-        console.log(this.video)
-        this.link = this.video.fields.link
-        this.loadEvent(this.video.fields.event)
-      })
+    this.loadVideo()
+  },
+  watch: {
+    '$route': 'loadVideo'
   },
   data () {
     return {
@@ -54,6 +50,19 @@ export default {
     }
   },
   methods: {
+    loadVideo () {
+      this.video = {}
+      this.link = new Array(0)
+      this.events = new Array(0)
+      this.cheermessages = new Array(0)
+      let videoId = this.$route.params.id
+      this.$http.get(`/api/videos/${videoId}/`)
+        .then((response) => {
+          this.video = JSON.parse(response.data)[0]
+          this.link = this.video.fields.link
+          this.loadEvent(this.video.fields.event)
+        })
+    },
     loadEvent (events) {
       for (let eventId of events) {
         let uri1 = `/api/events/${eventId}/`
@@ -103,7 +112,7 @@ export default {
   font-weight: 600;
   background-color: rgb(188, 77, 77);
   color: white;
-  margin-top: 25px;
+  margin-top: 20px;
   float: right;
 }
 
