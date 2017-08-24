@@ -321,7 +321,8 @@ body {
 }
 
 .events {
-  width: 50%;
+  width: 40%;
+  float: right;
 }
 
 .navbar-name.today {
@@ -329,6 +330,7 @@ body {
   font-weight: 300;
   height: 58px;
   margin-left: 5px;
+  float: right;
 }
 
 .to-streaming {
