@@ -135,7 +135,7 @@ class TotoContent(models.Model):
     )
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-total', '-id']
 
 
 class BasketballToto(models.Model):
@@ -198,8 +198,6 @@ class EsportsToto(models.Model):
         TotoContent,
         related_name = 'esports_toto',
     )
-    score_k = models.IntegerField()
-    score_p = models.IntegerField()
     winner = models.IntegerField(
         default = 0,
         choices = SCHOOLS,

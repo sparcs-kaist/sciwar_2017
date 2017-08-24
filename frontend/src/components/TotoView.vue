@@ -41,12 +41,6 @@
               <td><input v-model="scoreBasketballP" disabled></td>
               <td class="winner"><span name="winnerBasketball">{{ winnerBasketball }}</span></td>
             </tr>
-            <tr>
-              <td>League of Legend</td>
-              <td><input v-model="scoreLolK" disabled></td>
-              <td><input v-model="scoreLolP" disabled></td>
-              <td class="winner"><span name="winnerLol">{{ winnerLol }}</span></td>
-            </tr>
           </tbody>
         </table>
         <h2 class="table-title">과학경기 승패 맞추기</h2>
@@ -59,6 +53,11 @@
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>LOL</td>
+              <td><input v-model="winnerLol" type="radio" class="radio-button" value="KAIST" disabled></td>
+              <td><input v-model="winnerLol" type="radio" class="radio-button" value="POSTECH" disabled></td>
+            </tr>
             <tr>
               <td>Science Quiz</td>
               <td><input v-model="winnerQuiz" type="radio" class="radio-button" value="KAIST" disabled></td>
@@ -95,8 +94,6 @@ export default {
       scoreBaseballP: '',
       scoreBasketballK: '',
       scoreBasketballP: '',
-      scoreLolK: '',
-      scoreLolP: '',
       winnerSoccer: 'None',
       winnerBaseball: 'None',
       winnerBasketball: 'None',
@@ -141,8 +138,6 @@ export default {
           this.scoreBaseballP = data.scoreBaseballP
           this.scoreBasketballK = data.scoreBasketballK
           this.scoreBasketballP = data.scoreBasketballP
-          this.scoreLolK = data.scoreLolK
-          this.scoreLolP = data.scoreLolP
           this.winnerSoccer = schools[data.winnerSoccer]
           this.winnerBaseball = schools[data.winnerBaseball]
           this.winnerBasketball = schools[data.winnerBasketball]

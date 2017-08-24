@@ -18,8 +18,10 @@
             <i class="fa fa-chevron-left" aria-hidden="ture"></i>
           </div>
           <div class="navbar-event-name">
-            {{ eventsRendered[currentIndex].fields.name_kor }}
-            <button v-if="eventsRendered[currentIndex].fields.live == 1" class="to-streaming">LIVE</button>
+            <div v-if="eventsRendered[0]">
+              {{ eventsRendered[currentIndex].fields.name_kor }}
+              <button v-if="eventsRendered[currentIndex].fields.live == 1" class="to-streaming">LIVE</button>
+            </div>
           </div>
           <div class="navbar-name" v-on:click="moveRight()">
             <i class="fa fa-chevron-right" aria-hidden="ture"></i>
@@ -153,7 +155,6 @@ export default {
           }
         }
         console.log(this.eventsRendered)
-        console.log(this.kaistScore)
       })
   },
   updated () {
@@ -314,6 +315,16 @@ body {
   height: 58px;
 }
 
+#kaist-score {
+  margin-left: 30px;
+  margin-right: 50px;
+}
+
+#postech-score {
+  margin-left: 30px;
+  margin-right: 50px;
+}
+
 .navbar-name.postech {
   font-size: 37px;
   font-weight: 300;
@@ -322,15 +333,12 @@ body {
 
 .events {
   width: 40%;
-  float: right;
 }
 
 .navbar-name.today {
   font-size: 37px;
   font-weight: 300;
   height: 58px;
-  margin-left: 5px;
-  float: right;
 }
 
 .to-streaming {

@@ -32,7 +32,6 @@
       </tbody>
     </table>
     <div class="paginator noto-sans">
-      <div style="width:50px;"></div>
       <div>
         <button class="pg" v-on:click="page_turn(1)"><</button>
         <button class="pg" v-if="page_range[0] > 1" v-on:click="page_turn(page_range[0] - 1)">... </button> 
@@ -40,9 +39,6 @@
         <button class="pg" v-if="page_range[page_range.length - 1] < max_page" v-on:click="page_turn(page_range[page_range.length - 1] + 1)">...</button>
         <button class="pg" v-on:click="page_turn(max_page)">></button>
       </div>
-      <router-link :to="{ name: 'toto_write' }">
-        <span class="write noto-sans">쓰기</span>
-      </router-link>
     </div>
   </div>
 </template>
@@ -156,7 +152,7 @@ export default {
 .paginator {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
 }
 
