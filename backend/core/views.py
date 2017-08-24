@@ -154,12 +154,27 @@ def videos(request):
         return HttpResponse('')
 
 
+@csrf_exempt
 def video(request, pk):
     if request.method == "GET":
         video = Video.objects.get(id = pk)
         video = serializers.serialize('json', [video])
 
         return JsonResponse(video, safe = False, json_dumps_params = {'ensure_ascii': False})
+
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print(data)
+        video = Video.objects.get(id = pk)
+        video.type = data['type']
+        video.save()
+
+        return HttpResponse('')
+
+    if request.method == "DELETE":
+        video = Video.objects.get(id = pk).delete()
+
+        return HttpResponse('')
 
 
 @csrf_exempt

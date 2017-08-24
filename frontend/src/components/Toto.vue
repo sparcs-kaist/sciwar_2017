@@ -3,6 +3,7 @@
     <div class="toto-title">
       토토이벤트
     </div>
+    <p class="toto-guide">점수 순대로 나열됩니다.</p>
     <table class="board">
       <thead>
         <tr>
@@ -112,6 +113,12 @@ export default {
 .toto-title {
   font-size: 64px;
   font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.toto-guide {
+  font-size: 30px;
+  margin-left: 24px;
 }
 
 .board{
