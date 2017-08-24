@@ -20,7 +20,7 @@
           <div class="navbar-event-name">
             <div v-if="eventsRendered[currentIndex]">
               <router-link :to="{ name: 'event', params: { id: eventsRendered[currentIndex].pk } }">{{ eventsRendered[currentIndex].fields.name_kor }}</router-link>
-              <router-link v-if="eventsRendered[currentIndex].fields.live == 1" :to="{ name: 'video', params: { id: videosRendered[currentIndex].pk } }" class="to-streaming">LIVE</router-link>
+              <router-link v-if="videosRendered[currentIndex] != 0" :to="{ name: 'video', params: { id: videosRendered[currentIndex].pk } }" class="to-streaming">LIVE</router-link>
             </div>
           </div>
           <div class="navbar-name" v-on:click="moveRight()">
@@ -172,6 +172,7 @@ export default {
       document.getElementById('submenu').style.left = left
     },
     renderEvent () {
+      this.eventRendered = new Array(0)
       this.today = new Date()
       this.dd = this.today.getDate()
       this.mm = this.today.getMonth() + 1
@@ -199,16 +200,24 @@ export default {
       this.$http.get('/api/videos/')
         .then((response) => {
           this.videos = JSON.parse(response.data)
-          for (let i in this.eventsRendered) {
-            for (let video of this.videos) {
-              if (video.fields.event.indexOf(this.eventsRendered[i].pk) > -1 && video.fields.type === 0) {
-                this.videosRendered.push(video)
-                break
+          this.videosRendered = new Array(0)
+          for (let i = 0; i < this.eventsRendered.length; i++) {
+            this.videosRendered.push(0)
+          }
+          for (let x in this.eventsRendered) {
+            if (this.eventsRendered[x].fields.live === 0) {
+              continue
+            } else if (this.eventsRendered[x].fields.live === 1) {
+              for (let video of this.videos) {
+                if (video.fields.event.indexOf(this.eventsRendered[x].pk) > -1 && video.fields.type === 0) {
+                  this.videosRendered[x] = video
+                  break
+                }
               }
             }
           }
+          console.log(this.videosRendered)
         })
-      console.log(this.videosRendered)
     },
     moveLeft () {
       if (this.currentIndex > 0) {
@@ -362,7 +371,7 @@ body {
 .to-streaming {
   border: none;
   font-size: 35px;
-  padding: 5px 12px 5px 12px;
+  padding: 3px 12px 5px 12px;
   font-weight: 600;
   cursor: pointer;
   background-color: rgb(188, 77, 77);

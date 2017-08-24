@@ -22,6 +22,7 @@
         {{ event.fields.score_p }}
       </div>
       <p class="winner-is">winner is...
+      <span v-if="event.fields.winner == 0" class="winner-team none">TBD</span>
       <span v-if="event.fields.winner == 1" class="winner-team kaist">KAIST</span>
       <span v-else-if="event.fields.winner == 2" class="winner-team postech">POSTECH</span> 
       <router-link :to="{ name: 'videos' }" class="to-video">
@@ -224,6 +225,10 @@ html, body {
   margin-top: -50px;
   font-size: 72px;
   font-weight: 800;
+}
+
+.winner-team.none {
+  color: rgb(215, 215, 215);
 }
 
 .winner-team.kaist {
