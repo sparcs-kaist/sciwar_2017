@@ -4,8 +4,8 @@
     <div v-for="event in events" class="internal-event">
       <div class="event-name">{{ event.fields.name_kor }}</div>
       <div class="event-status">
-        <input class="input" v-if="event.fields.score_k" type="text" :value="event.fields.score_k" :name="'kaist' + event.pk">
-        <input class="input" v-if="event.fields.score_p" type="text" :value="event.fields.score_p" :name="'postech' + event.pk">
+        <input class="input input-score" v-if="event.fields.score_k" type="text" :value="event.fields.score_k" :name="'kaist' + event.pk">
+        <input class="input input-score" v-if="event.fields.score_p" type="text" :value="event.fields.score_p" :name="'postech' + event.pk">
         <div class="select">
           <select class="select-options">
             <option v-for="option in options" :value="option.value" :selected="option.value == event.fields.live">{{ option.text }}</option>
@@ -122,7 +122,7 @@ export default {
   margin-right: 300px;
 }
 
-.input {
+.input-score {
   width: 80px;
 }
 
