@@ -97,10 +97,20 @@ export default {
         } else {
           this.messageTeam = 'POSTECH'
         }
-        if (this.message.fields.event === 1) {
+        if (this.message.fields.event === 3) {
           this.messageEvent = '축구'
-        } else if (this.message.fields.event === 2) {
+        } else if (this.message.fields.event === 4) {
+          this.messageEvent = '인공지능'
+        } else if (this.message.fields.event === 5) {
+          this.messageEvent = '롤'
+        } else if (this.message.fields.event === 6) {
           this.messageEvent = '야구'
+        } else if (this.message.fields.event === 7) {
+          this.messageEvent = '과학퀴즈'
+        } else if (this.message.fields.event === 8) {
+          this.messageEvent = '농구'
+        } else if (this.message.fields.event === 10) {
+          this.messageEvent = '모두에게'
         }
       })
   },
@@ -175,6 +185,7 @@ html, body {
   font-size: 35px;
   margin: 0 10px;
   font-weight: 300;
+  word-break: keep-all;
 }
 
 .current-cheer-message > div > img{
