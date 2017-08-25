@@ -121,7 +121,6 @@ def messages(request):
 
     if request.method == "PUT":
         data = json.loads(request.body)
-        print(data['content'])
         cheerMessage = CheerMessage(content = data['content'], school = data['school'])
         cheerMessage.event_id = data['event']
         print(cheerMessage.event)
