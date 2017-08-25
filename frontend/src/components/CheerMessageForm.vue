@@ -15,8 +15,13 @@
     <div class="third-form">
       <p class="question">응원하는 경기</p>
       <select id="event-selector" class="selector">
-        <option value="1" selected>축구</option>
-        <option value="7">야구</option>
+        <option value="3" selected>축구</option>
+        <option value="4">인공지능</option>
+        <option value="5">롤</option>
+        <option value="6">야구</option>
+        <option value="7">과학퀴즈</option>
+        <option value="8">인공지능</option>
+        <option value="10">모두에게</option>
       </select>
     </div>
     <router-link :to="{ name: 'cheermessage' }">
