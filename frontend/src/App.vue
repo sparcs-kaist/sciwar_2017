@@ -199,7 +199,6 @@ export default {
         this.mm = '0' + this.mm
       }
       this.today = this.yyyy + '-' + this.mm + '-' + this.dd
-      this.today = '2017-09-22'
       console.log(this.today)
       for (let i in this.events) {
         if (this.events[i].fields.winner === 1 && this.events[i].fields.live === 2) {
@@ -211,7 +210,7 @@ export default {
           this.eventsRendered.push(this.events[i])
         }
       }
-      console.log(this.eventsRendered)
+      console.log(this.events)
       this.$http.get('/api/videos/')
         .then((response) => {
           this.videos = JSON.parse(response.data)

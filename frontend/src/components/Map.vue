@@ -37,7 +37,7 @@ export default {
       .then((response) => {
         this.events = JSON.parse(response.data)
         this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png']
-        this.locations = ['Creative Learning Building', 'Outdoor Theater', 'Sports Complex', 'Stadium', 'Main Playground']
+        this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장']
         console.log(this.events[0])
         this.mapChange(this.events[0])
         this.clicked = this.events[0].pk
