@@ -100,7 +100,7 @@
               <div class="menu-images">
                 <img v-bind:src="'/static/images/' + event.fields.name_eng + '.png'" width="25" style="margin:6px 10px 0 5px;">
               </div>
-              <p>
+              <p class="submenu-event-name">
                 {{ event.fields.name_kor }}
                 <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
               </p> 
@@ -139,7 +139,7 @@ export default {
       })
   },
   updated () {
-    let left = document.getElementById('sidebar-wrapper').offsetLeft + 300 + 'px'
+    let left = document.getElementById('sidebar-wrapper').offsetLeft + 290 + 'px'
     document.getElementById('submenu').style.left = left
     if (document.getElementsByClassName('image')[0]) {
       document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
@@ -561,7 +561,7 @@ a:hover > p > .fa {
   margin-bottom: 10px;
 }
 
-.event-list > div >  a{
+.event-list > div > a {
   width: 100%;
   height: 100%;
   display: flex;
@@ -576,11 +576,16 @@ a:hover > p > .fa {
 .event-list > div > a > p {
   width: 100%;
   margin-top: 5px;
-} 
+}
+
+.event-list > div > a > div {
+  margin: 3px 5px 0 5px;
+}
 
 .event-list > div > a > p > .fa.menu{
   float: right;
   margin-top: 4px;
+  margin-right: 5px;
 }
 
 .menu-images {
