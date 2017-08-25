@@ -95,15 +95,17 @@
       </div>
       <div id="submenu">
         <div class="event-list" v-for="event in events">
-          <router-link :to="{ name: 'event', params: { id: event.pk } }">
-            <div class="menu-images">
-              <img v-bind:src="'/static/images/' + event.fields.name_eng + '.png'" width="25" style="margin:6px 10px 0 5px;">
-            </div>
-            <p>
-              {{ event.fields.name_kor }}
-              <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
-            </p> 
-          </router-link>
+          <div v-if="event.fields.location < 5">
+            <router-link :to="{ name: 'event', params: { id: event.pk } }">
+              <div class="menu-images">
+                <img v-bind:src="'/static/images/' + event.fields.name_eng + '.png'" width="25" style="margin:6px 10px 0 5px;">
+              </div>
+              <p>
+                {{ event.fields.name_kor }}
+                <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
+              </p> 
+            </router-link>
+          </div>
         </div>  
       </div>
       <div class="main">
@@ -559,7 +561,7 @@ a:hover > p > .fa {
   margin-bottom: 10px;
 }
 
-.event-list > a{
+.event-list > div >  a{
   width: 100%;
   height: 100%;
   display: flex;
@@ -571,12 +573,12 @@ a:hover > p > .fa {
   height: 40px;
 }
 
-.event-list > a > p {
+.event-list > div > a > p {
   width: 100%;
   margin-top: 5px;
 } 
 
-.event-list > a > p > .fa.menu{
+.event-list > div > a > p > .fa.menu{
   float: right;
   margin-top: 4px;
 }

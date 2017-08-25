@@ -10,10 +10,12 @@
     </div>
     <div class="event-select">
       <div v-for="event in events" v-on:click="mapChange(event)" class="map-event button is-large">
-        <label class="radio">
-          <input v-on:click="radioClick()" type="radio" name="map-event" :value="event.pk" v-model="clicked">
-          {{ event.fields.name_kor }}
-        </label>
+        <div v-if="event.fields.location < 5">
+          <label class="radio">
+            <input v-on:click="radioClick()" type="radio" name="map-event" :value="event.pk" v-model="clicked">
+            {{ event.fields.name_kor }}
+          </label>
+        </div>
       </div>
     </div>
     <div class="event-detail-map"></div>
@@ -127,7 +129,7 @@ export default {
   background: rgb(149, 179, 215);
 }
 
-.map-event > .radio {
+.map-event > div > .radio {
   padding: 8px 18px;
   width: 100%;
   height: 100%;

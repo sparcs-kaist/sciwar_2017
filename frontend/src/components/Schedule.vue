@@ -4,21 +4,23 @@
     <div v-for="date in dates" class="events-date">
       <p>9월  {{ date.split('-')[2] }}일</p>
       <div v-for="event in events" class="events-schedule">
-        <div v-if="event.fields.start_time.split('T')[0] == date" class="event-schedule">
-          <router-link :to="{ name: 'event', params: { id: event.pk } }">
-            <div class="event-name">
-              {{ event.fields.name_kor }} {{ event.fields.name_eng }}
-              <i class="fa fa-chevron-right"></i>
-            </div>
-          </router-link>
-          <div class="time-location">
-            <div class="event-time">
-              <i class="fa fa-clock-o" aria-hidden="true"></i>
-              {{ event.fields.start_time.split('T')[1].split('Z')[0].split(':')[0] }}:{{ event.fields.start_time.split('T')[1].split('Z')[0].split(':')[1] }}&nbsp; &nbsp;
-            </div>
-            <div class="event-location">
-              <i class="fa fa-map-pin" aria-hidden="true"></i>
-              {{ locations[event.fields.location] }}
+        <div v-if="event.fields.location < 5">
+          <div v-if="event.fields.start_time.split('T')[0] == date" class="event-schedule">
+            <router-link :to="{ name: 'event', params: { id: event.pk } }">
+              <div class="event-name">
+                {{ event.fields.name_kor }} {{ event.fields.name_eng }}
+                <i class="fa fa-chevron-right"></i>
+              </div>
+            </router-link>
+            <div class="time-location">
+              <div class="event-time">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                {{ event.fields.start_time.split('T')[1].split('Z')[0].split(':')[0] }}:{{ event.fields.start_time.split('T')[1].split('Z')[0].split(':')[1] }}&nbsp; &nbsp;
+              </div>
+              <div class="event-location">
+                <i class="fa fa-map-pin" aria-hidden="true"></i>
+                {{ locations[event.fields.location] }}
+              </div>
             </div>
           </div>
         </div>
