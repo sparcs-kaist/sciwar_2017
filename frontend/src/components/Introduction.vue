@@ -25,6 +25,10 @@
   flex-direction: row;
 }
 
+.introduction-form > img {
+  height: 300px;
+}
+
 .introduction-message {
   font-size: 20px;
 }
