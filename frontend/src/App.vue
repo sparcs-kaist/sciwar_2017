@@ -111,7 +111,7 @@
           <div v-if="event.fields.type === 0">
             <router-link :to="{ name: 'event', params: { id: event.pk } }">
               <div class="menu-images">
-                <img v-bind:src="'/static/images/' + event.fields.name_eng + '.png'" width="25" style="margin:6px 10px 0 5px;">
+                <img v-bind:src="'/static/images/' + event.fields.name_eng + '.png'" width="22" style="margin:7px 10px 0 5px;">
               </div>
               <p class="submenu-event-name">
                 {{ event.fields.name_kor }}
