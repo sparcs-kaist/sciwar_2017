@@ -11,7 +11,7 @@
       </div>
     </div>
     <p class="videos-sub-title">경기별 동영상</p>
-    <div v-on:click="filterChange(1)" class="videos-event button is-large">
+    <div v-on:click="filterChange(1)" class="videos-event button is-large" style="margin-right: -1px">
       <label class="radio">
         <input v-on:click="radioClick()" type="radio" name="videos-event" value=0>
         전체
@@ -128,6 +128,7 @@ export default {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin-right: 2px;
+  margin-top: 5px;
   background: rgb(242, 242, 242);
 }
 

@@ -5,16 +5,16 @@
     </div>
     <table class="supporters-todo">
       <tr>
-        <th>하나,</th><td>티셔츠를 나누어 드립니다.</td>
+        <th>하나,</th><td>카이스트 서포터즈로서 최선을 다해 활동에 참여해주시기 바랍니다.</td>
       </tr>
       <tr>
-        <th>둘,</th><td>서포터즈 교육을 받아야 합니다.</td>
+        <th>둘,</th><td>6개의 경기(축구, 농구, 야구, LOL, AI, 과학퀴즈) 중 3가지 이상의 경기를 관람해주셔야합니다.</td>
       </tr>
       <tr>
-        <th>셋,</th><td>카포전 당일 참석을 해야 합니다.</td>
+        <th>셋,</th><td>서포터즈 티셔츠 및 각종 물품을 제공할 예정이니 9/21(목) 전야제에 꼭 참석하셔야합니다.</td>
       </tr>
       <tr>
-        <th>넷,</th><td>서포터즈 정원은 150명 입니다.</td>
+        <th>넷,</th><td>9/20(수) 저녁에 엘카의 경기 응원 교육이 있습니다.</td>
       </tr>
     </table>
     <table class="board">
@@ -153,6 +153,7 @@ export default {
 .supporters-todo > tr > th {
   font-weight: 400;
   color: black;
+  width: 120px;
 }
 
 .board{
