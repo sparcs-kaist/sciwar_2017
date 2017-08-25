@@ -20,7 +20,7 @@
         <option value="5">롤</option>
         <option value="6">야구</option>
         <option value="7">과학퀴즈</option>
-        <option value="8">인공지능</option>
+        <option value="8">농구</option>
         <option value="10">모두에게</option>
       </select>
     </div>
