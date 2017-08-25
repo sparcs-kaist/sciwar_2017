@@ -197,7 +197,7 @@ export default {
           this.eventsRendered.push(this.events[i])
         }
       }
-      console.log(this.events)
+      console.log(this.eventsRendered)
       this.$http.get('/api/videos/')
         .then((response) => {
           this.videos = JSON.parse(response.data)

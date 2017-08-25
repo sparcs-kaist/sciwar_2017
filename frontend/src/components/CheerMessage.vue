@@ -15,8 +15,13 @@
       </thead>
       <tbody>
         <tr v-for="message in messages_rendered">
-          <td class="fc" v-if="message.fields.event === 1">축구</td>
-          <td class="fc" v-if="message.fields.event === 7">야구</td>
+          <td class="fc" v-if="message.fields.event === 3">축구</td>
+          <td class="fc" v-else-if="message.fields.event === 4">인공지능</td>
+          <td class="fc" v-else-if="message.fields.event === 5">롤</td>
+          <td class="fc" v-else-if="message.fields.event === 6">야구</td>
+          <td class="fc" v-else-if="message.fields.event === 7">과학퀴즈</td>
+          <td class="fc" v-else-if="message.fields.event === 8">농구</td>
+          <td class="fc" v-else-if="message.fields.event === 10">모두에게</td>
           <td class="sc">{{ message.fields.content }}</td>
           <td class="tc" v-if="message.fields.school === 1">KAIST</td>
           <td class="tc" v-else-if="message.fields.school === 2">POSTECH</td>
@@ -27,8 +32,13 @@
       <div>
         <select id="event-type">
           <option value="0" selected>모두보기</option>
-          <option value="1">축구</option>
-          <option value="7">야구</option>
+          <option value="3">축구</option>
+          <option value="4">인공지능</option>
+          <option value="5">롤</option>
+          <option value="6">야구</option>
+          <option value="7">과학퀴즈</option>
+          <option value="8">농구</option>
+          <option value="10">모두에게</option>
         </select>
         <span class="write" v-on:click="select_event()">확인</span>
       </div>
