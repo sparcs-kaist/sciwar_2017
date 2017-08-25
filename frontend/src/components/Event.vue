@@ -31,7 +31,7 @@
       </router-link>
       </p>
     </div>
-    <div class="time"><i class="fa fa-clock-o"></i>일시<span>{{ day }} {{ startTimeH }}:{{ startTimeM }} - {{ endTimeH }}:{{ endTimeM }}</span>
+    <div class="time"><i class="fa fa-clock-o"></i>일시<span>{{ day }} {{ startTimeH }}:{{ startTimeM }}~{{ endTimeH }}:{{ endTimeM }}</span>
     </div>
     <div class="location"><i class="fa fa-map-marker"></i>위치<span>{{ locations[event.fields.location] }}</span>
       <div class="chevron" v-on:click="location()"><i class="fa fa-chevron-down"></i></div> 
@@ -90,7 +90,7 @@ export default {
   },
   created () {
     this.fetchData()
-    this.locations = ['Creative Learning Building', 'Outdoor Theater', 'Sports Complex', 'Stadium', 'Main Playground']
+    this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장']
     this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png']
   },
   watch: {
@@ -109,7 +109,7 @@ export default {
           this.event = JSON.parse(response.data)[0]
           console.log(this.event)
           let res = this.event.fields.start_time.split('T')
-          this.day = res[0]
+          this.day = res[0][6] + '월 ' + res[0].slice(8, 10) + '일'
           this.startTimeH = res[1].split('Z')[0].split(':')[0]
           this.startTimeM = res[1].split('Z')[0].split(':')[1]
           this.endTimeH = this.event.fields.end_time.split('T')[1].split('Z')[0].split(':')[0]
