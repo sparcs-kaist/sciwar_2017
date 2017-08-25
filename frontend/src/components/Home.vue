@@ -186,6 +186,7 @@ html, body {
   margin: 0 10px;
   font-weight: 300;
   word-break: keep-all;
+  text-align: center;
 }
 
 .current-cheer-message > div > img{
