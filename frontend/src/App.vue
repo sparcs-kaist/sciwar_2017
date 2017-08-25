@@ -94,8 +94,21 @@
         </div>
       </div>
       <div id="submenu">
+        <div class="event-list">
+          <div>
+            <router-link :to="{ name: 'introduction' }">
+              <div class="menu-images">
+                <img src="/static/images/sciwar.png" width="25" style="margin:6px 10px 0 5px">
+              </div>
+              <p class="submenu-event-name">
+                카포전 소개
+                <i class="fa fa-chevron-right menu" aria-hidden="true"></i> 
+              </p>
+            </router-link>
+          </div>
+        </div>
         <div class="event-list" v-for="event in events">
-          <div v-if="event.fields.location < 5">
+          <div v-if="event.fields.type === 0">
             <router-link :to="{ name: 'event', params: { id: event.pk } }">
               <div class="menu-images">
                 <img v-bind:src="'/static/images/' + event.fields.name_eng + '.png'" width="25" style="margin:6px 10px 0 5px;">

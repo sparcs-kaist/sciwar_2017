@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import Introduction from '@/components/Introduction'
 import Album from '@/components/Album'
 import Event from '@/components/Event'
 import Videos from '@/components/Videos'
@@ -36,6 +37,13 @@ export default new Router({
       name: 'home',
       components: {
         contents: Home
+      }
+    },
+    {
+      path: '/introduction',
+      name: 'introduction',
+      components: {
+        contents: Introduction
       }
     },
     {
