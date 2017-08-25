@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="supporters-recruit noto-sans">
-      <p class="title">서포터가 되어주세요!</p>
+      <p class="title">서포터즈가 되어주세요!</p>
       <div>
         <img src="static/images/supporters.svg" alt="supporters" width="300" height="230"> 
         <p>어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구</p>
