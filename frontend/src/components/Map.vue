@@ -74,7 +74,7 @@ export default {
       for (let i of document.getElementsByClassName('map-event')) {
         i.style.background = 'rgb(242,242,242)'
       }
-      event.target.parentNode.parentNode.style.background = 'rgb(149, 179, 215)'
+      event.target.parentNode.parentNode.parentNode.style.background = 'rgb(149, 179, 215)'
       console.log(this.clicked)
     }
   }
