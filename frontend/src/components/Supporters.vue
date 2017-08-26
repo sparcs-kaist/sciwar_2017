@@ -2,16 +2,17 @@
   <div class="supporters noto-sans">
     <div class="supporters-title">
       서포터즈가 되면...
+      <p>아래의 <서포터즈 활용 동의서>를 숙지하시고 신청해 주세요.</p>
     </div>
     <table class="supporters-todo">
       <tr>
         <th>하나,</th><td>카이스트 서포터즈로서 최선을 다해 활동에 참여해주시기 바랍니다.</td>
       </tr>
       <tr>
-        <th>둘,</th><td>6개의 경기(축구, 농구, 야구, LOL, AI, 과학퀴즈) 중 3가지 이상의 경기를 관람해주셔야합니다.</td>
+        <th>둘,</th><td>6개의 경기 (축구, 농구, 야구, LOL, AI, 과학퀴즈) 중 3가지 이상의 경기를 관람해주셔야 합니다.</td>
       </tr>
       <tr>
-        <th>셋,</th><td>서포터즈 티셔츠 및 각종 물품을 제공할 예정이니 9/21(목) 전야제에 꼭 참석하셔야합니다.</td>
+        <th>셋,</th><td>서포터즈 티셔츠 및 각종 물품을 제공할 예정이니 9/21(목) 전야제에 꼭 참석하셔야 합니다.</td>
       </tr>
       <tr>
         <th>넷,</th><td>9/20(수) 저녁에 엘카의 경기 응원 교육이 있습니다.</td>
@@ -143,6 +144,12 @@ export default {
   font-size: 64px;
   font-weight: 700;
   padding-bottom: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.supporters-title > p {
+  font-size: 28px;
+  font-weight: 500;
 }
 
 .supporters-todo {
@@ -154,6 +161,10 @@ export default {
   font-weight: 400;
   color: black;
   width: 120px;
+}
+
+.supporters-todo > tr > td {
+  padding-bottom: 10px;
 }
 
 .board{

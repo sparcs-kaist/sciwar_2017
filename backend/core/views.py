@@ -123,7 +123,6 @@ def messages(request):
         data = json.loads(request.body)
         cheerMessage = CheerMessage(content = data['content'], school = data['school'])
         cheerMessage.event_id = data['event']
-        print(cheerMessage.event)
         cheerMessage.save()
 
         return HttpResponse('')

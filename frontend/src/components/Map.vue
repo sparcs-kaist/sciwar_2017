@@ -142,7 +142,7 @@ input[type="radio"] {
 
 .event-detail-map {
   width: 628px;
-  margin-top: 0;
+  margin-top: 10px;
 }
 
 .event-map {
