@@ -49,7 +49,6 @@ export default {
             this.dates.push(date)
           }
         }
-        console.log(this.dates)
       })
     this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장']
   }

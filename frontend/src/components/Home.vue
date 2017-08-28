@@ -84,13 +84,10 @@ export default {
     this.$http.get('/api/events/')
       .then((response) => {
         this.events = JSON.parse(response.data)
-        console.log(this.events)
       })
     this.$http.get('/api/cheermessage/')
       .then((response) => {
         this.message = JSON.parse(response.data)[0]
-        console.log(this.message)
-        console.log(this.message.fields.school)
         this.messageContent = this.message.fields.content
         if (this.message.fields.school === 1) {
           this.messageTeam = 'KAIST'
@@ -116,7 +113,6 @@ export default {
   },
   mounted () {
     this.scrolled = window.scrollY
-    console.log(this.scrolled)
     document.getElementById('nav-bar').style.top = '623px'
     document.getElementById('sidebar-wrapper').style.top = '767px'
   },

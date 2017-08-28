@@ -71,7 +71,6 @@ export default {
     this.$http.get('/api/cheermessage/')
       .then((response) => {
         this.messages = JSON.parse(response.data)
-        console.log(this.messages.length)
         this.current_page = 1
         this.event_type = 0
         this.select_event(0)
@@ -84,7 +83,6 @@ export default {
         this.messages_rendered.pop()
       }
       this.current_page = n
-      console.log(this.current_page)
       if (this.messages_event.length > this.current_page * 10) {
         for (let i = this.current_page * 10 - 10; i < (this.current_page * 10); i++) {
           this.messages_rendered.push(this.messages_event[i])
@@ -95,7 +93,6 @@ export default {
         }
       }
       // this.messages_rendered = JSON.stringify(this.messages_rendered)
-      console.log(this.messages_rendered)
       this.set_range()
     },
     set_range: function () {
@@ -115,14 +112,12 @@ export default {
         this.page_range.push(start)
         start++
       }
-      console.log(this.page_range)
     },
     select_event: function () {
       var eventID = parseInt(document.getElementById('event-type').value)
       while (this.messages_event.length) {
         this.messages_event.pop()
       }
-      console.log(eventID)
       if (eventID === 0) {
         for (let i = 0; i < this.messages.length; i++) {
           this.messages_event.push(this.messages[i])
@@ -134,7 +129,6 @@ export default {
           }
         }
       }
-      console.log(this.messages_event)
       this.max_page = parseInt((this.messages_event.length - 1) / 10) + 1
       this.page_turn(1)
     }

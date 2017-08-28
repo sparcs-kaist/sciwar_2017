@@ -76,7 +76,6 @@ export default {
             this.cheermessages.push.apply(this.cheermessages, JSON.parse(response.data))
           })
       }
-      console.log(this.cheermessages)
     },
     mouseOver () {
       event.target.style.background = 'rgb(149,179,215)'

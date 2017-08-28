@@ -185,61 +185,44 @@ def supporters(request):
 
     if request.method == "PUT":
         data = json.loads(request.body)
-        print(data)
-        print(data['teamName'])
-        supporterReg = SupporterReg(nickname = data['teamName'], contact = data['contact'], password = data['password'])
-        supporterReg.save()
-        for sup in data['supporters']:
-            print(sup)
-            supporter = Supporter(name = sup['name'], student_id = sup['studentID'], department = sup['department'], size = sup['size'], registry = supporterReg)
-            supporter.save()
+        supporter = Supporter(name = data['name'], contact = data['contact'], password = data['password'], student_id = data['studentID'], department = data['department'], size = data['size'])
+        supporter.save()
 
         return HttpResponse('')
 
     if request.method == "POST":
         data = json.loads(request.body)
-        print(data)
-        SupporterReg.objects.get(id = data['pk']).supporters.all().delete()
-        supporterReg = SupporterReg(id = data['pk'], nickname = data['nickname'], contact = data['contact'], password = data['password'])
-        supporterReg.save()
-        for instance in data['supporters']:
-            supporter = Supporter(name = instance['name'], student_id = instance['studentID'], department = instance['department'], size = instance['size'], registry = supporterReg)
-            supporter.save()
+        supporter = Supporter.objects.get(id = data['pk'])
+        supporter.name = data['name']
+        supporter.contact = data['contact']
+        supporter.password = data['password']
+        supporter.student_id = data['studentID']
+        supporter.department = data['department']
+        supporter.size = data['size']
+        supporter.save()
 
         return HttpResponse('')
 
 
-def supporterReg(request):
-    if request.method == "GET":
-        supporters = SupporterReg.objects.all()
-        supporters = serializers.serialize('json', supporters)
-        
-        return JsonResponse(supporters, safe = False, json_dumps_params = {'ensure_ascii': False})
-
-
 @csrf_exempt
-def supportersView(request, reg_id):
+def supportersView(request, pk):
     if request.method == "GET":
-        data = serializers.serialize('json', [SupporterReg.objects.get(id = reg_id)], fields=('password'))
+        data = serializers.serialize('json', [Supporter.objects.get(id = pk)], fields=('password'))
         print(data)
 
         return JsonResponse(data, safe = False, json_dumps_params = {'ensure_ascii': False})
 
     if request.method == "DELETE":
-        reg = SupporterReg.objects.get(id = reg_id)
-        reg.supporters.all().delete()
-        reg.delete()
+        supporter = Supporter.objects.get(id = pk)
+        supporter.delete()
 
         return HttpResponse('')
 
 
-def SupportersViewComplete(request, reg_id):
+def SupportersViewComplete(request, pk):
     if request.method == "GET":
-        data = {
-            'reg': serializers.serialize('json', [SupporterReg.objects.get(id = reg_id)]),
-            'supporters': serializers.serialize('json', SupporterReg.objects.get(id = reg_id).supporters.all())
-        }
-        print(data)
+        data = Supporter.objects.get(id = pk)
+        data = serializers.serialize('json', [data])
 
     return JsonResponse(data, safe = False, json_dumps_params = {'ensure_ascii': False})
 

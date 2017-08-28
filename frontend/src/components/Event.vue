@@ -103,11 +103,9 @@ export default {
   methods: {
     fetchData () {
       let uri = '/api/events/' + this.$route.params.id + '/'
-      console.log(uri)
       this.$http.get(uri)
         .then((response) => {
           this.event = JSON.parse(response.data)[0]
-          console.log(this.event)
           let res = this.event.fields.start_time.split('T')
           this.day = res[0][6] + '월 ' + res[0].slice(8, 10) + '일'
           this.startTimeH = res[1].split('Z')[0].split(':')[0]
@@ -117,17 +115,14 @@ export default {
           this.$http.get('/api/events/' + this.$route.params.id + '/players-k/')
             .then((response) => {
               this.playersK = JSON.parse(response.data)
-              console.log('playersK', this.playersK)
             })
           this.$http.get('/api/events/' + this.$route.params.id + '/players-p/')
             .then((response) => {
               this.playersP = JSON.parse(response.data)
-              console.log('playersP', this.playersP)
             })
           this.$http.get('/api/events/' + this.$route.params.id + '/messages/')
             .then((response) => {
               this.messages = JSON.parse(response.data)
-              console.log(this.messages)
               document.getElementsByClassName('location-picture')[0].style.background = "url('/static/images/" + this.mapList[this.event.fields.location] + "')"
             })
         })

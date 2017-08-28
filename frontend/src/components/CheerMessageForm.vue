@@ -54,11 +54,7 @@ export default {
       let content = this.message
       let school = document.getElementById('school-selector').value
       let event = document.getElementById('event-selector').value
-      console.log(content)
-      console.log(school)
-      console.log(event)
       let data = { 'content': content, 'school': school, 'event': event }
-      console.log(data)
       data = JSON.stringify(data)
       this.$http.put('/api/cheermessage/', data)
         .then((response) => {

@@ -38,7 +38,6 @@ export default {
         this.events = JSON.parse(response.data)
         this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png']
         this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장']
-        console.log(this.events[0])
         this.mapChange(this.events[0])
         this.clicked = this.events[0].pk
       })
@@ -51,7 +50,6 @@ export default {
     mapChange (event) {
       document.getElementsByClassName('event-detail-map')[0].style.height = '280px'
       document.getElementsByClassName('event-detail-map')[0].style.background = "url('/static/images/" + this.mapList[event.fields.location] + "')"
-      console.log(event.fields.location)
       this.location = this.locations[event.fields.location]
       if (event.fields.location === 2) {
         document.getElementsByClassName('pin')[0].style.paddingLeft = '315px'
@@ -75,7 +73,6 @@ export default {
         i.style.background = 'rgb(242,242,242)'
       }
       event.target.parentNode.parentNode.parentNode.style.background = 'rgb(149, 179, 215)'
-      console.log(this.clicked)
     }
   }
 }
