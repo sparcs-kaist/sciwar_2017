@@ -3,7 +3,7 @@
     <div class="toto-title">
       토토이벤트
     </div>
-    <p class="toto-guide">점수 순대로 나열됩니다.</p>
+    <p class="toto-guide">각 경기의 승자와 점수를 맞춰 주세요! 한 번 작성한 토토는 수정할 수 없으니 신중히 찍어주세요. 아래 게시판에는 점수 순으로 배열되고, 경기가 끝날때마다 업데이트 됩니다. (상품은 추후 공지 예정)</p>
     <table class="board">
       <thead>
         <tr>
@@ -117,7 +117,7 @@ export default {
 }
 
 .toto-guide {
-  font-size: 30px;
+  font-size: 32px;
   margin-left: 24px;
 }
 

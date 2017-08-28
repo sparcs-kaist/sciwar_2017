@@ -3,7 +3,7 @@
     <div class="info noto-sans">
       <p class="info-head">응원의 메세지</p>
       <img src="/static/images/message.png"  class="info-img">
-      <p class="info-parag">어어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌어쩌구쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구</p>
+      <p class="info-parag">카포전을 재밌게 즐기고 계신가요? 수고하는 우리편 선수들과 가슴졸이며 지켜보고 있는 학우들에게 응원의 한 마디를 남겨주세요!</p>
     </div>
     <table class="board noto-sans">
       <thead>
