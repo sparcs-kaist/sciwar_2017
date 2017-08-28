@@ -32,9 +32,9 @@
     <div class="radio-container">
       <label>live streaming 여부</label><br>
       <input type="radio" id="live0" value="0" v-model="live">
-      <label for="live0" class="link">네</label>
+      <label v-on:click="radioClick(0)" for="live0" class="link radio-label">네</label>
       <input type="radio" id="live1" value="1" v-model="live">
-      <label for="live1" class="link">아니요</label>
+      <label v-on:click="radioClick(1)" for="live1" class="link radio-label">아니요</label>
     </div>
     <div class="button-container">
       <router-link :to="{ name: 'videos_check' }"><button v-on:click="submit()" class="link">제출</button></router-link>
@@ -102,6 +102,13 @@ export default {
         .then((response) => {
           console.log('successful')
         })
+    },
+    radioClick (num) {
+      let link = document.getElementsByClassName('radio-label')
+      for (let i of link) {
+        i.style.color = 'white'
+      }
+      link[num].style.color = 'black'
     }
   }
 }

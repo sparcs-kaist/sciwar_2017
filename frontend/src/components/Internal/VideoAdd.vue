@@ -8,9 +8,9 @@
     <div class="radio-container">
       <label>live streaming 여부</label><br>
       <input type="radio" id="live0" value="0" v-model="live">
-      <label for="live0" class="link">네</label>
+      <label v-on:click="radioClick(0)" for="live0" class="link">네</label>
       <input type="radio" id="live1" value="1" v-model="live">
-      <label for="live1" class="link">아니요</label>
+      <label v-on:click="radioClick(1)" for="live1" class="link">아니요</label>
     </div>
     <p>해당 이벤트</p>
     <div v-for="event in events">
@@ -49,6 +49,13 @@ export default {
             console.log('save successfully')
           })
       }
+    },
+    radioClick (num) {
+      let link = document.getElementsByClassName('link')
+      for (let i of link) {
+        i.style.color = 'white'
+      }
+      link[num].style.color = 'black'
     }
   }
 }
@@ -76,5 +83,15 @@ export default {
 
 .radio-container > input[type=radio] {
   display: none;
+}
+
+.link {
+  background-color: #555555;
+  text-align: center;
+  font-size: 22px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px 11px;
 }
 </style>
