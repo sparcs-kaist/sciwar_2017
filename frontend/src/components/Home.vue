@@ -181,7 +181,7 @@ html, body {
   font-size: 35px;
   margin: 0 10px;
   font-weight: 300;
-  word-break: keep-all;
+  word-break: break-all;
   text-align: center;
 }
 
