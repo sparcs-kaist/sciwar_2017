@@ -73,25 +73,6 @@ class CheerMessage(models.Model):
         return f'<{self.get_school_display()}>: {self.content}, {self.event.name_kor}'
 
 
-class SupporterReg(models.Model):
-    nickname = models.CharField(
-        max_length = 30,
-    )
-    contact = models.CharField(
-        max_length = 11,
-    )
-    password = models.CharField(
-        max_length = 64,
-        null = False,
-        default = '1234',
-    )
-    def __str__(self):
-        return f'{self.nickname}'
-
-    class Meta:
-        ordering = ['-id']
-
-
 class Supporter(models.Model):
     SIZE = (
         (0, 'XS'),
@@ -104,8 +85,18 @@ class Supporter(models.Model):
     name = models.CharField(
         max_length = 30,
     )
+    contact = models.CharField(
+        max_length = 11,
+        default = '0'
+    )
+    password = models.CharField(
+        max_length = 64,
+        null = False,
+        default = '1234',
+    )
     student_id = models.CharField(
         max_length = 8,
+        default = '0'
     )
     department = models.CharField(
         max_length = 50,
@@ -114,13 +105,11 @@ class Supporter(models.Model):
         default = 0,
         choices = SIZE,
     )
-    registry = models.ForeignKey(
-        'SupporterReg',
-        on_delete = models.CASCADE,
-        related_name = 'supporters',
-    )
     def __str__(self):
         return f'{self.name}'
+
+    class Meta:
+        ordering = ['-id']
 
 
 class TotoContent(models.Model):

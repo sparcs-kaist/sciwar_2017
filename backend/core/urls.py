@@ -23,12 +23,11 @@ urlpatterns = [
     url(r'^events/(?P<event_id>\d+)/players-p/$', views.event_players_p),
     url(r'^events/(?P<event_id>\d+)/messages/$', views.event_messages),
     url(r'^cheermessage/$', views.messages),
-    url(r'^supporter-reg/$', views.supporterReg),
     url(r'^toto/(?P<pk>\d+)/$', views.totoView),
     url(r'^toto/complete/(?P<pk>\d+)/$', views.totoViewComplete),
     url(r'^toto-content/$', views.totoContent),
-    url(r'^supporters/(?P<reg_id>\d+)/', views.supportersView),
-    url(r'^supporters/complete/(?P<reg_id>\d+)/', views.SupportersViewComplete),
+    url(r'^supporters/(?P<pk>\d+)/', views.supportersView),
+    url(r'^supporters/complete/(?P<pk>\d+)/', views.SupportersViewComplete),
 
     # PUT
     url(r'^toto/$', views.toto),

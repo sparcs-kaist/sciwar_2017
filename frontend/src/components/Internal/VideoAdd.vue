@@ -5,11 +5,13 @@
     <input class="input" name="title" type="text">
     <label>source</label>
     <input class="input" name="source" type="text" placeholder="ex) https://www.youtube.com/embed/jy_UiIQn_d0">
-    <label>live streaming 여부</label><br>
-    <input type="radio" value="0" v-model="live">
-    <label>네</label>
-    <input type="radio" value="1" v-model="live">
-    <label>아니요</label>
+    <div class="radio-container">
+      <label>live streaming 여부</label><br>
+      <input type="radio" id="live0" value="0" v-model="live">
+      <label v-on:click="radioClick(0)" for="live0" class="link">네</label>
+      <input type="radio" id="live1" value="1" v-model="live">
+      <label v-on:click="radioClick(1)" for="live1" class="link">아니요</label>
+    </div>
     <p>해당 이벤트</p>
     <div v-for="event in events">
       <input type="checkbox" :value="event.pk" v-model="checkedEvents">
@@ -47,6 +49,13 @@ export default {
             console.log('save successfully')
           })
       }
+    },
+    radioClick (num) {
+      let link = document.getElementsByClassName('link')
+      for (let i of link) {
+        i.style.color = 'white'
+      }
+      link[num].style.color = 'black'
     }
   }
 }
@@ -61,5 +70,28 @@ export default {
 
 .input {
   margin-bottom: 10px;
+}
+
+.radio-container {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.radio-container > .link {
+  cursor: pointer;
+}
+
+.radio-container > input[type=radio] {
+  display: none;
+}
+
+.link {
+  background-color: #555555;
+  text-align: center;
+  font-size: 22px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px 11px;
 }
 </style>

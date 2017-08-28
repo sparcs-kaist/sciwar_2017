@@ -128,7 +128,6 @@ export default {
       this.$http.get('/api/toto/complete/' + this.$route.params.id + '/')
         .then((response) => {
           let data = JSON.parse(response.data)
-          console.log(data)
           let schools = ['None', 'KAIST', 'POSTECH']
           this.studentId = data.studentId
           this.name = data.name

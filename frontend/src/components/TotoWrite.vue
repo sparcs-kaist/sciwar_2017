@@ -147,9 +147,7 @@ export default {
       let shasum = crypto.createHash('sha256')
       shasum.update(this.password)
       let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'winnerAI': this.winnerAI, 'winnerHacking': this.winnerHacking }
-      console.log(data)
       data = JSON.stringify(data)
-      console.log(data)
       let url = '/api/toto/'
       this.$http.put(url, data)
         .then((response) => {

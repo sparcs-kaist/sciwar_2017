@@ -18,8 +18,8 @@
       <thead>
         <tr>
           <th class="fc">번호</th>
-          <th class="sc">팀이름</th>
-          <th class="tc">인원 수</th>
+          <th class="sc">이름</th>
+          <th class="tc">사이즈</th>
         </tr>
       </thead>
       <tbody>
@@ -31,12 +31,12 @@
           </td>
           <td class="sc">
             <router-link :to="{ name: 'internal_supporters_view', params: { id:supporter.pk } }">
-              <div>{{ supporter.fields.nickname }}</div>
+              <div>{{ supporter.fields.name }}</div>
             </router-link>
           </td>
           <td class="tc">
             <router-link :to="{ name: 'internal_supporters_view', params: { id:supporter.pk } }">
-              <div>{{ supporter.num }}</div>
+              <div>{{ size[supporter.fields.size] }}</div>
             </router-link>
           </td>
         </tr>
@@ -72,47 +72,32 @@ export default {
       numM: 0,
       numL: 0,
       numXL: 0,
-      numXXL: 0
+      numXXL: 0,
+      size: ['XS', 'S', 'M', 'L', 'XL', 'XXL']
     }
   },
   created () {
-    this.$http.get('/api/supporter-reg/')
+    this.$http.get('/api/supporters/')
       .then((response) => {
-        this.supporterRegs = JSON.parse(response.data)
-        this.max_page = parseInt((this.supporterRegs.length - 1) / 10) + 1
-        this.supportersNum = new Array(this.supporterRegs[0].pk + 1).fill(0)
-        console.log(this.supporterRegs.length)
-        this.$http.get('/api/supporters/')
-          .then((response) => {
-            this.supporters = JSON.parse(response.data)
-            this.numSupporters = this.supporters.length
-            for (let i in this.supporters) {
-              this.supportersNum[this.supporters[i].fields.registry]++
-              if (this.supporters[i].fields.size === 0) {
-                this.numXS++
-              } else if (this.supporters[i].fields.size === 1) {
-                this.numS++
-              } else if (this.supporters[i].fields.size === 2) {
-                this.numM++
-              } else if (this.supporters[i].fields.size === 3) {
-                this.numL++
-              } else if (this.supporters[i].fields.size === 4) {
-                this.numXL++
-              } else if (this.supporters[i].fields.size === 5) {
-                this.numXXL++
-              }
-            }
-            let j = 0
-            this.supportersNum.reverse()
-            for (let i in this.supportersNum) {
-              if (this.supportersNum[i] > 0) {
-                this.supporterRegs[j]['num'] = this.supportersNum[i]
-                j++
-              }
-            }
-            console.log(this.supporterRegs)
-            this.page_turn(1)
-          })
+        this.supporters = JSON.parse(response.data)
+        this.max_page = parseInt((this.supporters.length - 1) / 10) + 1
+        this.numSupporters = this.supporters.length
+        for (let i in this.supporters) {
+          if (this.supporters[i].fields.size === 0) {
+            this.numXS++
+          } else if (this.supporters[i].fields.size === 1) {
+            this.numS++
+          } else if (this.supporters[i].fields.size === 2) {
+            this.numM++
+          } else if (this.supporters[i].fields.size === 3) {
+            this.numL++
+          } else if (this.supporters[i].fields.size === 4) {
+            this.numXL++
+          } else if (this.supporters[i].fields.size === 5) {
+            this.numXXL++
+          }
+        }
+        this.page_turn(1)
       })
   },
   methods: {
@@ -121,18 +106,16 @@ export default {
         this.supportersRendered.pop()
       }
       this.current_page = n
-      console.log(this.current_page)
-      if (this.supporterRegs.length > this.current_page * 10) {
+      if (this.supporters.length > this.current_page * 10) {
         for (let i = this.current_page * 10 - 10; i < (this.current_page * 10); i++) {
-          this.supportersRendered.push(this.supporterRegs[i])
+          this.supportersRendered.push(this.supporters[i])
         }
       } else {
-        for (let i = this.current_page * 10 - 10; i < this.supporterRegs.length; i++) {
-          this.supportersRendered.push(this.supporterRegs[i])
+        for (let i = this.current_page * 10 - 10; i < this.supporters.length; i++) {
+          this.supportersRendered.push(this.supporters[i])
         }
       }
       // this.messages_rendered = JSON.stringify(this.messages_rendered)
-      console.log(this.supporterRegs)
       this.set_range()
     },
     set_range: function () {
@@ -152,7 +135,6 @@ export default {
         this.page_range.push(start)
         start++
       }
-      console.log(this.page_range)
     }
   }
 }

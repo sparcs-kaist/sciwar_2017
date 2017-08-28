@@ -171,7 +171,6 @@ export default {
     }
     document.getElementById('kaist-score').innerHTML = this.kaistScore
     document.getElementById('postech-score').innerHTML = this.postechScore
-    console.log(1)
   },
   methods: {
     submenu (event) {
@@ -199,7 +198,6 @@ export default {
         this.mm = '0' + this.mm
       }
       this.today = this.yyyy + '-' + this.mm + '-' + this.dd
-      console.log(this.today)
       for (let i in this.events) {
         if (this.events[i].fields.winner === 1 && this.events[i].fields.live === 2) {
           this.kaistScore += 1
@@ -210,7 +208,6 @@ export default {
           this.eventsRendered.push(this.events[i])
         }
       }
-      console.log(this.eventsRendered)
       this.$http.get('/api/videos/')
         .then((response) => {
           this.videos = JSON.parse(response.data)
@@ -230,7 +227,6 @@ export default {
               }
             }
           }
-          console.log(this.videosRendered)
         })
     },
     moveLeft () {

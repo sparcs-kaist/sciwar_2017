@@ -4,22 +4,24 @@
     <div class="supporter-reg">
       <table class="team-info">
         <tr>
-          <th>팀 이름</th>
-          <td>{{ supporterReg.fields.nickname }}</td>
+          <th>이름</th>
+          <td>{{ supporter.fields.name }}</td>
         </tr>
         <tr>
-          <th>대표자 연락처</th>
-          <td>{{ supporterReg.fields.contact }}</td>
+          <th>학번</th>
+          <td>{{ supporter.fields.student_id }}</td>
         </tr>
         <tr>
-          <th>멤버</th>
-          <td class="supporter-list">
-            <ul v-for="supporter in supporters" class="supporter-info">{{ supporter.fields.name }}
-              <li class="student-id">{{ supporter.fields.student_id }}</li>
-              <li>{{ supporter.fields.department }}</li>
-              <li>사이즈 {{ supporter.fields.size }}</li>
-            </ul>
-          </td>
+          <th>학과</th>
+          <td>{{ supporter.fields.department }}</td>
+        </tr>
+        <tr>
+          <th>연락처</th>
+          <td>{{ supporter.fields.contact }}</td>
+        </tr>
+        <tr>
+          <th>사이즈</th>
+          <td>{{ size[supporter.fields.size] }}</td>
         </tr>
       </table>
       <div class="link-container">
@@ -39,16 +41,15 @@ export default {
     return {
       theRightPassword: '',
       certified: false,
-      supporterReg: {},
-      supporters: []
+      supporter: [],
+      size: ['XS', 'S', 'M', 'L', 'XL', 'XXL']
     }
   },
   created () {
     let uri = '/api/supporters/complete/' + this.$route.params.id + '/'
     this.$http.get(uri)
       .then((response) => {
-        this.supporterReg = JSON.parse(response.data['reg'])[0]
-        this.supporters = JSON.parse(response.data['supporters'])
+        this.supporter = JSON.parse(response.data)[0]
       })
   },
   methods: {

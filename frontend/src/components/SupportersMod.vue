@@ -95,8 +95,6 @@ export default {
       .then((response) => {
         this.reg = JSON.parse(response.data['reg'])[0]
         this.supporters = JSON.parse(response.data['supporters'])
-        console.log(this.reg)
-        console.log(this.supporters)
       })
   },
   methods: {
@@ -114,12 +112,10 @@ export default {
       let nickname = document.getElementsByName('team-name')[0].value
       let contact = document.getElementsByName('contact')[0].value
       let password = document.getElementsByName('password')[0].value
-      console.log(password)
       let nameList = document.getElementsByName('name')
       let studentIDList = document.getElementsByName('studentID')
       let departmentList = document.getElementsByName('department')
       let sizeList = document.getElementsByClassName('T-shirt')
-      console.log(sizeList)
       let supporterList = []
       for (let i = 0; i < nameList.length; i++) {
         let name = nameList[i].value
@@ -129,7 +125,6 @@ export default {
         let supporter = { 'name': name, 'studentID': studentID, 'department': department, 'size': size }
         supporterList.push(supporter)
       }
-      console.log(supporterList)
       let crypto = require('crypto')
       let shasum = crypto.createHash('sha256')
       shasum.update(password)

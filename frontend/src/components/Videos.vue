@@ -55,7 +55,6 @@ export default {
             this.videoLive.push(i)
           }
         }
-        console.log(this.videoLive)
       })
     this.$http.get('/api/events/')
       .then((response) => {
@@ -67,7 +66,6 @@ export default {
   },
   methods: {
     filterChange (event) {
-      console.log(event)
       if (event === 1) {
         this.videosRendered = JSON.parse(JSON.stringify(this.videos))
       } else {
@@ -86,11 +84,9 @@ export default {
       event.target.parentNode.parentNode.style.background = 'rgb(149,179,215)'
     },
     abbreviate (name) {
-      console.log(name)
       if (name.length > 18) {
         name = name.slice(0, 16)
         name = name + '...'
-        console.log(name)
       }
       return name
     }

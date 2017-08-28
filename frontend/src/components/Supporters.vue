@@ -22,8 +22,7 @@
       <thead>
         <tr>
           <th class="fc">번호</th>
-          <th class="sc">팀이름</th>
-          <th class="tc">인원 수</th>
+          <th class="sc">이름</th>
         </tr>
       </thead>
       <tbody>
@@ -35,12 +34,7 @@
           </td>
           <td class="sc">
             <router-link :to="{ name: 'supporters_view', params: { id:supporter.pk } }">
-              <div>{{ supporter.fields.nickname }}</div>
-            </router-link>
-          </td>
-          <td class="tc">
-            <router-link :to="{ name: 'supporters_view', params: { id:supporter.pk } }">
-              <div>{{ supporter.num }}</div>
+              <div>{{ supporter.fields.name }}</div>
             </router-link>
           </td>
         </tr>
@@ -73,27 +67,11 @@ export default {
     }
   },
   created () {
-    this.$http.get('/api/supporter-reg/')
+    this.$http.get('/api/supporters/')
       .then((response) => {
-        this.supporterRegs = JSON.parse(response.data)
-        this.max_page = parseInt((this.supporterRegs.length - 1) / 10) + 1
-        this.supportersNum = new Array(this.supporterRegs[0].pk + 1).fill(0)
-        this.$http.get('/api/supporters/')
-          .then((response) => {
-            this.supporters = JSON.parse(response.data)
-            for (let i in this.supporters) {
-              this.supportersNum[this.supporters[i].fields.registry]++
-            }
-            this.supportersNum.reverse()
-            let j = 0
-            for (let i in this.supportersNum) {
-              if (this.supportersNum[i] > 0) {
-                this.supporterRegs[j]['num'] = this.supportersNum[i]
-                j++
-              }
-            }
-            this.page_turn(1)
-          })
+        this.supporters = JSON.parse(response.data)
+        this.max_page = parseInt((this.supporters.length - 1) / 10) + 1
+        this.page_turn(1)
       })
   },
   methods: {
@@ -102,18 +80,16 @@ export default {
         this.supportersRendered.pop()
       }
       this.current_page = n
-      console.log(this.current_page)
-      if (this.supporterRegs.length > this.current_page * 10) {
+      if (this.supporters.length > this.current_page * 10) {
         for (let i = this.current_page * 10 - 10; i < (this.current_page * 10); i++) {
-          this.supportersRendered.push(this.supporterRegs[i])
+          this.supportersRendered.push(this.supporters[i])
         }
       } else {
-        for (let i = this.current_page * 10 - 10; i < this.supporterRegs.length; i++) {
-          this.supportersRendered.push(this.supporterRegs[i])
+        for (let i = this.current_page * 10 - 10; i < this.supporters.length; i++) {
+          this.supportersRendered.push(this.supporters[i])
         }
       }
       // this.messages_rendered = JSON.stringify(this.messages_rendered)
-      console.log(this.supporterRegs)
       this.set_range()
     },
     set_range: function () {
@@ -133,7 +109,6 @@ export default {
         this.page_range.push(start)
         start++
       }
-      console.log(this.page_range)
     }
   }
 }
@@ -182,11 +157,6 @@ export default {
   padding-left: 15px;
  }
  
-.board .tc {
-  width: 120px;
-  padding-right: 15px;
-}
-
 .board > thead {
   font-size: 28px;
   padding-bottom: 10px;
