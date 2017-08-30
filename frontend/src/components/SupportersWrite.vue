@@ -26,8 +26,8 @@
     <div class="supporter-size">
       <label>티셔츠 사이즈</label>
       <select class="T-shirt">
-        <option>XS</option>
-        <option>S</option>
+        <option style="display:none;">XS</option>
+        <option selected>S</option>
         <option>M</option>
         <option>L</option>
         <option>XL</option>
