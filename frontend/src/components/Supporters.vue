@@ -29,7 +29,7 @@
         <tr v-for="supporter in supportersRendered">
           <td class="fc">
             <router-link :to="{ name: 'supporters_view', params: { id:supporter.pk } }">
-              <div>{{ supporter.pk }}</div>
+              <div>{{ supporter.num }}</div>
             </router-link>
           </td>
           <td class="sc">
@@ -71,6 +71,11 @@ export default {
       .then((response) => {
         this.supporters = JSON.parse(response.data)
         this.max_page = parseInt((this.supporters.length - 1) / 10) + 1
+        let page = 1
+        for (let i = this.supporters.length; i--;) {
+          this.supporters[i].num = page
+          page++
+        }
         this.page_turn(1)
       })
   },
