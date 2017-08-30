@@ -1,5 +1,6 @@
 <template>
   <div id="event" class="noto-sans">
+    <router-link :to="{ 'name': 'introduction' }" id="to-intro"></router-link>
     <div id="event-name">
       {{ event.fields.name_kor }} {{ event.fields.name_eng }}
     </div> 
@@ -102,6 +103,9 @@ export default {
   },
   methods: {
     fetchData () {
+      if (!((this.$route.params.id < 9 && this.$route.params.id > 2) || (this.$route.params.id === 11))) {
+        document.getElementById('to-intro').click()
+      }
       let uri = '/api/events/' + this.$route.params.id + '/'
       this.$http.get(uri)
         .then((response) => {
