@@ -6,12 +6,22 @@
       <div v-for="event in events" class="events-schedule">
         <div v-if="event.fields.location < 5">
           <div v-if="event.fields.start_time.split('T')[0] == date" class="event-schedule">
-            <router-link :to="{ name: 'event', params: { id: event.pk } }">
-              <div class="event-name">
-                {{ event.fields.name_kor }} {{ event.fields.name_eng }}
-                <i class="fa fa-chevron-right"></i>
-              </div>
-            </router-link>
+            <div v-if="event.fields.type===0">
+              <router-link :to="{ name: 'event', params: { id: event.pk } }">
+                <div class="event-name">
+                  {{ event.fields.name_kor }} {{ event.fields.name_eng }}
+                  <i class="fa fa-chevron-right"></i>
+                </div>
+              </router-link>
+            </div>
+            <div v-else>
+              <router-link :to="{ name: 'introduction' }">
+                <div class="event-name">
+                  {{ event.fields.name_kor }} {{ event.fields.name_eng }}
+                  <i class="fa fa-chevron-right"></i>
+                </div>
+              </router-link>
+            </div>
             <div class="time-location">
               <div class="event-time">
                 <i class="fa fa-clock-o" aria-hidden="true"></i>
