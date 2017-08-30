@@ -273,13 +273,13 @@ def toto(request):
     if request.method == "PUT":
         data = json.loads(request.body)
         print(data)
-        soccer = Event.objects.get(name_kor = '축구')
-        baseball = Event.objects.get(name_kor = '야구')
-        basketball = Event.objects.get(name_kor = '농구')
-        LOL = Event.objects.get(name_kor = '롤')
-        quiz = Event.objects.get(name_kor = '과학퀴즈')
-        AI = Event.objects.get(name_kor = '인공지능')
-        hacking = Event.objects.get(name_kor = '해킹')
+        soccer = Event.objects.get(name_eng = 'Soccer')
+        baseball = Event.objects.get(name_eng = 'Baseball')
+        basketball = Event.objects.get(name_eng = 'Basketball')
+        LOL = Event.objects.get(name_eng = 'LOL')
+        quiz = Event.objects.get(name_eng = 'Quiz')
+        AI = Event.objects.get(name_eng = 'AI')
+        hacking = Event.objects.get(name_eng = 'Hacking')
         school = {'KAIST': 1, 'POSTECH': 2}
 
         totoContent = TotoContent(student_id = data['studentID'], name = data['name'], password = data['password'], total = 0)
