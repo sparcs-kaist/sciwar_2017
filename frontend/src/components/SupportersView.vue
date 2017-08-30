@@ -32,7 +32,6 @@
       </table>
       <div class="link-container">
         <router-link :to="{ name: 'supporters' }" class="link link1">목록으로</router-link>
-        <a v-on:click="showMod()" class="link link2">수정하기</a>
       </div>
     </div>
     <div v-else-if="edit" class="supporter-mod">
