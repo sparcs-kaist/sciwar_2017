@@ -1,6 +1,8 @@
 <template>
   <div class="map noto-sans">
-    <div class="map-title">지도</div>
+    <div class="map-title">지도
+      <a href="https://somemap.kr/map/1019" class="some-map">카이스트 안전지도 썸맵 들어가기<img src="/static/images/map.png" width="50"></a>
+    </div>
     <p>카이스트 전체지도</p>
     <div class="event-map">
       <i class="fa fa-map-pin pin" aria-hidden="true"></i>
@@ -83,6 +85,21 @@ export default {
   font-size: 64px;
   font-weight: 700;
   padding-bottom: 10px;
+  margin-bottom: 30px;
+  display: inline;
+}
+
+.some-map {
+  color: black;
+  font-size: 24px;
+  font-weight: 300;
+  float: right;
+  width: 400px;
+  margin-top: 30px;
+}
+
+.some-map > img {
+  vertical-align: text-bottom !important;
 }
 
 .map > p {
