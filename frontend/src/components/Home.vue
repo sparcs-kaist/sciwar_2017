@@ -3,7 +3,7 @@
     <div class="image">
       <p class="noto-sans big">2017 SCIENCE WAR</p>
       <p class="kopub">카이스트포스텍학생대제전</p>
-      <p class="noto-sans small">OCT. 15 - 17<sup class="th"> th</sup> KAIST</p>
+      <p class="noto-sans small">SEP. 22 - 23<sup class="th"> rd</sup> KAIST</p>
     </div>
     <div class="current-cheer-message noto-sans">
       <div>
