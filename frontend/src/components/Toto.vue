@@ -16,7 +16,7 @@
         <tr v-for="toto in totoRendered">
           <td class="fc">
             <router-link :to="{ name: 'toto_view', params: { id: toto.pk } }">
-              <div>{{ toto.pk }}</div>
+              <div>{{ toto.num }}</div>
             </router-link>
           </td>
           <td class="sc">
@@ -66,7 +66,11 @@ export default {
           toto.fields.name = toto.fields.name.substr(0, 1) + '*' + toto.fields.name.substr(2)
         }
         this.max_page = parseInt((this.totoContents.length - 1) / 10) + 1
-        this.totoNum = new Array(this.totoContents.length).fill(0)
+        let page = 1
+        for (let i = this.totoContents.length; i--;) {
+          this.totoContents[i].num = page
+          page++
+        }
         this.page_turn(1)
       })
   },
