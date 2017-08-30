@@ -15,7 +15,7 @@
         <tr v-for="toto in totoRendered">
           <td class="fc">
             <router-link :to="{ name: 'internal_toto_view', params: { id: toto.pk } }">
-              <div>{{ toto.pk }}</div>
+              <div>{{ toto.num }}</div>
             </router-link>
           </td>
           <td class="sc">
@@ -58,6 +58,11 @@ export default {
       .then((response) => {
         this.totoContents = JSON.parse(response.data)
         this.max_page = parseInt((this.totoContents.length - 1) / 10) + 1
+        let page = 1
+        for (let i = this.totoContents.length; i--;) {
+          this.totoContents[i].num = page
+          page++
+        }
         this.totoNum = new Array(this.totoContents.length).fill(0)
         this.page_turn(1)
       })
