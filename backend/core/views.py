@@ -290,7 +290,7 @@ def toto(request):
         quiz = Event.objects.get(name_eng = 'Quiz')
         AI = Event.objects.get(name_eng = 'AI')
         hacking = Event.objects.get(name_eng = 'Hacking')
-        school = {'KAIST': 1, 'POSTECH': 2}
+        school = {'None': 0, 'KAIST': 1, 'POSTECH': 2}
 
         totoContent = TotoContent(student_id = data['studentID'], name = data['name'], password = data['password'], total = 0)
         totoContent.save()
