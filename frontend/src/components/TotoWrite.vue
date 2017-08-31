@@ -166,12 +166,15 @@ export default {
         this.name !== '' &&
         this.password !== '') {
         document.getElementsByClassName('form-button')[0].disabled = false
-        alert('모든 칸을 바르게 채워 주세요')
       } else {
         document.getElementsByClassName('form-button')[0].disabled = true
       }
     },
     submit () {
+      if (document.getElementsByClassName('form-button')[0].disabled === true) {
+        alert('모든 칸을 바르게 채워주세요.')
+        return
+      }
       let crypto = require('crypto')
       let shasum = crypto.createHash('sha256')
       shasum.update(this.password)
@@ -252,7 +255,7 @@ export default {
 }
 
 .form-button:disabled {
-  background-color:#D2D2D2;
+  background-color: #555555;
   border:#DDDDDD;
   cursor:auto;
 }
