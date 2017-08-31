@@ -36,6 +36,18 @@
 						<td><input v-model="scoreBasketballP" name="score3_2" placeholder="ex)51" v-on:keyup="getWinnerBasketball()"></td>
 						<td class="winner"><span name="winnerBasketball">{{ winnerBasketball }}</span></td>
 					</tr>
+          <tr>
+            <td>LOL</td>
+            <td><input v-model="scoreLolK" name="score4_1" placeholder="ex)2" v-on:keyup="getWinnerLol()"></td>
+            <td><input v-model="scoreLolP" name="score4_2" placeholder="ex)1" v-on:keyup="getWinnerLol()"></td>
+            <td class="winner"><span name="winnerLol">{{ winnerLol }}</span></td>
+          </tr>
+          <tr>
+            <td>AI</td>
+            <td><input v-model="scoreAiK" name="score5_1" placeholder="ex)2" v-on:keyup="getWinnerAi()"></td>
+            <td><input v-model="scoreAiP" name="score5_2" placeholder="ex)0" v-on:keyup="getWinnerAi()"></td>
+            <td class="winner"><span name="winnerAi">{{ winnerAi }}</span></td>
+          </tr>
 				</tbody>
 			</table>
 			<h2 class="table-title">과학경기 승패 맞추기</h2>
@@ -49,19 +61,9 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>LOL</td>
-						<td><input v-model="winnerLol" type="radio" class="radio-button" value="KAIST"></td>
-						<td><input v-model="winnerLol" type="radio" class="radio-button" value="POSTECH"></td>
-					</tr>
-					<tr>
 						<td>Science Quiz</td>
 						<td><input v-model="winnerQuiz" type="radio" class="radio-button" value="KAIST"></td>
 						<td><input v-model="winnerQuiz" type="radio" class="radio-button" value="POSTECH"></td>
-					</tr>
-					<tr>
-						<td>AI</td>
-						<td><input v-model="winnerAI" type="radio" class="radio-button" value="KAIST"></td>
-						<td><input v-model="winnerAI" type="radio" class="radio-button" value="POSTECH"></td>
 					</tr>
 					<tr>
 						<td>Hacking Contest</td>
@@ -90,6 +92,10 @@ export default {
       scoreBaseballP: '',
       scoreBasketballK: '',
       scoreBasketballP: '',
+      scoreLolK: '',
+      scoreLolP: '',
+      scoreAiK: '',
+      scoreAiP: '',
       winnerSoccer: 'None',
       winnerBaseball: 'None',
       winnerBasketball: 'None',
@@ -130,14 +136,37 @@ export default {
       }
       this.showFormButton()
     },
+    getWinnerLol () {
+      if (parseInt(this.scoreLolK) > parseInt(this.scoreLolP)) {
+        this.winnerLol = 'KAIST'
+      } else if (parseInt(this.scoreLolK) < parseInt(this.scoreLolP)) {
+        this.winnerLol = 'POSTECH'
+      } else {
+        this.winnerLol = 'None'
+      }
+      this.showFormButton()
+    },
+    getWinnerAi () {
+      if (parseInt(this.scoreAiK) > parseInt(this.scoreAiP)) {
+        this.winnerAi = 'KAIST'
+      } else if (parseInt(this.scoreAiK) < parseInt(this.scoreAiP)) {
+        this.winnerAi = 'POSTECH'
+      } else {
+        this.winnerAi = 'None'
+      }
+      this.showFormButton()
+    },
     showFormButton () {
       if (this.winnerSoccer !== 'None' &&
         this.winnerBaseball !== 'None' &&
         this.winnerBasketball !== 'None' &&
+        this.winnerLol !== 'None' &&
+        this.winnerAi !== 'None' &&
         this.studentId.length === 8 &&
         this.name !== '' &&
         this.password !== '') {
         document.getElementsByClassName('form-button')[0].disabled = false
+        alert('모든 칸을 바르게 채워 주세요')
       } else {
         document.getElementsByClassName('form-button')[0].disabled = true
       }
@@ -146,7 +175,7 @@ export default {
       let crypto = require('crypto')
       let shasum = crypto.createHash('sha256')
       shasum.update(this.password)
-      let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'winnerAI': this.winnerAI, 'winnerHacking': this.winnerHacking }
+      let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'scoreLolK': this.scoreLolK, 'scoreLolP': this.scoreLolP, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'scoreAiK': this.scoreAiK, 'scoreAiP': this.scoreAiP, 'winnerAI': this.winnerAI, 'winnerHacking': this.winnerHacking }
       data = JSON.stringify(data)
       let url = '/api/toto/'
       this.$http.put(url, data)
