@@ -171,10 +171,6 @@ export default {
       }
     },
     submit () {
-      if (document.getElementsByClassName('form-button')[0].disabled === true) {
-        alert('모든 칸을 바르게 채워주세요.')
-        return
-      }
       let crypto = require('crypto')
       let shasum = crypto.createHash('sha256')
       shasum.update(this.password)
@@ -255,9 +251,13 @@ export default {
 }
 
 .form-button:disabled {
-  background-color: #555555;
+  background-color: #555555 !important;
   border:#DDDDDD;
   cursor:auto;
+}
+
+.form-button {
+  background-color: black !important;
 }
 
 h2 {
