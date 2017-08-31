@@ -99,9 +99,9 @@ export default {
       winnerSoccer: 'None',
       winnerBaseball: 'None',
       winnerBasketball: 'None',
-      winnerLol: 'KAIST',
+      winnerLol: 'None',
       winnerQuiz: 'KAIST',
-      winnerAI: 'KAIST',
+      winnerAi: 'None',
       winnerHacking: 'KAIST'
     }
   },
@@ -175,7 +175,7 @@ export default {
       let crypto = require('crypto')
       let shasum = crypto.createHash('sha256')
       shasum.update(this.password)
-      let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'scoreLolK': this.scoreLolK, 'scoreLolP': this.scoreLolP, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'scoreAiK': this.scoreAiK, 'scoreAiP': this.scoreAiP, 'winnerAI': this.winnerAI, 'winnerHacking': this.winnerHacking }
+      let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'scoreLolK': this.scoreLolK, 'scoreLolP': this.scoreLolP, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'scoreAiK': this.scoreAiK, 'scoreAiP': this.scoreAiP, 'winnerAI': this.winnerAi, 'winnerHacking': this.winnerHacking }
       data = JSON.stringify(data)
       let url = '/api/toto/'
       this.$http.put(url, data)
