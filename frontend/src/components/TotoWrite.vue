@@ -157,11 +157,16 @@ export default {
       this.showFormButton()
     },
     showFormButton () {
-      if (this.winnerSoccer !== 'None' &&
-        this.winnerBaseball !== 'None' &&
-        this.winnerBasketball !== 'None' &&
-        this.winnerLol !== 'None' &&
-        this.winnerAi !== 'None' &&
+      if (this.scoreSoccerK !== '' &&
+        this.scoreSoccerP !== '' &&
+        this.scoreBaseballK !== '' &&
+        this.scoreBaseballP !== '' &&
+        this.scoreBasketballK !== '' &&
+        this.scoreBasketballP !== '' &&
+        this.ScoreLolK !== '' &&
+        this.ScoreLolP !== '' &&
+        this.scoreAiK !== '' &&
+        this.scoreAiP !== '' &&
         this.studentId.length === 8 &&
         this.name !== '' &&
         this.password !== '') {

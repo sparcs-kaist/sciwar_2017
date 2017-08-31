@@ -94,12 +94,16 @@ export default {
       scoreBaseballP: '',
       scoreBasketballK: '',
       scoreBasketballP: '',
+      scoreLolK: '',
+      scoreLolP: '',
+      scoreAiK: '',
+      scoreAiP: '',
       winnerSoccer: 'None',
       winnerBaseball: 'None',
       winnerBasketball: 'None',
       winnerLol: 'None',
       winnerQuiz: 'KAIST',
-      winnerAI: 'KAIST',
+      winnerAI: 'None',
       winnerHacking: 'KAIST'
     }
   },
@@ -137,6 +141,10 @@ export default {
           this.scoreBaseballP = data.scoreBaseballP
           this.scoreBasketballK = data.scoreBasketballK
           this.scoreBasketballP = data.scoreBasketballP
+          this.scoreLolK = data.scoreLolK
+          this.scoreLolP = data.scoreLolP
+          this.scoreAiK = data.scoreAiK
+          this.scoreAiP = data.scoreAiP
           this.winnerSoccer = schools[data.winnerSoccer]
           this.winnerBaseball = schools[data.winnerBaseball]
           this.winnerBasketball = schools[data.winnerBasketball]
