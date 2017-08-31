@@ -5,6 +5,17 @@
     </div>
     <p class="toto-guide">각 경기의 승자와 점수를 맞춰 주세요! 한 번 작성한 토토는 수정할 수 없으니 신중히 찍어주세요. 각 경기의 승자를 맞출 때마다 1점이 추가되고, 정확한 점수를 맞추면 가점이 추가됩니다. 가점은 야구와 농구 경기가 더 높습니다. 경기가 모두 끝나고 나면, 상위 랭커부터 상품을 선택하여 수령하실 수 있어요! </p>
     <div class="prize">
+      <p>상품 목록</p>
+      <div>
+        <div class="refrigerator"><img src="/static/images/prize/Refrigerator.jpg" width="200"><p>냉장고 1대</p></div>
+        <div class="bicycle"><img src="/static/images/prize/Bicycle.jpg" width="200"><p>자전거 1대</p></div>
+        <div class="pillow"><img src="/static/images/prize/Pilloy.jpg" width="200"><p>라텍스 베개 1개</p></div>
+        <div class="vesta"><img src="/static/images/prize/Vesta.jpg" width="200"><p>베스타 평일 저녁권 2개</p></div>
+        <div class="mystery"><img src="/static/images/prize/Box.jpg" width="200"><p>골라골라 5만원 - 5만원 상당 상품 선택권</p></div>
+        <div class="coffee-five"><img src="/static/images/prize/CoffeeFive.jpg" width="200"><p>투썸 아메리카노 쿠폰 5장</p></div>
+        <div class="coffee-three"><img src="/static/images/prize/CoffeeThree.jpg" width="200"><p>투썸 아메리카노 쿠폰 3장</p></div>
+        <div class="dunkin"><img src="/static/images/prize/Dunkin.jpg" width="200"><p>던킨 5천원 쿠폰 4장 2장</p></div>
+      </div>
     </div>
     <table class="board">
       <thead>
@@ -127,6 +138,42 @@ export default {
   margin-left: 24px;
 }
 
+.prize {
+  margin-top: 30px;
+}
+
+.prize > p {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: -40px;
+}
+
+.prize > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.prize > div > div {
+  width: 220px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.prize > div > div > p {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.prize > div > div > img {
+  filter: grayscale(0%);
+}
+
 .board{
   margin-top: 50px;
   margin-left: 10px;
@@ -194,4 +241,3 @@ export default {
   cursor: pointer;
 }
 </style>
-
