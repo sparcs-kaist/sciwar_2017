@@ -301,13 +301,13 @@ def toto(request):
         basketballToto = BasketballToto(event = basketball, bet = totoContent, score_k = data['scoreBasketballK'], score_p = data['scoreBasketballP'], winner = school[data['winnerBasketball']])
         basketballToto.save()
 
-        LOLToto = EsportsToto(event = LOL, bet = totoContent, winner = school[data['winnerLol']])
+        LOLToto = EsportsToto(event = LOL, bet = totoContent, score_k = data['scoreLolK'], score_p = data['scoreLolP'], winner = school[data['winnerLol']])
         LOLToto.save()
 
         quizToto = QuizToto(event = quiz, bet = totoContent, winner = school[data['winnerQuiz']])
         quizToto.save()
 
-        AiToto = AIToto(event = AI, bet = totoContent, winner = school[data['winnerAI']])
+        AiToto = AIToto(event = AI, bet = totoContent, score_k = data['scoreAiK'], score_p = data['scoreAiP'], winner = school[data['winnerAI']])
         AiToto.save()
 
         hackingToto = HackingToto(event = hacking, bet = totoContent, winner = school[data['winnerHacking']])
