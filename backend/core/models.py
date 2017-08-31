@@ -187,6 +187,8 @@ class EsportsToto(models.Model):
         TotoContent,
         related_name = 'esports_toto',
     )
+    score_k = models.IntegerField(default=0)
+    score_p = models.IntegerField(default=0)
     winner = models.IntegerField(
         default = 0,
         choices = SCHOOLS,
@@ -217,6 +219,8 @@ class AIToto(models.Model):
         TotoContent,
         related_name = 'ai_toto',
     )
+    score_k = models.IntegerField(default=0)
+    score_p = models.IntegerField(default=0)
     winner = models.IntegerField(
         default = 0,
         choices = SCHOOLS,

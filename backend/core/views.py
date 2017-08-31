@@ -46,24 +46,30 @@ def event(request, event_id):
         if live == 2:
             # Toto score update
             event = Event.objects.get(id = pk) 
-            if event_dict[pk] == 'ai':
-                event_totoes = event.ai_toto.all()
-            elif event_dict[pk] == 'quiz':
+            if event_dict[pk] == 'quiz':
                 event_totoes = event.quiz_toto.all()
             elif event_dict[pk] == 'hacking':
                 event_totoes = event.hacking_toto.all()
+            elif event_dict[pk] == 'baseball':
+                event_totoes = event.baseball_toto.all()
+                for toto in event_totoes:
+                    if score_k == toto.score_k and score_p == toto.score_p:
+                        toto.bet.total += 0.5
+            elif event_dict[pk] == 'basketball':
+                event_totoes = event.basketball_toto.all()
+                for toto in event_totoes:
+                    if score_k == toto.score_k and score_p == toto.score_p:
+                        toto.bet.total += 0.5
             else:
-                if event_dict[pk] == 'baseball':
-                    event_totoes = event.baseball_toto.all()
-                elif event_dict[pk] == 'basketball':
-                    event_totoes = event.basketball_toto.all()
-                elif event_dict[pk] == 'soccer':
+                if event_dict[pk] == 'soccer':
                     event_totoes = event.soccer_toto.all()
                 elif event_dict[pk] == 'lol':
                     event_totoes = event.esports_toto.all()
+                elif event_dict[pk] == 'ai':
+                    event_totoes = event.ai_toto.all()
                 for toto in event_totoes:
                     if score_k == toto.score_k and score_p == toto.score_p:
-                        toto.bet.total += 0.1
+                        toto.bet.total += 0.2
             for toto in event_totoes:
                 if winner == toto.winner:
                     toto.bet.total += 1
