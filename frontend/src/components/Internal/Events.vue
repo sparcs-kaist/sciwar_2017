@@ -73,7 +73,7 @@ export default {
         console.log('live')
         if (kaist > postech) {
           winner = 1
-        } else {
+        } else if (kaist < postech) {
           winner = 2
         }
       }
