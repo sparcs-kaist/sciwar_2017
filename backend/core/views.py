@@ -190,7 +190,7 @@ def supporters(request):
         return JsonResponse(supporters, safe = False, json_dumps_params = {'ensure_ascii': False})
 
     if request.method == "PUT":
-        if len(Supporter.objects.all()) >= 170:
+        if len(Supporter.objects.all()) >= 180:
             return HttpResponse('')
         data = json.loads(request.body)
         supporter = Supporter(name = data['name'], contact = data['contact'], password = data['password'], student_id = data['studentID'], department = data['department'], size = data['size'])
