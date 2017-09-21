@@ -22,6 +22,7 @@
           <td class="fc" v-else-if="message.fields.event === 7">과학퀴즈</td>
           <td class="fc" v-else-if="message.fields.event === 8">농구</td>
           <td class="fc" v-else-if="message.fields.event === 10">모두에게</td>
+          <td class="fc" v-else-if="message.fields.event === 11">해킹</td></td>
           <td class="sc">{{ message.fields.content }}</td>
           <td class="tc" v-if="message.fields.school === 1">KAIST</td>
           <td class="tc" v-else-if="message.fields.school === 2">POSTECH</td>
@@ -38,6 +39,7 @@
           <option value="6">야구</option>
           <option value="7">과학퀴즈</option>
           <option value="8">농구</option>
+          <option value="11">해킹</option>
           <option value="10">모두에게</option>
         </select>
         <span class="write" v-on:click="select_event()">확인</span>
