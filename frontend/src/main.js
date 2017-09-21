@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 
 Vue.config.productionTip = false
+require('es6-promise').polyfill()
 Vue.prototype.$http = axios
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'

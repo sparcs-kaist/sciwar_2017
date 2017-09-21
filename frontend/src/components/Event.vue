@@ -258,6 +258,7 @@ html, body {
 .time > i {
   margin-top: 8px;
   margin-right: 10px;
+  font-size: 40px !important;
 }
 
 .time > span {
@@ -275,6 +276,7 @@ html, body {
   margin-top: 8px;
   margin-left: 7px;
   margin-right: 13px;
+  font-size: 40px !important;
 }
 
 .location > span {
@@ -292,6 +294,7 @@ html, body {
   margin-top: 8px;
   margin-left: 2px;
   margin-right: 12px;
+  font-size: 40px !important;
 }
 
 .chevron {

@@ -39,7 +39,7 @@
           </td>
           <td class="tc">
             <router-link :to="{ name: 'toto_view', params: { id: toto.pk } }">
-              <div>{{ toto.fields.total }}</div>
+              <div>{{ toto.fields.total.toFixed(1) }}</div>
             </router-link>
           </td>
         </tr>

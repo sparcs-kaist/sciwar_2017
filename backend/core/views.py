@@ -190,6 +190,8 @@ def supporters(request):
         return JsonResponse(supporters, safe = False, json_dumps_params = {'ensure_ascii': False})
 
     if request.method == "PUT":
+        if len(Supporter.objects.all()) >= 180:
+            return HttpResponse('')
         data = json.loads(request.body)
         supporter = Supporter(name = data['name'], contact = data['contact'], password = data['password'], student_id = data['studentID'], department = data['department'], size = data['size'])
         supporter.save()
@@ -282,7 +284,6 @@ def totoViewComplete(request, pk):
 def toto(request):
     if request.method == "PUT":
         data = json.loads(request.body)
-        print(data)
         soccer = Event.objects.get(name_eng = 'Soccer')
         baseball = Event.objects.get(name_eng = 'Baseball')
         basketball = Event.objects.get(name_eng = 'Basketball')
@@ -295,8 +296,10 @@ def toto(request):
         totoContent = TotoContent(student_id = data['studentID'], name = data['name'], password = data['password'], total = 0)
         totoContent.save()
 
+        quizToto = QuizToto(event = quiz, bet = totoContent, winner = school[data['winnerQuiz']])
+        quizToto.save()
+
         soccerToto = SoccerToto(event = soccer, bet = totoContent, score_k = data['scoreSoccerK'], score_p = data['scoreSoccerP'], winner = school[data['winnerSoccer']])
-        print(data)
         soccerToto.save()
 
         baseballToto = BaseballToto(event = baseball, bet = totoContent, score_k = data['scoreBaseballK'], score_p = data['scoreBaseballP'], winner = school[data['winnerBaseball']])
@@ -307,9 +310,6 @@ def toto(request):
 
         LOLToto = EsportsToto(event = LOL, bet = totoContent, score_k = data['scoreLolK'], score_p = data['scoreLolP'], winner = school[data['winnerLol']])
         LOLToto.save()
-
-        quizToto = QuizToto(event = quiz, bet = totoContent, winner = school[data['winnerQuiz']])
-        quizToto.save()
 
         AiToto = AIToto(event = AI, bet = totoContent, score_k = data['scoreAiK'], score_p = data['scoreAiP'], winner = school[data['winnerAI']])
         AiToto.save()
