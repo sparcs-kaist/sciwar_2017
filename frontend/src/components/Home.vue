@@ -108,6 +108,8 @@ export default {
           this.messageEvent = '농구'
         } else if (this.message.fields.event === 10) {
           this.messageEvent = '모두에게'
+        } else if (this.message.fields.event === 11) {
+          this.messageEvent = '해킹'
         }
       })
   },
