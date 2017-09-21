@@ -12,7 +12,7 @@
     </div>
     <div class="event-select">
       <div v-for="event in events" v-on:click="mapChange(event)" class="map-event button is-large">
-        <div v-if="event.fields.location < 5">
+        <div v-if="event.fields.location < 6">
           <label class="radio">
             <input v-on:click="radioClick()" type="radio" name="map-event" :value="event.pk" v-model="clicked">
             {{ event.fields.name_kor }}
@@ -38,8 +38,8 @@ export default {
     this.$http.get('/api/events/')
       .then((response) => {
         this.events = JSON.parse(response.data)
-        this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png']
-        this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장']
+        this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png', 'map_N5, Basic Experiment & Research.jpg']
+        this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장', 'N5 2268, 2269호']
         this.mapChange(this.events[0])
         this.clicked = this.events[0].pk
       })
@@ -68,6 +68,9 @@ export default {
       } else if (event.fields.location === 4) {
         document.getElementsByClassName('pin')[0].style.paddingLeft = '270px'
         document.getElementsByClassName('pin')[0].style.paddingTop = '200px'
+      } else if (event.fields.location === 5) {
+        document.getElementsByClassName('pin')[0].style.paddingLeft = '430px'
+        document.getElementsByClassName('pin')[0].style.paddingTop = '180px'
       }
     },
     radioClick () {

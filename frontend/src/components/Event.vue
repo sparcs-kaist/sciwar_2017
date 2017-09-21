@@ -91,8 +91,8 @@ export default {
   },
   created () {
     this.fetchData()
-    this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장']
-    this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png']
+    this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장', 'N5 2268, 2269호']
+    this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png', 'map_N5, Basic Experiment & Research.jpg']
   },
   watch: {
     '$route': 'fetchData'
