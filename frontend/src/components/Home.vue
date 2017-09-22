@@ -25,19 +25,21 @@
           <div v-if="event.fields.winner == 1 && event.fields.type == 0 && event.fields.live == 2" class="kaist-win">
             <p class="status-event-name">{{ event.fields.name_kor }}</p>
             <div class="status-event-score">
-              <p v-if="event.fields.score_k < 100" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
+              <p v-if="parseInt(event.fields.score_k) < 100" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
               <p v-else style="font-size:36px;" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
               <p>:</p>
-              <p v-if="event.fields.score_p < 100" class="status-event-postech-score">{{ event.fields.score_p }}</p>
+              <p v-if="parseInt(event.fields.score_p) < 100" class="status-event-postech-score">{{ event.fields.score_p }}</p>
               <p v-else style="font-size:36px;" class="status-event-postech-score">{{ event.fields.score_p }}</p>
             </div>
           </div>
           <div v-else-if="event.fields.winner == 2 && event.fields.type == 0 && event.fields.live == 2" class="postech-win">
             <p class="status-event-name">{{ event.fields.name_kor }}</p>
             <div class="status-event-score">
-              <p class="status-event-kaist-score">{{ event.fields.score_k }}</p>
+              <p v-if="parseInt(event.fields.score_k) < 100" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
+              <p v-else style="font-size:36px;" class="status-event-kaist-score">{{ event.fields.score_k }}</p>
               <p>:</p>
-              <p class="status-event-postech-score">{{ event.fields.score_p }}</p>
+              <p v-if="parseInt(event.fields.score_p) < 100" class="status-event-postech-score">{{ event.fields.score_p }}</p>
+              <p v-else style="font-size:36px;" class="status-event-postech-score">{{ event.fields.score_p }}</p>
             </div>
           </div>
           <div v-else-if="event.fields.type == 0 && event.fields.live == 1" class="none-win">
