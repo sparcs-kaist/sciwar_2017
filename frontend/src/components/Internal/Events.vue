@@ -14,6 +14,7 @@
         <button class="button is-primary submit" v-on:click = selectClick($event) name="button">Submit</button>
       </div>
     </div>
+    <button id="restore" v-on:click=restore()>절대로 누르지 마세요</button>
   </div>
 </template>
 
@@ -53,7 +54,7 @@ export default {
   methods: {
     selectClick (event) {
       let options = document.getElementsByClassName('select-options')
-      console.log(event.target)
+      console.log(event.target.name)
       let select = options[event.target.name]
       if (select.selectedIndex === 2) {
         options[event.target.name].disabled = true
@@ -64,8 +65,8 @@ export default {
       let url = '/api/events/' + pk + '/'
       let kaistpk = 'kaist' + pk
       let postechpk = 'postech' + pk
-      let kaist = document.getElementsByName(kaistpk)[0].value
-      let postech = document.getElementsByName(postechpk)[0].value
+      let kaist = parseInt(document.getElementsByName(kaistpk)[0].value)
+      let postech = parseInt(document.getElementsByName(postechpk)[0].value)
       let live = select.selectedIndex
       console.log(kaist, postech, live)
       let winner = 0
@@ -86,6 +87,13 @@ export default {
       }))
         .then((response) => {
           console.log('save successfully')
+        })
+    },
+    restore () {
+      let url = '/api/shrhksrP/'
+      this.$http.post(url)
+        .then((response) => {
+          console.log('restore')
         })
     }
   }

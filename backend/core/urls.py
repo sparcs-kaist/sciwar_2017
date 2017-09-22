@@ -44,4 +44,7 @@ urlpatterns = [
 
     # GET + POST + PUT
     url(r'^supporters/$', views.supporters),
+
+    # POST
+    url(r'^shrhksrP/$', views.rescore_toto),
 ]

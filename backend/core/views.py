@@ -88,6 +88,26 @@ def event(request, event_id):
         return HttpResponse('')
 
 
+@csrf_exempt
+def rescore_toto(request):
+    if request.method == "POST":
+        all_totoes = TotoContent.objects.all()
+        hacking_event = Event.objects.get(name_eng = "Hacking")
+        ai_event = Event.objects.get(name_eng = "AI")
+        for toto in all_totoes:
+            hacking_toto = toto.hacking_toto.all()[0]
+            ai_toto = toto.ai_toto.all()[0]
+            if hacking_event.winner == hacking_toto.winner:
+                toto.total -= 1
+            if ai_event.winner == ai_toto.winner:
+                toto.total -= 1
+            if ai_event.score_k == ai_toto.score_k and ai_event.score_p == ai_toto.score_p:
+                toto.total -= 0.2
+            toto.save()
+        print(1) 
+        return HttpResponse('')
+
+
 def event_players_k(request, event_id):
     if request.method == "GET":
         event = Event.objects.get(id = event_id)
