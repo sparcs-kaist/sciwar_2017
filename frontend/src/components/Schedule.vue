@@ -4,7 +4,7 @@
     <div v-for="date in dates" class="events-date">
       <p>9월  {{ date.split('-')[2] }}일</p>
       <div v-for="event in events" class="events-schedule">
-        <div v-if="event.fields.location < 5">
+        <div v-if="event.fields.location < 6">
           <div v-if="event.fields.start_time.split('T')[0] == date" class="event-schedule">
             <div v-if="event.fields.type===0">
               <router-link :to="{ name: 'event', params: { id: event.pk } }">
@@ -60,7 +60,7 @@ export default {
           }
         }
       })
-    this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장']
+    this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장', 'N5 2268, 2269호']
   }
 }
 </script>
