@@ -46,7 +46,7 @@
       <div style="width:50px;"></div>
       <div>
         <button class="pg" v-on:click="page_turn(1)"><</button>
-        <button class="pg" v-if="page_range[0] > 1" v-on:click="page_turn(page_range[0] - 1)">... </button> 
+        <button class="pg" v-if="page_range[0] > 1" v-on:click="page_turn(page_range[0] - 1)">... </button>
         <button class="pg" v-for="n in page_range" v-on:click="page_turn(n)">{{ n }}</button>
         <button class="pg" v-if="page_range[page_range.length - 1] < max_page" v-on:click="page_turn(page_range[page_range.length - 1] + 1)">...</button>
         <button class="pg" v-on:click="page_turn(max_page)">></button>
@@ -145,7 +145,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .internal-supporters-title {
   font-size: 64px;
   font-weight: 700;
@@ -180,7 +180,7 @@ export default {
   width: 200px;
   padding-left: 15px;
  }
- 
+
 .board .tc {
   width: 120px;
   padding-right: 15px;

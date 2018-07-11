@@ -11,6 +11,8 @@ selenium-debug.log
 venv/
 env/
 virtualenv/
+package-lock.json
+db.sqlite3
 
 # Editor directories and files
 .idea

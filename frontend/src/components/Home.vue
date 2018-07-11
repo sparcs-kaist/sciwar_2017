@@ -18,7 +18,7 @@
       <p class="title">경기 현황</p>
       <router-link :to="{ name: 'cheermessage' }" id="to-cheer-message">
         <p>응원메시지 남기러 가기<img src="/static/images/message.png" width="35"></p>
-        
+
       </router-link>
       <div>
         <div v-for="event in events" class="status-event">
@@ -139,7 +139,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 html, body {
   color: black;
 }

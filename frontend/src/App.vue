@@ -102,7 +102,7 @@
               </div>
               <p class="submenu-event-name">
                 카포전 소개
-                <i class="fa fa-chevron-right menu" aria-hidden="true"></i> 
+                <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
               </p>
             </router-link>
           </div>
@@ -116,10 +116,10 @@
               <p class="submenu-event-name">
                 {{ event.fields.name_kor }}
                 <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
-              </p> 
+              </p>
             </router-link>
           </div>
-        </div>  
+        </div>
       </div>
       <div class="main">
         <router-view name="contents"></router-view>
@@ -260,7 +260,7 @@ html {
   color: black;
 }
 
-body { 
+body {
   overflow-x: scroll !important;
   height: 100%;
   color: black;
@@ -298,7 +298,9 @@ body {
   word-spacing: -3px;
   color: white;
 }
+</style>
 
+<style scoped>
 .container {
   overflow-y: initial;
   width: 100% !important;

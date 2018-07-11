@@ -87,7 +87,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .video-title {
   display: flex;
   flex-direction: row;

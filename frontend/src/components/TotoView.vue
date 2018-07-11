@@ -160,7 +160,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .head {
   font-size: 64px;
   font-weight: 700;

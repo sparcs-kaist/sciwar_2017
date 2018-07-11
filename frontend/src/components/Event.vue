@@ -3,7 +3,7 @@
     <router-link :to="{ 'name': 'introduction' }" id="to-intro"></router-link>
     <div id="event-name">
       {{ event.fields.name_kor }} {{ event.fields.name_eng }}
-    </div> 
+    </div>
     <div class="team">
       <p>KAIST</p>
       <p>POSTECH</p>
@@ -25,7 +25,7 @@
       <p class="winner-is">winner is...
       <span v-if="event.fields.winner == 0" class="winner-team none">TBD</span>
       <span v-if="event.fields.winner == 1" class="winner-team kaist">KAIST</span>
-      <span v-else-if="event.fields.winner == 2" class="winner-team postech">POSTECH</span> 
+      <span v-else-if="event.fields.winner == 2" class="winner-team postech">POSTECH</span>
       <router-link :to="{ name: 'videos' }" class="to-video">
         <br>경기 보러가기
         <i class="fa fa-youtube-play"></i>
@@ -35,7 +35,7 @@
     <div class="time"><i class="fa fa-clock-o"></i>일시<span>{{ day }} {{ startTimeH }}:{{ startTimeM }}~{{ endTimeH }}:{{ endTimeM }}</span>
     </div>
     <div class="location"><i class="fa fa-map-marker"></i>위치<span>{{ locations[event.fields.location] }}</span>
-      <div class="chevron" v-on:click="location()"><i class="fa fa-chevron-down"></i></div> 
+      <div class="chevron" v-on:click="location()"><i class="fa fa-chevron-down"></i></div>
       <div class="location-picture"></div>
     </div>
     <div class="player"><i class="fa fa-user"></i>선수단 목록
@@ -151,7 +151,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 html, body {
 }
 
@@ -333,7 +333,7 @@ html, body {
   background-color: rgb(242, 242, 242);
   padding: 0 5px;
   width: 100%;
-  font-size: 30px; 
+  font-size: 30px;
 }
 
 .player-detail > div:nth-child(1) > .players-list {

@@ -94,8 +94,7 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
 .video-name > a {
   font-size: 28px;
   font-weight: 300;

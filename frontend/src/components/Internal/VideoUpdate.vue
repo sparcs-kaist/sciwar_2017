@@ -114,7 +114,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .internal-video-title {
   display: flex;
   flex-direction: row;

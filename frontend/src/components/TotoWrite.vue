@@ -191,7 +191,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .toto-content {
   width:100%;
 }
