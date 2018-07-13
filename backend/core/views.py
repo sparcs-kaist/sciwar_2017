@@ -1,4 +1,4 @@
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from core.models import *
 from django.http import JsonResponse, HttpResponse
@@ -11,11 +11,11 @@ def events(request):
     if request.method == "GET":
         events = Event.objects.all().order_by('start_time')
         events = serializers.serialize('json', events)
-        
+
         return JsonResponse(events, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
-@csrf_exempt
+# @csrf_exempt
 def event(request, event_id):
     if request.method == "GET":
         event = Event.objects.get(id = event_id)
@@ -45,7 +45,7 @@ def event(request, event_id):
             event_dict[event.id] = event.name_eng.lower()
         if live == 2:
             # Toto score update
-            event = Event.objects.get(id = pk) 
+            event = Event.objects.get(id = pk)
             if event_dict[pk] == 'quiz':
                 event_totoes = event.quiz_toto.all()
             elif event_dict[pk] == 'hacking':
@@ -88,7 +88,7 @@ def event(request, event_id):
         return HttpResponse('')
 
 
-@csrf_exempt
+# @csrf_exempt
 def rescore_toto(request):
     if request.method == "POST":
         all_totoes = TotoContent.objects.all()
@@ -104,7 +104,7 @@ def rescore_toto(request):
             if ai_event.score_k == ai_toto.score_k and ai_event.score_p == ai_toto.score_p:
                 toto.total -= 0.2
             toto.save()
-        print(1) 
+        print(1)
         return HttpResponse('')
 
 
@@ -135,7 +135,7 @@ def event_messages(request, event_id):
         return JsonResponse(messages, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
-@csrf_exempt
+# @csrf_exempt
 def messages(request):
     if request.method == "GET":
         messages = CheerMessage.objects.all().order_by('-time')
@@ -143,7 +143,7 @@ def messages(request):
         messages = serializers.serialize('json', messages)
 
         return JsonResponse(messages, safe = False, json_dumps_params = {'ensure_ascii': False})
-    
+
 
     if request.method == "PUT":
         data = json.loads(request.body)
@@ -154,17 +154,17 @@ def messages(request):
         return HttpResponse('')
 
 
-@csrf_exempt
+# @csrf_exempt
 def videos(request):
     if request.method == "GET":
         videos = Video.objects.all().order_by('-time')
         videos = serializers.serialize('json', videos)
-        
+
         return JsonResponse(videos, safe = False, json_dumps_params = {'ensure_ascii': False})
 
     if request.method == "PUT":
         data = json.loads(request.body)
-        events = [] 
+        events = []
         for i in data['event']:
             events.append(Event.objects.get(id = i))
         video = Video()
@@ -178,7 +178,7 @@ def videos(request):
         return HttpResponse('')
 
 
-@csrf_exempt
+# @csrf_exempt
 def video(request, pk):
     if request.method == "GET":
         video = Video.objects.get(id = pk)
@@ -201,12 +201,11 @@ def video(request, pk):
         return HttpResponse('')
 
 
-@csrf_exempt
 def supporters(request):
     if request.method == "GET":
         supporters = Supporter.objects.all()
         supporters = serializers.serialize('json', supporters)
-        
+
         return JsonResponse(supporters, safe = False, json_dumps_params = {'ensure_ascii': False})
 
     if request.method == "PUT":
@@ -232,7 +231,6 @@ def supporters(request):
         return HttpResponse('')
 
 
-@csrf_exempt
 def supportersView(request, pk):
     if request.method == "GET":
         data = serializers.serialize('json', [Supporter.objects.get(id = pk)], fields=('password'))
@@ -294,13 +292,13 @@ def totoViewComplete(request, pk):
         data['winnerQuiz'] = toto.quiz_toto.all()[0].winner
         data['winnerAI'] = toto.ai_toto.all()[0].winner
         data['winnerHacking'] = toto.hacking_toto.all()[0].winner
-        
+
         data = json.dumps(data)
 
         return JsonResponse(data, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
-@csrf_exempt
+# @csrf_exempt
 def toto(request):
     if request.method == "PUT":
         data = json.loads(request.body)

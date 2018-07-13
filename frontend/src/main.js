@@ -3,15 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios'
+import axios from './axios-config'
 
 Vue.config.productionTip = false
 require('es6-promise').polyfill()
 Vue.prototype.$http = axios
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-axios.xsrfCookieName = 'XSRF-TOKEN'
-axios.xsrfHeaderName = 'X-XSRF-Token'
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
