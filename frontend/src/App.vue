@@ -81,6 +81,14 @@
             비디오
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
+            <router-link :to="{ name: 'cheermessage' }" class="button">
+              <div class="menu-images">
+                <img src="/static/images/message.png" width="50">
+              </div>
+              <p>
+              응원메세지
+                <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
+              </p></router-link>
         </div>
         <div id="home-top">
           <router-link :to="{ name: 'home' }">
@@ -107,14 +115,27 @@
             </router-link>
           </div>
         </div>
-        <div class="event-list" v-for="event in events">
-          <div v-if="event.fields.type === 0">
-            <router-link :to="{ name: 'event', params: { id: event.pk } }">
+        <div class="event-list">
+          <div>
+            <router-link :to="{ name: 'introduction' }">
               <div class="menu-images">
-                <img v-bind:src="'/static/images/' + event.fields.name_eng + '.png'" width="22" style="margin:7px 10px 0 5px;">
+                <img v-bind:src="'/static/images/Baseball.png'" width="22" style="margin:7px 10px 0 5px;">
               </div>
               <p class="submenu-event-name">
-                {{ event.fields.name_kor }}
+                운동 경기
+                <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
+              </p>
+            </router-link>
+          </div>
+        </div>
+        <div class="event-list">
+          <div>
+            <router-link :to="{ name: 'introduction' }">
+              <div class="menu-images">
+                <img v-bind:src="'/static/images/Hacking.png'" width="22" style="margin:7px 10px 0 5px;">
+              </div>
+              <p class="submenu-event-name">
+                과학 경기
                 <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
               </p>
             </router-link>
@@ -137,7 +158,9 @@ export default {
       eventsRendered: [],
       videos: [],
       videosRendered: [],
-      currentIndex: 0
+      currentIndex: 0,
+      kaistScore: 0,
+      postechScore: 0
     }
   },
   created () {
@@ -146,31 +169,14 @@ export default {
     this.$http.get('/api/events/')
       .then((response) => {
         this.events = JSON.parse(response.data)
-        this.kaistScore = 0
-        this.postechScore = 0
         this.renderEvent()
       })
   },
+  mounted () {
+    this.relocateContents()
+  },
   updated () {
-    let left = document.getElementById('sidebar-wrapper').offsetLeft + 290 + 'px'
-    document.getElementById('submenu').style.left = left
-    if (document.getElementsByClassName('image')[0]) {
-      document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
-      document.getElementById('submenu').style.top = '865px'
-    } else if (this.$route.params.id && this.$route.name === 'event') {
-      document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
-      document.getElementsByClassName('contents')[0].style.margin = '244px auto 0 auto'
-      document.getElementById('submenu').style.top = '342px'
-      document.getElementById('nav-bar').style.top = '0px'
-      document.getElementById('sidebar-wrapper').style.top = '244px'
-    } else {
-      document.getElementsByClassName('contents')[0].style.margin = '144px auto 0 auto'
-      document.getElementById('submenu').style.top = '242px'
-      document.getElementById('nav-bar').style.top = '0px'
-      document.getElementById('sidebar-wrapper').style.top = '144px'
-    }
-    document.getElementById('kaist-score').innerHTML = this.kaistScore
-    document.getElementById('postech-score').innerHTML = this.postechScore
+    this.relocateContents()
   },
   methods: {
     submenu (event) {
@@ -242,6 +248,27 @@ export default {
       } else if (this.currentIndex === this.eventsRendered.length - 1) {
         this.currentIndex = 0
       }
+    },
+    relocateContents () {
+      let left = document.getElementById('sidebar-wrapper').offsetLeft + 290 + 'px'
+      document.getElementById('submenu').style.left = left
+      if (document.getElementsByClassName('image')[0]) {
+        document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
+        document.getElementById('submenu').style.top = '865px'
+      } else if (this.$route.params.id && this.$route.name === 'event') {
+        // document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
+        document.getElementsByClassName('contents')[0].style.margin = '244px auto 0 auto'
+        document.getElementById('submenu').style.top = '342px'
+        document.getElementById('nav-bar').style.top = '0px'
+        document.getElementById('sidebar-wrapper').style.top = '244px'
+      } else {
+        document.getElementsByClassName('contents')[0].style.margin = '144px auto 0 auto'
+        document.getElementById('submenu').style.top = '242px'
+        document.getElementById('nav-bar').style.top = '0px'
+        document.getElementById('sidebar-wrapper').style.top = '144px'
+      }
+      document.getElementById('kaist-score').innerHTML = this.kaistScore
+      document.getElementById('postech-score').innerHTML = this.postechScore
     }
   }
 }
@@ -425,7 +452,7 @@ body {
 
 .contents {
   height: 100%;
-  margin: 144px auto 0 auto;
+  margin: 767px auto 0 auto;
   display: flex;
   justify-content: space-between;
   width:1295px;
@@ -556,11 +583,20 @@ a:hover > p > .fa {
   margin-left: -2px;
 }
 
+#sidebar-left > a:nth-child(7) > p {
+  margin-left: -2px;
+}
+
+#sidebar-left > a:nth-child(7) > div {
+  margin-left: -2px;
+  margin-top: 4px;
+}
+
 #submenu {
   position: absolute;
   display: none;
-  left: 300px;
-  top: 242px;
+  left: 590px;
+  top: 865px;
   padding: 15px 15px 5px 15px;
   background-color: rgba(242,242,242,1);
   z-index: 10;

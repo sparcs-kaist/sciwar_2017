@@ -17,14 +17,15 @@ class Player(models.Model):
 class Event(models.Model):
     TYPE = (
         (0, 'Sports'),
-        (1, 'Others'),
+        (1, 'Science'),
+        (2, 'Others'),
     )
     STATUS = (
         (0, 'Pre'),
         (1, 'Live'),
         (2, 'Post'),
     )
-    
+
     type = models.IntegerField(default=0, choices=TYPE)
     name_eng = models.CharField(max_length=30)
     name_kor = models.CharField(max_length=30)

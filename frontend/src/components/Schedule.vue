@@ -6,7 +6,7 @@
       <div v-for="event in events" class="events-schedule">
         <div v-if="event.fields.location < 6">
           <div v-if="event.fields.start_time.split('T')[0] == date" class="event-schedule">
-            <div v-if="event.fields.type===0">
+            <div v-if="event.fields.type == 0 || event.fields.type == 1">
               <router-link :to="{ name: 'event', params: { id: event.pk } }">
                 <div class="event-name">
                   {{ event.fields.name_kor }} {{ event.fields.name_eng }}
