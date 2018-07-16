@@ -5,7 +5,7 @@
     <div class="live-videos">
       <div v-for="video in videoLive" class="video-element">
         <div>
-          <iframe width="280" height="250" :src="video.fields.link" frameborder="0" allowfullscreen></iframe>
+          <iframe width="280" height="250" :src="generateUrl(video.fields.link)" frameborder="0" allowfullscreen></iframe>
           <p class="video-name" v-bind:title="video.fields.name"><router-link :to="{ name: 'video', params: { id: video.pk }}">{{ abbreviate(video.fields.name) }}</router-link></p>
         </div>
       </div>
@@ -26,7 +26,7 @@
     <div class="video-list">
       <div v-for="video in videosRendered" class="video-element">
         <div>
-          <iframe width="280" height="250" :src="video.fields.link" frameborder="0" allowfullscreen></iframe>
+          <iframe width="280" height="250" :src="generateUrl(video.fields.link)" frameborder="0" allowfullscreen></iframe>
           <p class="video-name" v-bind:title="video.fields.name"><router-link :to="{ name: 'video', params: { id: video.pk }}">{{ abbreviate(video.fields.name) }}</router-link></p>
         </div>
       </div>
@@ -89,6 +89,9 @@ export default {
         name = name + '...'
       }
       return name
+    },
+    generateUrl (key) {
+      return `http://www.youtube.com/embed/${key}`
     }
   }
 }

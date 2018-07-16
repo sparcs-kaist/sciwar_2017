@@ -4,7 +4,7 @@
       <p>{{ video.fields.name }}</p>
       <div v-if="video.fields.type == 0">LIVE</div>
     </div>
-    <iframe id="frame" width="800" height="450" :src="link" frameborder="0" allowfullscreen></iframe>
+    <iframe id="frame" width="800" height="450" :src="generateUrl(link)" frameborder="0" allowfullscreen></iframe>
     <div class="related-events">
       <p>연관 행사:</p>
       <router-link v-for="event in events" :to="{ name: 'event', params: { id: event.pk } }">
@@ -76,6 +76,9 @@ export default {
             this.cheermessages.push.apply(this.cheermessages, JSON.parse(response.data))
           })
       }
+    },
+    generateUrl (key) {
+      return `http://www.youtube.com/embed/${key}`
     },
     mouseOver () {
       event.target.style.background = 'rgb(149,179,215)'

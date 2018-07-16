@@ -4,7 +4,7 @@
     <div class="video-list">
       <div v-for="video in videos" class="video">
         <div>
-          <iframe width="290" height="290" :src="video.fields.link" frameborder="0" allowfullscreen></iframe>
+          <iframe width="290" height="290" :src="generateUrl(video.fields.link)" frameborder="0" allowfullscreen></iframe>
           <p class="video-name"><router-link :to="{ name: 'video', params: { id: video.pk }}">{{ video.fields.name }}</router-link></p>
         </div>
       </div>
@@ -25,6 +25,11 @@ export default {
   data () {
     return {
       videos: []
+    }
+  },
+  methods: {
+    generateUrl (key) {
+      return `http://www.youtube.com/embed/${key}`
     }
   }
 }

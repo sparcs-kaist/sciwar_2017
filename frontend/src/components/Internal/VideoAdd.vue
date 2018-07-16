@@ -38,10 +38,20 @@ export default {
       })
   },
   methods: {
+    parseUrl (src) {
+      let token = src.split('/').pop()
+      let idx = token.indexOf('v=')s
+      if (idx !== -1) {
+        token = token.slice(idx + 2)
+        return token.slice(0, token.indexOf('&'))
+      }
+      return token
+    },
     submitClick () {
       let title = document.getElementsByName('title')[0].value
-      let source = document.getElementsByName('source')[0].value
+      let source = this.parseUrl(document.getElementsByName('source')[0].value)
       let data = { 'title': title, 'source': source, 'event': this.checkedEvents, 'type': this.live }
+      console.log(source)
       data = JSON.stringify(data)
       if (title && source) {
         this.$http.put('/api/videos/', data)
