@@ -16,10 +16,6 @@
     </div>
     <div class="events-status noto-sans">
       <p class="title">경기 현황</p>
-      <router-link :to="{ name: 'cheermessage' }" id="to-cheer-message">
-        <p>응원메시지 남기러 가기<img src="/static/images/message.png" width="35"></p>
-
-      </router-link>
       <div>
         <div v-for="event in events" class="status-event">
           <div v-if="event.fields.winner == 1 && (event.fields.type == 0 || event.fields.type == 1) && event.fields.live == 2" class="kaist-win">
@@ -77,9 +73,38 @@ export default {
     return {
       scrolled: false,
       events: [],
-      messageContent: '',
-      messageTeam: '',
-      messageEvent: ''
+      message: {}
+    }
+  },
+  computed: {
+    messageContent () {
+      if (this.message.hasOwnProperty('fields')) {
+        return this.message.fields.content
+      }
+      return ''
+    },
+    messageTeam () {
+      if (this.message.hasOwnProperty('fields')) {
+        if (this.message.fields.school === 1) {
+          return 'KAIST'
+        } else {
+          return 'POSTECH'
+        }
+      }
+      return ''
+    },
+    messageEvent () {
+      if (this.message.hasOwnProperty('fields')) {
+        if (this.message.fields.hasOwnProperty('event')) {
+          for (let event of this.events) {
+            if (this.message.fields.event === event.pk) {
+              return event.fields.name_kor
+            }
+          }
+        }
+        return '모두에게'
+      }
+      return ''
     }
   },
   created () {
@@ -90,39 +115,29 @@ export default {
     this.$http.get('/api/cheermessage/')
       .then((response) => {
         this.message = JSON.parse(response.data)[0]
-        this.messageContent = this.message.fields.content
-        if (this.message.fields.school === 1) {
-          this.messageTeam = 'KAIST'
-        } else {
-          this.messageTeam = 'POSTECH'
-        }
-        if (this.message.fields.event === 3) {
-          this.messageEvent = '축구'
-        } else if (this.message.fields.event === 4) {
-          this.messageEvent = '인공지능'
-        } else if (this.message.fields.event === 5) {
-          this.messageEvent = '롤'
-        } else if (this.message.fields.event === 6) {
-          this.messageEvent = '야구'
-        } else if (this.message.fields.event === 7) {
-          this.messageEvent = '과학퀴즈'
-        } else if (this.message.fields.event === 8) {
-          this.messageEvent = '농구'
-        } else if (this.message.fields.event === 10) {
-          this.messageEvent = '모두에게'
-        } else if (this.message.fields.event === 11) {
-          this.messageEvent = '해킹'
-        }
+        // if (this.message.fields.event === 3) {
+        //   this.messageEvent = '축구'
+        // } else if (this.message.fields.event === 4) {
+        //   this.messageEvent = '인공지능'
+        // } else if (this.message.fields.event === 5) {
+        //   this.messageEvent = '롤'
+        // } else if (this.message.fields.event === 6) {
+        //   this.messageEvent = '야구'
+        // } else if (this.message.fields.event === 7) {
+        //   this.messageEvent = '과학퀴즈'
+        // } else if (this.message.fields.event === 8) {
+        //   this.messageEvent = '농구'
+        // } else if (this.message.fields.event === 10) {
+        //   this.messageEvent = '모두에게'
+        // } else if (this.message.fields.event === 11) {
+        //   this.messageEvent = '해킹'
+        // }
       })
   },
   mounted () {
     this.scrolled = window.scrollY
     document.getElementById('nav-bar').style.top = '623px'
     document.getElementById('sidebar-wrapper').style.top = '767px'
-  },
-  computed () {
-  },
-  methods: {
   },
   updated () {
     let statusEvents = document.getElementsByClassName('status-event')

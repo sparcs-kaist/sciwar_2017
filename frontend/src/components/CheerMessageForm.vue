@@ -15,14 +15,8 @@
     <div class="third-form">
       <p class="question">응원하는 경기</p>
       <select id="event-selector" class="selector">
-        <option value="3" selected>축구</option>
-        <option value="4">인공지능</option>
-        <option value="5">롤</option>
-        <option value="6">야구</option>
-        <option value="7">과학퀴즈</option>
-        <option value="8">농구</option>
-        <option value="11">해킹</option>
-        <option value="10">모두에게</option>
+        <option value="" selected>모두에게</option>
+        <option v-for="event in events" v-if="event.fields.type != 2" :value="event.pk">{{ event.fields.name_kor }}</option>
       </select>
     </div>
     <router-link :to="{ name: 'cheermessage' }">
@@ -36,8 +30,15 @@ export default {
   name: 'cheermessage-write',
   data () {
     return {
+      events: [],
       message: ''
     }
+  },
+  created () {
+    this.$http.get('/api/events/')
+      .then((response) => {
+        this.events = JSON.parse(response.data)
+      })
   },
   methods: {
     lengthCheck: function () {
@@ -54,6 +55,7 @@ export default {
       }
       let content = this.message
       let school = document.getElementById('school-selector').value
+      console.log(document.getElementById('event-selector').value)
       let event = document.getElementById('event-selector').value
       let data = { 'content': content, 'school': school, 'event': event }
       data = JSON.stringify(data)

@@ -15,14 +15,7 @@
       </thead>
       <tbody>
         <tr v-for="message in messages_rendered">
-          <td class="fc" v-if="message.fields.event === 3">축구</td>
-          <td class="fc" v-else-if="message.fields.event === 4">인공지능</td>
-          <td class="fc" v-else-if="message.fields.event === 5">롤</td>
-          <td class="fc" v-else-if="message.fields.event === 6">야구</td>
-          <td class="fc" v-else-if="message.fields.event === 7">과학퀴즈</td>
-          <td class="fc" v-else-if="message.fields.event === 8">농구</td>
-          <td class="fc" v-else-if="message.fields.event === 10">모두에게</td>
-          <td class="fc" v-else-if="message.fields.event === 11">해킹</td></td>
+          <td class="fc">{{ find_event_name(message) }}</td>
           <td class="sc">{{ message.fields.content }}</td>
           <td class="tc" v-if="message.fields.school === 1">KAIST</td>
           <td class="tc" v-else-if="message.fields.school === 2">POSTECH</td>
@@ -32,15 +25,9 @@
     <div class="paginator noto-sans">
       <div>
         <select id="event-type">
-          <option value="0" selected>모두보기</option>
-          <option value="3">축구</option>
-          <option value="4">인공지능</option>
-          <option value="5">롤</option>
-          <option value="6">야구</option>
-          <option value="7">과학퀴즈</option>
-          <option value="8">농구</option>
-          <option value="11">해킹</option>
-          <option value="10">모두에게</option>
+          <option value="all" selected>모든 경기</option>
+          <option value="no-specific">모두에게</option>
+          <option v-for="event in events" v-if="event.fields.type != 2" :value="event.pk">{{ event.fields.name_kor }}</option>
         </select>
         <span class="write" v-on:click="select_event()">확인</span>
       </div>
@@ -63,6 +50,7 @@ export default {
   name: 'cheermessage',
   data () {
     return {
+      events: [],
       messages: [],
       messages_event: [],
       messages_rendered: [],
@@ -75,11 +63,25 @@ export default {
         this.messages = JSON.parse(response.data)
         this.current_page = 1
         this.event_type = 0
-        this.select_event(0)
+        this.select_event()
         this.max_page = parseInt((this.messages.length - 1) / 10) + 1
+      })
+    this.$http.get('/api/events/')
+      .then((response) => {
+        this.events = JSON.parse(response.data)
       })
   },
   methods: {
+    find_event_name: function (message) {
+      if (message.fields.hasOwnProperty('event')) {
+        for (let event of this.events) {
+          if (event.pk === message.fields.event) {
+            return event.fields.name_kor
+          }
+        }
+      }
+      return '모두에게'
+    },
     page_turn: function (n) {
       while (this.messages_rendered.length) {
         this.messages_rendered.pop()
@@ -116,13 +118,20 @@ export default {
       }
     },
     select_event: function () {
-      var eventID = parseInt(document.getElementById('event-type').value)
+      var eventID = document.getElementById('event-type').value
+      console.log(eventID)
       while (this.messages_event.length) {
         this.messages_event.pop()
       }
-      if (eventID === 0) {
+      if (eventID === 'all') { // show all
         for (let i = 0; i < this.messages.length; i++) {
           this.messages_event.push(this.messages[i])
+        }
+      } else if (eventID === 'no-specific') { // show messages with no specific event tied to it
+        for (let i = 0; i < this.messages.length; i++) {
+          if (!this.messages[i].fields.hasOwnProperty('event')) {
+            this.messages_event.push(this.messages[i])
+          }
         }
       } else {
         for (let i = 0; i < this.messages.length; i++) {

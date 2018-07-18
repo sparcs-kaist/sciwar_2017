@@ -40,7 +40,7 @@ export default {
   methods: {
     parseUrl (src) {
       let token = src.split('/').pop()
-      let idx = token.indexOf('v=')s
+      let idx = token.indexOf('v=')
       if (idx !== -1) {
         token = token.slice(idx + 2)
         return token.slice(0, token.indexOf('&'))

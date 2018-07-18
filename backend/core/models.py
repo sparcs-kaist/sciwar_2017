@@ -68,7 +68,7 @@ class CheerMessage(models.Model):
     content = models.CharField(max_length=140)
     school = models.IntegerField(choices=SCHOOLS)
     time = models.DateTimeField(auto_now_add=True)
-    event = models.ForeignKey(Event)
+    event = models.ForeignKey(Event, blank=True, null=True)
 
     def __str__(self):
         return f'<{self.get_school_display()}>: {self.content}, {self.event.name_kor}'
