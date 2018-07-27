@@ -8,7 +8,7 @@
     <div class="current-cheer-message noto-sans">
       <div>
         <img src="/static/images/quote1.png" width="35" height="35">
-        <p>{{ messageContent }}</p>
+        <p id="current-cheer-message">{{ messageContent }}</p>
         <img src="/static/images/quote2.png" width="35" height="35">
       </div>
       <p><span>to. </span>{{ messageTeam }}</p>
@@ -79,6 +79,9 @@ export default {
   computed: {
     messageContent () {
       if (this.message.hasOwnProperty('fields')) {
+        if (this.message.fields.content.length < 30) {
+          document.getElementById('current-cheer-message').style.width = '300px'
+        }
         return this.message.fields.content
       }
       return ''
@@ -195,12 +198,14 @@ html, body {
   justify-content: center;
 }
 
-.current-cheer-message > div > p{
-  align-self: flex-end;
+.current-cheer-message > div > p {
+  line-break: loose;
+  word-break:keep-all;
+  word-wrap: normal;
+  word-spacing: 1px;
   font-size: 35px;
-  margin: 0 10px;
+  margin: auto;
   font-weight: 300;
-  word-break: break-all;
   text-align: center;
 }
 

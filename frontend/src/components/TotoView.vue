@@ -12,7 +12,7 @@
       <label class="control-label">Name</label>
       <input v-model="name" name="name" class="form-controll-small" v-on:keyup="showFormButton()" disabled>
       <div class="toto-content">
-        <h2 class="table-title">스포츠 종목 점수맞추기</h2>
+        <h2 class="table-title">운동경기 점수 맞추기</h2>
         <table class="toto-table board-table">
           <thead>
             <tr>
@@ -23,35 +23,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Soccer</td>
-              <td><input v-model="scoreSoccerK" disabled></td>
-              <td><input v-model="scoreSoccerP" disabled></td>
-              <td class="winner"><span name="winnerSoccer">{{ winnerSoccer }}</span></td>
-            </tr>
-            <tr>
-              <td>Baseball</td>
-              <td><input v-model="scoreBaseballK" disabled></td>
-              <td><input v-model="scoreBaseballP" disabled></td>
-              <td class="winner"><span name="winnerBaseball">{{ winnerBaseball }}</span></td>
-            </tr>
-            <tr>
-              <td>Basketball</td>
-              <td><input v-model="scoreBasketballK" disabled></td>
-              <td><input v-model="scoreBasketballP" disabled></td>
-              <td class="winner"><span name="winnerBasketball">{{ winnerBasketball }}</span></td>
-            </tr>
-            <tr>
-              <td>LOL</td>
-              <td><input v-model="scoreLolK" disabled></td>
-              <td><input v-model="scoreLolP" disabled></td>
-              <td class="winner"><span name="winnerLol">{{ winnerLol }}</span></td>
-            </tr>
-            <tr>
-              <td>AI</td>
-              <td><input v-model="scoreAiK" disabled></td>
-              <td><input v-model="scoreAiP" disabled></td>
-              <td class="winner"><span name="winnerAi">{{ winnerAI }}</span></td>
+            <tr v-for="event in events" v-if="event.fields.type === 0">
+              <td>{{ event.fields.name_kor }}</td>
+              <td><input :id="event.fields.name_eng.concat('K')" :value="totos[event.fields.name_eng]['K']" disabled></td>
+  						<td><input :id="event.fields.name_eng.concat('P')" :value="totos[event.fields.name_eng]['P']" disabled></td>
+              <td class="winner"><span :id="event.fields.name_eng.concat('Winner')">{{ totos[event.fields.name_eng]['Winner'] }}</span></td>
             </tr>
           </tbody>
         </table>
@@ -65,15 +41,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Science Quiz</td>
-              <td><input v-model="winnerQuiz" type="radio" class="radio-button" value="KAIST" disabled></td>
-              <td><input v-model="winnerQuiz" type="radio" class="radio-button" value="POSTECH" disabled></td>
-            </tr>
-            <tr>
-              <td>Hacking Contest</td>
-              <td><input v-model="winnerHacking" type="radio" class="radio-button" value="KAIST" disabled></td>
-              <td><input v-model="winnerHacking" type="radio" class="radio-button" value="POSTECH" disabled></td>
+            <tr v-for="event in events" v-if="event.fields.type === 1">
+              <td>{{ event.fields.name_kor }}</td>
+              <td><input :id="event.fields.name_eng.concat('K')" type="radio" :name="event.fields.name_eng" class="radio-button" value="KAIST" disabled></td>
+  						<td><input :id="event.fields.name_eng.concat('P')" type="radio" :name="event.fields.name_eng" class="radio-button" value="POSTECH" disabled></td>
             </tr>
           </tbody>
         </table>
@@ -88,25 +59,10 @@ export default {
   data () {
     return {
       certified: false,
+      events: [],
       studentId: '',
       name: '',
-      scoreSoccerK: '',
-      scoreSoccerP: '',
-      scoreBaseballK: '',
-      scoreBaseballP: '',
-      scoreBasketballK: '',
-      scoreBasketballP: '',
-      scoreLolK: '',
-      scoreLolP: '',
-      scoreAiK: '',
-      scoreAiP: '',
-      winnerSoccer: 'None',
-      winnerBaseball: 'None',
-      winnerBasketball: 'None',
-      winnerLol: 'None',
-      winnerQuiz: 'KAIST',
-      winnerAI: 'None',
-      winnerHacking: 'KAIST'
+      totos: {}
     }
   },
   created () {
@@ -114,6 +70,18 @@ export default {
       .then((response) => {
         this.theRightPassword = JSON.parse(response.data)[0]
         this.theRightPassword = this.theRightPassword.fields.password
+      })
+    this.$http.get('/api/events/')
+      .then((response) => {
+        this.events = JSON.parse(response.data)
+        for (let event of this.events) {
+          if (event.fields.type === 2) continue
+          this.totos[event.fields.name_eng] = {
+            'K': 0,
+            'P': 0,
+            'Winner': 'NONE'
+          }
+        }
       })
   },
   methods: {
@@ -134,26 +102,21 @@ export default {
       this.$http.get('/api/toto/complete/' + this.$route.params.id + '/')
         .then((response) => {
           let data = JSON.parse(response.data)
-          let schools = ['None', 'KAIST', 'POSTECH']
+          let schools = ['NONE', 'KAIST', 'POSTECH']
           this.studentId = data.studentId
           this.name = data.name
-          this.scoreSoccerK = data.scoreSoccerK
-          this.scoreSoccerP = data.scoreSoccerP
-          this.scoreBaseballK = data.scoreBaseballK
-          this.scoreBaseballP = data.scoreBaseballP
-          this.scoreBasketballK = data.scoreBasketballK
-          this.scoreBasketballP = data.scoreBasketballP
-          this.scoreLolK = data.scoreLolK
-          this.scoreLolP = data.scoreLolP
-          this.scoreAiK = data.scoreAiK
-          this.scoreAiP = data.scoreAiP
-          this.winnerSoccer = schools[data.winnerSoccer]
-          this.winnerBaseball = schools[data.winnerBaseball]
-          this.winnerBasketball = schools[data.winnerBasketball]
-          this.winnerLol = schools[data.winnerLol]
-          this.winnerQuiz = schools[data.winnerQuiz]
-          this.winnerAI = schools[data.winnerAI]
-          this.winnerHacking = schools[data.winnerHacking]
+          for (let event of this.events) {
+            if (event.fields.type === 2) continue
+            if (event.fields.type === 0) {
+              this.totos[event.fields.name_eng]['K'] = data[`${event.fields.name_eng}K`]
+              this.totos[event.fields.name_eng]['P'] = data[`${event.fields.name_eng}P`]
+            }
+            this.totos[event.fields.name_eng]['Winner'] = schools[data[`${event.fields.name_eng}Winner`]]
+            if (event.fields.type === 1) {
+              document.getElementById(event.fields.name_eng.concat('K')).checked = document.getElementById(event.fields.name_eng.concat('K')).value === this.totos[event.fields.name_eng]['Winner']
+              document.getElementById(event.fields.name_eng.concat('P')).checked = document.getElementById(event.fields.name_eng.concat('P')).value === this.totos[event.fields.name_eng]['Winner']
+            }
+          }
         })
     }
   }

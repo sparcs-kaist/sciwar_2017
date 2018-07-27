@@ -39,51 +39,25 @@ def event(request, event_id):
         event.winner = winner
         event.save()
 
-        events = Event.objects.all()
-        event_dict = {}
-        for event in events:
-            event_dict[event.id] = event.name_eng.lower()
         if live == 2:
             # Toto score update
-            event = Event.objects.get(id = pk)
-            if event_dict[pk] == 'quiz':
-                event_totoes = event.quiz_toto.all()
-            elif event_dict[pk] == 'hacking':
-                event_totoes = event.hacking_toto.all()
-            elif event_dict[pk] == 'baseball':
-                event_totoes = event.baseball_toto.all()
-                for toto in event_totoes:
+            totos = event.totos.all()
+            for toto in totos:
+                if event.type == 0:
                     if score_k == toto.score_k and score_p == toto.score_p:
-                        toto.bet.total += 0.5
-            elif event_dict[pk] == 'basketball':
-                event_totoes = event.basketball_toto.all()
-                for toto in event_totoes:
-                    if score_k == toto.score_k and score_p == toto.score_p:
-                        toto.bet.total += 0.5
-            else:
-                if event_dict[pk] == 'soccer':
-                    event_totoes = event.soccer_toto.all()
-                elif event_dict[pk] == 'lol':
-                    event_totoes = event.esports_toto.all()
-                elif event_dict[pk] == 'ai':
-                    event_totoes = event.ai_toto.all()
-                for toto in event_totoes:
-                    if score_k == toto.score_k and score_p == toto.score_p:
-                        toto.bet.total += 0.2
-            for toto in event_totoes:
+                        toto.bet.total += event.score_weight
                 if winner == toto.winner:
-                    toto.bet.total += 1
+                    toto.bet.total += event.win_weight
                 toto.bet.save()
-            # Live video
-            videos = Video.objects.all()
-            for video in videos:
-                live = 1
-                for event in video.event.all():
-                    if event.live == 1 and event.pk != pk:
-                        live = 0
-                        break
-                video.type = live
-                video.save()
+
+        # Live video
+        videos = event.video_set.all()
+        for video in videos:
+            if len(video.event.filter(live=1)) == 0:
+                video.type = 1
+            else:
+                video.type = 0
+            video.save()
 
         return HttpResponse('')
 
@@ -91,7 +65,7 @@ def event(request, event_id):
 # @csrf_exempt
 def rescore_toto(request):
     if request.method == "POST":
-        all_totoes = TotoContent.objects.all()
+        totos = TotoContent.objects.all()
         hacking_event = Event.objects.get(name_eng = "Hacking")
         ai_event = Event.objects.get(name_eng = "AI")
         for toto in all_totoes:
@@ -105,6 +79,7 @@ def rescore_toto(request):
                 toto.total -= 0.2
             toto.save()
         print(1)
+
         return HttpResponse('')
 
 
@@ -271,27 +246,16 @@ def totoView(request, pk):
 
 def totoViewComplete(request, pk):
     if request.method == "GET":
-        toto = TotoContent.objects.get(id = pk)
+        totoContent = TotoContent.objects.get(id = pk)
         data = {}
-        data['studentId'] = toto.student_id
-        data['name'] = toto.name
-        data['scoreSoccerK'] = toto.soccer_toto.all()[0].score_k
-        data['scoreSoccerP'] = toto.soccer_toto.all()[0].score_p
-        data['scoreBaseballK'] = toto.baseball_toto.all()[0].score_k
-        data['scoreBaseballP'] = toto.baseball_toto.all()[0].score_p
-        data['scoreBasketballK'] = toto.basketball_toto.all()[0].score_k
-        data['scoreBasketballP'] = toto.basketball_toto.all()[0].score_p
-        data['scoreLolK'] = toto.esports_toto.all()[0].score_k
-        data['scoreLolP'] = toto.esports_toto.all()[0].score_p
-        data['scoreAiK'] = toto.ai_toto.all()[0].score_k
-        data['scoreAiP'] = toto.ai_toto.all()[0].score_p
-        data['winnerSoccer'] = toto.soccer_toto.all()[0].winner
-        data['winnerBaseball'] = toto.baseball_toto.all()[0].winner
-        data['winnerBasketball'] = toto.basketball_toto.all()[0].winner
-        data['winnerLol'] = toto.esports_toto.all()[0].winner
-        data['winnerQuiz'] = toto.quiz_toto.all()[0].winner
-        data['winnerAI'] = toto.ai_toto.all()[0].winner
-        data['winnerHacking'] = toto.hacking_toto.all()[0].winner
+        data['studentId'] = totoContent.student_id
+        data['name'] = totoContent.name
+
+        for toto in totoContent.totos.all():
+            if toto.event.type == 0:
+                data[f'{toto.event.name_eng}K'] = toto.score_k
+                data[f'{toto.event.name_eng}P'] = toto.score_p
+            data[f'{toto.event.name_eng}Winner'] = toto.winner
 
         data = json.dumps(data)
 
@@ -302,38 +266,19 @@ def totoViewComplete(request, pk):
 def toto(request):
     if request.method == "PUT":
         data = json.loads(request.body)
-        soccer = Event.objects.get(name_eng = 'Soccer')
-        baseball = Event.objects.get(name_eng = 'Baseball')
-        basketball = Event.objects.get(name_eng = 'Basketball')
-        LOL = Event.objects.get(name_eng = 'LOL')
-        quiz = Event.objects.get(name_eng = 'Quiz')
-        AI = Event.objects.get(name_eng = 'AI')
-        hacking = Event.objects.get(name_eng = 'Hacking')
-        school = {'None': 0, 'KAIST': 1, 'POSTECH': 2}
+        school = {'NONE': 0, 'KAIST': 1, 'POSTECH': 2}
+        events = Event.objects.all()
 
         totoContent = TotoContent(student_id = data['studentID'], name = data['name'], password = data['password'], total = 0)
         totoContent.save()
 
-        quizToto = QuizToto(event = quiz, bet = totoContent, winner = school[data['winnerQuiz']])
-        quizToto.save()
-
-        soccerToto = SoccerToto(event = soccer, bet = totoContent, score_k = data['scoreSoccerK'], score_p = data['scoreSoccerP'], winner = school[data['winnerSoccer']])
-        soccerToto.save()
-
-        baseballToto = BaseballToto(event = baseball, bet = totoContent, score_k = data['scoreBaseballK'], score_p = data['scoreBaseballP'], winner = school[data['winnerBaseball']])
-        baseballToto.save()
-
-        basketballToto = BasketballToto(event = basketball, bet = totoContent, score_k = data['scoreBasketballK'], score_p = data['scoreBasketballP'], winner = school[data['winnerBasketball']])
-        basketballToto.save()
-
-        LOLToto = EsportsToto(event = LOL, bet = totoContent, score_k = data['scoreLolK'], score_p = data['scoreLolP'], winner = school[data['winnerLol']])
-        LOLToto.save()
-
-        AiToto = AIToto(event = AI, bet = totoContent, score_k = data['scoreAiK'], score_p = data['scoreAiP'], winner = school[data['winnerAI']])
-        AiToto.save()
-
-        hackingToto = HackingToto(event = hacking, bet = totoContent, winner = school[data['winnerHacking']])
-        hackingToto.save()
-
+        for totoData in data['toto']:
+            event = Event.objects.get(id = totoData['event'])
+            if event.type == 0:
+                toto = Toto(event=event, bet=totoContent, score_k=totoData[f'{event.name_eng}K'], score_p=totoData[f'{event.name_eng}P'], winner=school[totoData[f'{event.name_eng}Winner']])
+                toto.save()
+            elif event.type == 1:
+                toto = Toto(event=event, bet=totoContent, winner=school[totoData[f'{event.name_eng}Winner']])
+                toto.save()
 
         return HttpResponse('')

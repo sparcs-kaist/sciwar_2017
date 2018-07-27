@@ -103,9 +103,9 @@ export default {
   },
   methods: {
     fetchData () {
-      if (!((this.$route.params.id < 9 && this.$route.params.id > 2) || (this.$route.params.id === 11))) {
-        document.getElementById('to-intro').click()
-      }
+      // if (!((this.$route.params.id < 9 && this.$route.params.id > 2) || (this.$route.params.id === 11))) {
+      //   document.getElementById('to-intro').click()
+      // }
       let uri = '/api/events/' + this.$route.params.id + '/'
       this.$http.get(uri)
         .then((response) => {

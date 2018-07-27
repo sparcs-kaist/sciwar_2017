@@ -1,13 +1,13 @@
 <template>
   <div class="toto noto-sans">
     <label class="control-label">Student ID</label>
-    <input v-model="studentId" name="student_id" class="form-controll-small" v-on:keyup="showFormButton()" placeholder="ex)20999999">
+    <input v-model="studentId" name="student_id" class="form-controll-small" placeholder="ex)20999999" v-on:keyup="check()">
     <label class="control-label">Name</label>
-    <input v-model="name" name="name" class="form-controll-small" v-on:keyup="showFormButton()" placeholder="ex)김카이">
+    <input v-model="name" name="name" class="form-controll-small" placeholder="ex)김카이" v-on:keyup="check()">
     <label class="control-label">Password</label>
-    <input v-model="password" type="password" name="password" class="form-controll-small" v-on:keyup="showFormButton()">
+    <input v-model="password" type="password" name="password" class="form-controll-small" v-on:keyup="check()">
 		<div class="toto-content">
-			<h2 class="table-title">스포츠 종목 점수맞추기</h2>
+			<h2 class="table-title">운동경기 점수 맞추기</h2>
 			<table class="toto-table board-table">
 				<thead>
 					<tr>
@@ -18,35 +18,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Soccer</td>
-						<td><input v-model="scoreSoccerK" name="score1_1" placeholder="ex)4" v-on:keyup="getWinnerSoccer()"></td>
-						<td><input v-model="scoreSoccerP" name="score1_2" placeholder="ex)0" v-on:keyup="getWinnerSoccer()"></td>
-            <td class="winner"><span name="winnerSoccer">{{ winnerSoccer }}</span></td>
-					</tr>
-					<tr>
-						<td>Baseball</td>
-						<td><input v-model="scoreBaseballK" name="score2_1" placeholder="ex)12" v-on:keyup="getWinnerBaseball()"></td>
-						<td><input v-model="scoreBaseballP" name="score2_2" placeholder="ex)1" v-on:keyup="getWinnerBaseball()"></td>
-						<td class="winner"><span name="winnerBaseball">{{ winnerBaseball }}</span></td>
-					</tr>
-					<tr>
-						<td>Basketball</td>
-						<td><input v-model="scoreBasketballK" name="score3_1" placeholder="ex)67" v-on:keyup="getWinnerBasketball()"></td>
-						<td><input v-model="scoreBasketballP" name="score3_2" placeholder="ex)51" v-on:keyup="getWinnerBasketball()"></td>
-						<td class="winner"><span name="winnerBasketball">{{ winnerBasketball }}</span></td>
-					</tr>
-          <tr>
-            <td>LOL</td>
-            <td><input v-model="scoreLolK" name="score4_1" placeholder="ex)2" v-on:keyup="getWinnerLol()"></td>
-            <td><input v-model="scoreLolP" name="score4_2" placeholder="ex)1" v-on:keyup="getWinnerLol()"></td>
-            <td class="winner"><span name="winnerLol">{{ winnerLol }}</span></td>
-          </tr>
-          <tr>
-            <td>AI</td>
-            <td><input v-model="scoreAiK" name="score5_1" placeholder="ex)2" v-on:keyup="getWinnerAi()"></td>
-            <td><input v-model="scoreAiP" name="score5_2" placeholder="ex)0" v-on:keyup="getWinnerAi()"></td>
-            <td class="winner"><span name="winnerAi">{{ winnerAi }}</span></td>
+          <tr v-for="event in events" v-if="event.fields.type === 0">
+            <td>{{ event.fields.name_kor }}</td>
+            <td><input :id="event.fields.name_eng.concat('K')" placeholder="ex)3" v-on:keyup="getWinner(event.fields.name_eng);"></td>
+						<td><input :id="event.fields.name_eng.concat('P')" placeholder="ex)0" v-on:keyup="getWinner(event.fields.name_eng);"></td>
+            <td class="winner"><span :id="event.fields.name_eng.concat('Winner')">NONE</span></td>
           </tr>
 				</tbody>
 			</table>
@@ -60,21 +36,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Science Quiz</td>
-						<td><input v-model="winnerQuiz" type="radio" class="radio-button" value="KAIST"></td>
-						<td><input v-model="winnerQuiz" type="radio" class="radio-button" value="POSTECH"></td>
-					</tr>
-					<tr>
-						<td>Hacking Contest</td>
-						<td><input v-model="winnerHacking" type="radio" class="radio-button" value="KAIST"></td>
-						<td><input v-model="winnerHacking" type="radio" class="radio-button" value="POSTECH"></td>
+          <tr v-for="event in events" v-if="event.fields.type === 1">
+						<td>{{ event.fields.name_kor }}</td>
+						<td><input :id="event.fields.name_eng.concat('K')" type="radio" :name="event.fields.name_eng" class="radio-button" value="KAIST" checked></td>
+						<td><input :id="event.fields.name_eng.concat('P')" type="radio" :name="event.fields.name_eng" class="radio-button" value="POSTECH"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
     <router-link :to="{ name: 'toto' }">
-      <button v-on:click="submit()" class="board-button right form-button button is-primary" disabled>제출</button>
+      <button v-on:click="submit()" class="board-button right form-button button is-primary" :disabled="!checkSubmit">제출</button>
     </router-link>
   </div>
 </template>
@@ -86,100 +57,80 @@ export default {
     return {
       studentId: '',
       name: '',
-      scoreSoccerK: '',
-      scoreSoccerP: '',
-      scoreBaseballK: '',
-      scoreBaseballP: '',
-      scoreBasketballK: '',
-      scoreBasketballP: '',
-      scoreLolK: '',
-      scoreLolP: '',
-      scoreAiK: '',
-      scoreAiP: '',
-      winnerSoccer: 'None',
-      winnerBaseball: 'None',
-      winnerBasketball: 'None',
-      winnerLol: 'None',
-      winnerQuiz: 'KAIST',
-      winnerAi: 'None',
-      winnerHacking: 'KAIST'
+      password: '',
+      events: [],
+      toto: [],
+      checkSubmit: false
     }
   },
+  created () {
+    this.$http.get('/api/events/')
+      .then((response) => {
+        this.events = JSON.parse(response.data)
+      })
+  },
   methods: {
-    getWinnerSoccer () {
-      if (parseInt(this.scoreSoccerK) > parseInt(this.scoreSoccerP)) {
-        this.winnerSoccer = 'KAIST'
-      } else if (parseInt(this.scoreSoccerK) < parseInt(this.scoreSoccerP)) {
-        this.winnerSoccer = 'POSTECH'
-      } else {
-        this.winnerSoccer = 'None'
+    check () {
+      if (!this.studentId || !this.name || !this.password) {
+        this.checkSubmit = false
+        return
       }
-      this.showFormButton()
+      for (let event of this.events) {
+        if (event.fields.type === 0) {
+          if (!document.getElementById(event.fields.name_eng.concat('K')).value || !document.getElementById(event.fields.name_eng.concat('P')).value) {
+            this.checkSubmit = false
+            return
+          }
+          if (isNaN(document.getElementById(event.fields.name_eng.concat('K')).value) || isNaN(document.getElementById(event.fields.name_eng.concat('P')).value)) {
+            this.checkSubmit = false
+            return
+          }
+        } else if (event.fields.type === 1) {
+          if (!document.getElementById(event.fields.name_eng.concat('K')).checked && !document.getElementById(event.fields.name_eng.concat('P')).checked) {
+            this.checkSubmit = false
+            return
+          }
+        }
+      }
+      this.checkSubmit = true
     },
-    getWinnerBaseball () {
-      if (parseInt(this.scoreBaseballK) > parseInt(this.scoreBaseballP)) {
-        this.winnerBaseball = 'KAIST'
-      } else if (parseInt(this.scoreBaseballK) < parseInt(this.scoreBaseballP)) {
-        this.winnerBaseball = 'POSTECH'
+    getWinner (name) {
+      var scoreK = parseInt(document.getElementById(name.concat('K')).value)
+      var scoreP = parseInt(document.getElementById(name.concat('P')).value)
+      if (scoreK > scoreP) {
+        document.getElementById(name.concat('Winner')).innerHTML = 'KAIST'
+      } else if (scoreK < scoreP) {
+        document.getElementById(name.concat('Winner')).innerHTML = 'POSTECH'
       } else {
-        this.winnerBaseball = 'None'
+        document.getElementById(name.concat('Winner')).innerHTML = 'NONE'
       }
-      this.showFormButton()
+      this.check()
     },
-    getWinnerBasketball () {
-      if (parseInt(this.scoreBasketballK) > parseInt(this.scoreBasketballP)) {
-        this.winnerBasketball = 'KAIST'
-      } else if (parseInt(this.scoreBasketballK) < parseInt(this.scoreBasketballP)) {
-        this.winnerBasketball = 'POSTECH'
+    appendToto (event) {
+      var eventToto = {}
+      if (event.fields.type === 0) {
+        eventToto['event'] = event.pk
+        eventToto[`${event.fields.name_eng}K`] = parseInt(document.getElementById(event.fields.name_eng.concat('K')).value)
+        eventToto[`${event.fields.name_eng}P`] = parseInt(document.getElementById(event.fields.name_eng.concat('P')).value)
+        eventToto[`${event.fields.name_eng}Winner`] = document.getElementById(event.fields.name_eng.concat('Winner')).innerHTML
+      } else if (event.fields.type === 1) {
+        eventToto['event'] = event.pk
+        eventToto[`${event.fields.name_eng}Winner`] = document.getElementById(event.fields.name_eng.concat('K')).checked ? 'KAIST' : 'POSTECH'
       } else {
-        this.winnerBasketball = 'None'
+        return
       }
-      this.showFormButton()
-    },
-    getWinnerLol () {
-      if (parseInt(this.scoreLolK) > parseInt(this.scoreLolP)) {
-        this.winnerLol = 'KAIST'
-      } else if (parseInt(this.scoreLolK) < parseInt(this.scoreLolP)) {
-        this.winnerLol = 'POSTECH'
-      } else {
-        this.winnerLol = 'None'
-      }
-      this.showFormButton()
-    },
-    getWinnerAi () {
-      if (parseInt(this.scoreAiK) > parseInt(this.scoreAiP)) {
-        this.winnerAi = 'KAIST'
-      } else if (parseInt(this.scoreAiK) < parseInt(this.scoreAiP)) {
-        this.winnerAi = 'POSTECH'
-      } else {
-        this.winnerAi = 'None'
-      }
-      this.showFormButton()
-    },
-    showFormButton () {
-      if (this.scoreSoccerK !== '' &&
-        this.scoreSoccerP !== '' &&
-        this.scoreBaseballK !== '' &&
-        this.scoreBaseballP !== '' &&
-        this.scoreBasketballK !== '' &&
-        this.scoreBasketballP !== '' &&
-        this.ScoreLolK !== '' &&
-        this.ScoreLolP !== '' &&
-        this.scoreAiK !== '' &&
-        this.scoreAiP !== '' &&
-        this.studentId.length === 8 &&
-        this.name !== '' &&
-        this.password !== '') {
-        document.getElementsByClassName('form-button')[0].disabled = false
-      } else {
-        document.getElementsByClassName('form-button')[0].disabled = true
-      }
+      return eventToto
     },
     submit () {
       let crypto = require('crypto')
       let shasum = crypto.createHash('sha256')
       shasum.update(this.password)
-      let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'scoreSoccerK': this.scoreSoccerK, 'scoreSoccerP': this.scoreSoccerP, 'scoreBaseballK': this.scoreBaseballK, 'scoreBaseballP': this.scoreBaseballP, 'scoreBasketballK': this.scoreBasketballK, 'scoreBasketballP': this.scoreBasketballP, 'winnerSoccer': this.winnerSoccer, 'winnerBaseball': this.winnerBaseball, 'winnerBasketball': this.winnerBasketball, 'scoreLolK': this.scoreLolK, 'scoreLolP': this.scoreLolP, 'winnerLol': this.winnerLol, 'winnerQuiz': this.winnerQuiz, 'scoreAiK': this.scoreAiK, 'scoreAiP': this.scoreAiP, 'winnerAI': this.winnerAi, 'winnerHacking': this.winnerHacking }
+      this.toto = this.events.map(this.appendToto)
+      this.toto = this.toto.filter(function (item) {
+        return item
+      })
+      console.log(this.toto)
+      let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'toto': this.toto }
       data = JSON.stringify(data)
       let url = '/api/toto/'
       this.$http.put(url, data)
