@@ -14,6 +14,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.2.0",
     "axios": "^0.16.2",
     "bluebird": "^3.5.0",
     "bulma": "^0.4.4",
@@ -21,6 +22,7 @@
     "css-loader": "^0.28.4",
     "es6-promise": "^4.1.1",
     "font-awesome": "^4.7.0",
+    "fontawesome": "^4.7.2",
     "jquery": "^3.2.1",
     "js-cookie": "^2.1.4",
     "node-sass": "^4.9.2",

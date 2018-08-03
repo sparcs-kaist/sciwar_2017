@@ -34,5 +34,7 @@ const instance = axios.create({
   }
 })
 
+localStorage.setItem('likedMessages', '')
+
 /* export default */
 export default instance

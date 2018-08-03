@@ -11,6 +11,7 @@
           <th class="fc">경기</th>
           <th class="sc">내용</th>
           <th class="tc">팀</th>
+          <th class="fourth">좋아요</th>
         </tr>
       </thead>
       <tbody>
@@ -19,6 +20,10 @@
           <td class="sc">{{ message.fields.content }}</td>
           <td class="tc" v-if="message.fields.school === 1">KAIST</td>
           <td class="tc" v-else-if="message.fields.school === 2">POSTECH</td>
+          <td class="fourth" :id="'toggle'.concat(message.pk)" v-on:click="add_like($event, message); toggle($event.target)">
+            <i class="fas fa-thumbs-up" :style="initialFas(message.pk)"></i>
+            <i class="far fa-thumbs-up" :style="initialFar(message.pk)"></i>
+            {{ message.fields.likes }}개</td>
         </tr>
       </tbody>
     </table>
@@ -54,10 +59,14 @@ export default {
       messages: [],
       messages_event: [],
       messages_rendered: [],
-      page_range: []
+      page_range: [],
+      likedMessages: []
     }
   },
   created () {
+    this.likedMessages = localStorage.getItem('likedMessages')
+    if (this.likedMessages) this.likedMessages = JSON.parse(this.likedMessages)
+    console.log(this.likedMessages)
     this.$http.get('/api/cheermessage/')
       .then((response) => {
         this.messages = JSON.parse(response.data)
@@ -81,6 +90,54 @@ export default {
         }
       }
       return '모두에게'
+    },
+    toggle: function (target) {
+      if (target.tagName === 'I') target = target.parentNode
+      if (target.children[1].style.display !== 'none') {
+        target.children[1].style.display = 'none'
+        target.children[0].style.display = 'inline-block'
+      } else {
+        target.children[0].style.display = ''
+        target.children[1].style.display = ''
+      }
+    },
+    initialFar: function (pk) {
+      if (!this.likedMessages) return ''
+      let idx = this.likedMessages.indexOf(pk)
+      if (idx === -1) return ''
+      else return 'display: none'
+    },
+    initialFas: function (pk) {
+      if (!this.likedMessages) return ''
+      let idx = this.likedMessages.indexOf(pk)
+      if (idx === -1) return ''
+      else return 'display: inline-block'
+    },
+    add_like: function (event, message) {
+      let target = event.target
+      if (target.tagName === 'I') target = target.parentNode
+      if (target.children[1].style.display !== 'none') {
+        let data = JSON.stringify({ 'add': true })
+        this.$http.post('/api/cheermessage/' + message.pk + '/', data)
+          .then((response) => {
+            message.fields.likes += 1
+            if (!this.likedMessages) {
+              this.likedMessages = [message.pk]
+            } else {
+              this.likedMessages.push(message.pk)
+            }
+            localStorage.setItem('likedMessages', JSON.stringify(this.likedMessages))
+          })
+      } else {
+        let data = JSON.stringify({ 'add': false })
+        this.$http.post('/api/cheermessage/' + message.pk + '/', data)
+          .then((response) => {
+            message.fields.likes -= 1
+            let idx = this.likedMessages.indexOf(message.pk)
+            if (idx > -1) this.likedMessages.splice(idx, 1)
+            localStorage.setItem('likedMessages', JSON.stringify(this.likedMessages))
+          })
+      }
     },
     page_turn: function (n) {
       while (this.messages_rendered.length) {
@@ -119,7 +176,7 @@ export default {
     },
     select_event: function () {
       var eventID = document.getElementById('event-type').value
-      console.log(eventID)
+      // console.log(eventID)
       while (this.messages_event.length) {
         this.messages_event.pop()
       }
@@ -129,13 +186,13 @@ export default {
         }
       } else if (eventID === 'no-specific') { // show messages with no specific event tied to it
         for (let i = 0; i < this.messages.length; i++) {
-          if (!this.messages[i].fields.hasOwnProperty('event')) {
+          if (!this.messages[i].fields.event) {
             this.messages_event.push(this.messages[i])
           }
         }
       } else {
         for (let i = 0; i < this.messages.length; i++) {
-          if (this.messages[i].fields.event === eventID) {
+          if (this.messages[i].fields.event === parseInt(eventID)) {
             this.messages_event.push(this.messages[i])
           }
         }
@@ -184,13 +241,36 @@ export default {
 }
 
 .board .fc {
-  width: 200px;
+  width: 130px;
   padding-left: 15px;
  }
 
 .board .tc {
   width: 100px;
   padding-right: 15px;
+}
+
+.board .fourth {
+  width: 100px;
+  cursor: pointer;
+}
+
+.fourth > .far {
+  margin-right: 5px;
+}
+
+.fourth > .fas {
+  display: none;
+  margin-right: 5px;
+}
+
+.fourth:hover > .far {
+  display: none;
+}
+
+.fourth:hover > .fas {
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .board > thead {

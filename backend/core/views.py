@@ -113,7 +113,7 @@ def event_messages(request, event_id):
 # @csrf_exempt
 def messages(request):
     if request.method == "GET":
-        messages = CheerMessage.objects.all().order_by('-time')
+        messages = CheerMessage.objects.all().order_by('-likes')
 
         messages = serializers.serialize('json', messages)
 
@@ -125,6 +125,19 @@ def messages(request):
         cheerMessage = CheerMessage(content = data['content'], school = data['school'])
         cheerMessage.event_id = data['event']
         cheerMessage.save()
+
+        return HttpResponse('')
+
+
+def messageLike(request, pk):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        message = CheerMessage.objects.get(id=pk)
+        if (data['add']):
+            message.likes += 1
+        else:
+            message.likes -= 1
+        message.save()
 
         return HttpResponse('')
 

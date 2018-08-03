@@ -199,9 +199,6 @@ html, body {
 }
 
 .current-cheer-message > div > p {
-  line-break: loose;
-  word-break:keep-all;
-  word-wrap: normal;
   word-spacing: 1px;
   font-size: 35px;
   margin: auto;

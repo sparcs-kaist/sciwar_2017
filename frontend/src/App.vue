@@ -276,7 +276,7 @@ export default {
 
 <style lang="sass" src="bulma"></style>
 <style>
-@import '../node_modules/font-awesome/css/font-awesome.min.css';
+@import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 @import '../static/global.css';
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 @import url(//cdn.jsdelivr.net/font-kopub/1.0/kopubdotum.css);

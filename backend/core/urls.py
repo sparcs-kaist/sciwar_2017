@@ -47,4 +47,5 @@ urlpatterns = [
 
     # POST
     url(r'^shrhksrP/$', views.rescore_toto),
+    url(r'^cheermessage/(?P<pk>\d+)/$', views.messageLike),
 ]
