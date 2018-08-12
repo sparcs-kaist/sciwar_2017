@@ -5,6 +5,10 @@ SCHOOLS = (
     (1, 'KAIST'),
     (2, 'POSTECH'),
 )
+SEX = (
+    (0, 'MALE'),
+    (1, 'FEMALE'),
+)
 
 class Player(models.Model):
     name = models.CharField(max_length=30, blank=True)
@@ -41,7 +45,7 @@ class Event(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     winner = models.IntegerField(default=0, choices=SCHOOLS)
-    location = models.ForeignKey(Location, null=False, related_name="events")
+    location = models.ForeignKey(Location, null=True, related_name="events", on_delete=models.SET_NULL)
     score_k = models.IntegerField(blank=True, null=True, default=0)
     score_p = models.IntegerField(blank=True, null=True, default=0)
     players_k = models.ManyToManyField(Player, related_name="events_k")
@@ -77,14 +81,30 @@ class CheerMessage(models.Model):
     content = models.CharField(max_length=140)
     school = models.IntegerField(choices=SCHOOLS)
     time = models.DateTimeField(auto_now_add=True)
-    event = models.ForeignKey(Event, blank=True, null=True)
+    event = models.ForeignKey(Event, blank=True, null=True, on_delete=models.SET_NULL)
     likes = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f'<{self.get_school_display()}>: {self.content}, {self.event.name_kor}'
 
     class Meta:
-        ordering = ['likes']
+        ordering = ['likes','-time']
+
+
+class SupporterTeam(models.Model):
+    name = models.CharField(
+        max_length = 30,
+    )
+    contact = models.CharField(
+        max_length = 11,
+    )
+    password = models.CharField(
+        max_length = 64,
+        default = '1234',
+    )
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Supporter(models.Model):
@@ -99,14 +119,9 @@ class Supporter(models.Model):
     name = models.CharField(
         max_length = 30,
     )
-    contact = models.CharField(
-        max_length = 11,
-        default = '0'
-    )
-    password = models.CharField(
-        max_length = 64,
-        null = False,
-        default = '1234',
+    sex = models.IntegerField(
+        default = 0,
+        choices = SEX,
     )
     student_id = models.CharField(
         max_length = 8,
@@ -118,6 +133,16 @@ class Supporter(models.Model):
     size = models.IntegerField(
         default = 0,
         choices = SIZE,
+    )
+    is_leader = models.BooleanField(
+        default = False,
+    )
+    team = models.ForeignKey(
+        SupporterTeam,
+        related_name = 'members',
+        related_query_name = 'members',
+        on_delete = models.CASCADE,
+        null = True,
     )
 
     def __str__(self):
@@ -147,11 +172,13 @@ class Toto(models.Model):
         TotoContent,
         related_name = 'totos',
         null = False,
+        on_delete = models.CASCADE,
     )
     event = models.ForeignKey(
         Event,
         related_name = 'totos',
         null = False,
+        on_delete = models.CASCADE,
     )
     score_k = models.IntegerField(
         blank = True,

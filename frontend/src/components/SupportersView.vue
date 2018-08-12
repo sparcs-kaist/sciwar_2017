@@ -10,24 +10,23 @@
       <div class="head">서포터즈 조회하기</div>
       <table class="team-info">
         <tr>
-          <th>이름</th>
-          <td>{{ supporter.fields.name }}</td>
+          <th>팀 이름</th>
+          <td>{{ supporterTeam.fields.name }}</td>
         </tr>
         <tr>
-          <th>학번</th>
-          <td>{{ supporter.fields.student_id }}</td>
+          <th>대표자 연락처</th>
+          <td>{{ supporterTeam.fields.contact }}</td>
         </tr>
         <tr>
-          <th>학과</th>
-          <td>{{ supporter.fields.department }}</td>
-        </tr>
-        <tr>
-          <th>연락처</th>
-          <td>{{ supporter.fields.contact }}</td>
-        </tr>
-        <tr>
-          <th>사이즈</th>
-          <td>{{ size[supporter.fields.size] }}</td>
+          <th>멤버</th>
+          <td class="supporter-list">
+            <ul v-for="member in members" class="supporter-info">{{ member.fields.name }} {{ showLeader(member.fields.is_leader) }}
+              <li>{{ sex[member.fields.sex] }}</li>
+              <li class="student-id">{{ member.fields.student_id }}</li>
+              <li>{{ member.fields.department }}</li>
+              <li>사이즈 {{ size[member.fields.size] }}</li>
+            </ul>
+          </td>
         </tr>
       </table>
       <div class="link-container">
@@ -38,37 +37,72 @@
       <div class="head">서포터즈 신청 수정
         <p>양식의 내용을 확인해주세요</p>
       </div>
-      <div class="supporter-name">
-        <label>이름</label>
-        <input name="supporter-name" v-bind:value="supporter.fields.name">
+      <div class="team-name">
+        <label>팀 이름</label>
+        <input name="team-name" v-bind:value="supporterTeam.fields.name" />
       </div>
-      <div class="supporter-id">
-        <label>학번</label>
-        <input name="supporter-id" v-bind:value="supporter.fields.student_id">
+      <div class="team-contact">
+        <label>대표자 연락처</label>
+        <input name="team-contact" v-bind:value="supporterTeam.fields.contact" />
       </div>
-      <div class="supporter-department">
-        <label>학과</label>
-        <input name="supporter-department" v-bind:value="supporter.fields.department">
-      </div>
-      <div class="supporter-contact">
-        <label>연락처</label>
-        <input name="supporter-contact" v-bind:value="supporter.fields.contact">
-      </div>
-      <div class="supporter-password">
+      <div class="team-password">
         <label>비밀번호</label>
-        <input name="supporter-password" type="password" placeholder="기본값: 1234">
+        <input name="team-password" v-bind:value="supporterTeam.fields.password" />
       </div>
-      <div class="supporter-size">
-        <label>티셔츠 사이즈</label>
-        <select class="T-shirt">
-          <option :selected="supporter.fields.size === 1">XS</option>
-          <option :selected="supporter.fields.size === 2">S</option>
-          <option :selected="supporter.fields.size === 3">M</option>
-          <option :selected="supporter.fields.size === 4">L</option>
-          <option :selected="supporter.fields.size === 5">XL</option>
-          <option :selected="supporter.fields.size === 6">XXL</option>
-        </select>
+      <div class="members">
+        <button v-on:click="addClick(); print()" class="member-add">멤버 추가</button>
+        <button v-on:click="deleteClick()" class="member-add">멤버 삭제</button>
+        <p class="count">{{ click + members.length }}명</p>
       </div>
+      <div class="supporter-block">
+        <div v-for="member in members" v-bind:style="styleMember" class="supporter">
+          <label>이름</label>
+          <input name="member-name" v-bind:style="styleInput" v-bind:value="member.fields.name"><br>
+          <label>성별</label>
+          <select name="member-sex" v-bind:style="styleInput2">
+            <option :selected="member.fields.sex === 0">남성</option>
+            <option :selected="member.fields.sex === 1">여성</option>
+          </select>
+          <label>학번</label>
+          <input name="member-id" v-bind:style="styleInput" v-bind:value="member.fields.student_id"><br>
+          <label>학과</label>
+          <input name="member-department" v-bind:style="styleInput" v-bind:value="member.fields.department"><br>
+          <label>티셔츠 사이즈</label>
+          <select name="member-size" v-bind:style="styleInput2">
+            <option :selected="supporter.fields.size === 0">85</option>
+            <option :selected="supporter.fields.size === 1">90</option>
+            <option :selected="supporter.fields.size === 2">95</option>
+            <option :selected="supporter.fields.size === 3">100</option>
+            <option :selected="supporter.fields.size === 4">105</option>
+            <option :selected="supporter.fields.size === 5">110</option>
+          </select>
+          <label v-if="member.fields.is_leader">조장</label>
+          <label v-else v-on:click="setLeader(this.members.indexOf(member) + 1)">조장으로 하기</label>
+        </div>
+        <div v-for="n in click" v-bind:style="styleMember" class="supporter">
+          <label>이름</label>
+          <input name="member-name" v-bind:style="styleInput"><br>
+          <label>성별</label>
+          <select name="member-sex">
+            <option>남성</option>
+            <option>여성</option>
+          </select>
+          <label>학번</label>
+          <input name="member-id" v-bind:style="styleInput"><br>
+          <label>학과</label>
+          <input name="member-department" v-bind:style="styleInput"><br>
+          <label>티셔츠 사이즈</label>
+          <select name="member-size">
+            <option>85</option>
+            <option>90</option>
+            <option>95</option>
+            <option>100</option>
+            <option>105</option>
+            <option>110</option>
+          </select>
+          <label v-if="member.fields.is_leader">조장</label>
+          <label v-else v-on:click="setLeader(this.members.length + n)">조장으로 하기</label>
+        </div>
       <router-link :to="{ name: 'supporters' }">
         <button class="submit" v-on:click="submit">제출</button>
       </router-link>
@@ -77,6 +111,7 @@
       </router-link>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -87,8 +122,34 @@ export default {
       theRightPassword: '',
       certified: false,
       edit: false,
-      supporter: {},
-      size: ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+      click: 0,
+      supporterTeam: {},
+      members: [],
+      currentLeaderM: {},
+      currentLeaderF: {},
+      styleSupporter: {
+        backgroundColor: '#efefef',
+        borderRadius: '5px',
+        width: '260px',
+        margin: '15px 15px 0 0',
+        padding: '10px 7px 10px 17px',
+        fontSize: '24px'
+      },
+      styleInput: {
+        margin: '-10px 0 0 10px',
+        width: 'calc(100% - 83px)',
+        fontSize: '15px',
+        display: 'inline-block'
+      },
+      styleInput2: {
+        position: 'relative',
+        top: '-2px',
+        margin: '0px 0 0 10px',
+        fontSize: '15px',
+        display: 'inline-block'
+      },
+      size: ['85', '90', '95', '100', '105', '110'],
+      sex: ['남', '여']
     }
   },
   created () {
@@ -119,7 +180,6 @@ export default {
       shasum.update(password)
       password = shasum.digest('hex')
       if (password === this.theRightPassword) {
-        this.certified = true
         this.loadComplete()
       } else {
         alert('비밀번호가 틀렸습니다.')
@@ -129,24 +189,56 @@ export default {
       let uri = '/api/supporters/complete/' + this.$route.params.id + '/'
       this.$http.get(uri)
         .then((response) => {
-          this.supporter = JSON.parse(response.data)[0]
+          this.supporterTeam = JSON.parse(response.data['supporter_team'])[0]
+          this.members = JSON.parse(response.data['members'])
+          this.certified = true
         })
     },
     showMod: function () {
       this.edit = true
     },
+    print: function () {
+      console.log(this.members[0])
+    },
+    addClick: function () {
+      this.click++
+    },
+    deleteClick: function () {
+      if (this.click > 0) {
+        this.click--
+      } else if (this.click === 0 && this.members.length > 0) {
+        this.members.pop()
+      }
+    },
+    setLeader: function (n) {
+
+    },
     submit: function () {
-      let name = document.getElementsByName('supporter-name')[0].value
-      let contact = document.getElementsByName('supporter-contact')[0].value
-      let password = document.getElementsByName('supporter-password')[0].value
-      let studentID = document.getElementsByName('supporter-id')[0].value
-      let department = document.getElementsByName('supporter-department')[0].value
-      let size = document.getElementsByClassName('T-shirt')[0].selectedIndex
+      let teamName = document.getElementsByName('team-name')[0].value
+      let teamContact = document.getElementsByName('team-contact')[0].value
+      let teamPassword = document.getElementsByName('team-password')[0].value
+
+      let nameList = document.getElementsByName('member-name')
+      let idList = document.getElementsByName('member-id')
+      let departmentList = document.getElementsByName('member-department')
+      let sexList = document.getElementsByName('member-sex')
+      let sizeList = document.getElementsByName('member-size')
+      let supporterList = []
+      for (let i = 0; i < nameList.length; i++) {
+        let memberName = nameList[i].value
+        let memberId = idList[i].value
+        let memberDepartment = departmentList[i].value
+        let memberSex = sexList[i].selectedIndex
+        let memberSize = sizeList[i].selectedIndex
+        let supporter = { 'name': memberName, 'sex': memberSex, 'studentID': memberId, 'department': memberDepartment, 'size': memberSize }
+        supporterList.push(supporter)
+      }
+
       let crypto = require('crypto')
       let shasum = crypto.createHash('sha256')
-      shasum.update(password)
-      password = shasum.digest('hex')
-      let data = { 'pk': this.supporter.pk, 'name': name, 'contact': contact, 'password': password, 'studentID': studentID, 'department': department, 'size': size }
+      shasum.update(teamPassword)
+      teamPassword = shasum.digest('hex')
+      let data = { 'pk': this.supporterTeam.pk, 'teamName': teamName, 'contact': teamContact, 'password': teamPassword, 'supporters': supporterList }
       data = JSON.stringify(data)
       this.$http.post('/api/supporters/', data)
         .then((response) => {
@@ -158,6 +250,10 @@ export default {
         .then((response) => {
           console.log('successful')
         })
+    },
+    showLeader: function (bool) {
+      if (bool) return '/ 조장'
+      return ''
     }
   }
 }
@@ -204,6 +300,28 @@ export default {
   font-size: 28px;
 }
 
+.supporter-list {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+ }
+
+ .supporter-info {
+   border-radius: 10px;
+   background-color: #efefef;
+   margin-right: 10px;
+   margin-top: 10px;
+   width: 180px;
+   padding: 10px 10px 10px 10px;
+   text-align: center;
+ }
+
+ .supporter-info > li {
+   font-size: 20px;
+   font-weight: 300;
+   margin: 0 auto;
+ }
+
 .link {
   background-color: #555555;
   text-align: center;
@@ -231,82 +349,50 @@ export default {
   font-weight: 400;
 }
 
-.supporter-name {
+.team-name {
   padding-bottom: 15px;
 }
 
-.supporter-name > label {
+.team-name > label {
   font-size: 28px;
   margin-right: 20px;
   width: 200px;
   display: inline-block;
 }
 
-.supporter-name > input {
+.team-name > input {
   font-size: 24px;
   font-weight: 200;
 }
 
-.supporter-id {
+.team-contact {
   padding-bottom: 15px;
 }
 
-.supporter-id > label {
-  font-size: 28px;
-  margin-right: 20px;
-  width: 200px;
-  display: inline-block;
-}
-
-.supporter-id > input {
-  font-size: 24px;
-  font-weight: 200;
-}
-
-.supporter-department {
-  padding-bottom: 15px;
-}
-
-.supporter-department > label {
-  font-size: 28px;
-  margin-right: 20px;
-  width: 200px;
-  display: inline-block;
-}
-
-.supporter-department > input {
-  font-size: 24px;
-  font-weight: 200;
-}
-
-.supporter-contact {
-  padding-bottom: 15px;
-}
-
-.supporter-contact > label {
+.team-contact > label {
   font-size: 28px;
   margin-right: 20px;
   display: inline-block;
   width: 200px;
 }
 
-.supporter-contact > input {
+.team-contact > input {
   font-size: 24px;
   font-weight: 200;
 }
 
-.supporter-password {
+.team-password {
   padding-bottom: 20px;
 }
 
-.supporter-password > label {
+.team-password > label {
   font-size: 28px;
   margin-right: 20px;
   width: 200px;
   display: inline-block;
 }
 
-.supporter-password > input {
+.team-password > input {
    font-size: 24px;
    font-weight: 200;
 }
@@ -358,7 +444,6 @@ export default {
 .supporter-block {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
 }
 
 .del {
