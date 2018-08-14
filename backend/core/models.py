@@ -88,7 +88,7 @@ class CheerMessage(models.Model):
         return f'<{self.get_school_display()}>: {self.content}, {self.event.name_kor}'
 
     class Meta:
-        ordering = ['likes','-time']
+        ordering = ['-likes','-time']
 
 
 class SupporterTeam(models.Model):

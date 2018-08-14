@@ -197,7 +197,7 @@ def supporters(request):
         return JsonResponse(supporter_teams, safe = False, json_dumps_params = {'ensure_ascii': False})
 
     if request.method == "PUT":
-        if len(Supporter.objects.all()) >= 180:
+        if len(Supporter.objects.all()) > 10:
             return HttpResponse('')
 
         data = json.loads(request.body)
@@ -222,17 +222,16 @@ def supporters(request):
 
     if request.method == "POST":
         data = json.loads(request.body)
-        supporter = Supporter.objects.get(id = data['pk'])
 
         print(data)
         SupporterTeam.objects.get(id = data['pk']).members.all().delete()
         supporter_team = SupporterTeam(
             id = data['pk'],
-            name = data['nickname'],
+            name = data['teamName'],
             contact = data['contact'],
             password = data['password']
         )
-        team.save()
+        supporter_team.save()
         for instance in data['supporters']:
             supporter = Supporter(
                 name = instance['name'],

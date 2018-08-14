@@ -31,6 +31,7 @@
       </table>
       <div class="link-container">
         <router-link :to="{ name: 'supporters' }" class="link link1">목록으로</router-link>
+        <button type="button" class="link link2" v-on:click="showMod">수정하기</button>
       </div>
     </div>
     <div v-else-if="edit" class="supporter-mod">
@@ -47,52 +48,55 @@
       </div>
       <div class="team-password">
         <label>비밀번호</label>
-        <input name="team-password" v-bind:value="supporterTeam.fields.password" />
+        <input name="team-password" type="password" />
       </div>
       <div class="members">
-        <button v-on:click="addClick(); print()" class="member-add">멤버 추가</button>
-        <button v-on:click="deleteClick()" class="member-add">멤버 삭제</button>
+        <button v-on:click="addClick()" class="member-add">멤버 추가</button>
+        <button v-on:click="deleteClick(members.length + click)" class="member-add">멤버 삭제</button>
         <p class="count">{{ click + members.length }}명</p>
       </div>
       <div class="supporter-block">
-        <div v-for="member in members" v-bind:style="styleMember" class="supporter">
+        <div v-for="(member,index) in members" v-bind:style="styleMember" class="supporter">
           <label>이름</label>
           <input name="member-name" v-bind:style="styleInput" v-bind:value="member.fields.name"><br>
           <label>성별</label>
-          <select name="member-sex" v-bind:style="styleInput2">
+          <select name="member-sex" v-bind:style="styleInput2" v-on:change="setLeader2(index + 1, $event.target.selectedIndex)">
             <option :selected="member.fields.sex === 0">남성</option>
             <option :selected="member.fields.sex === 1">여성</option>
           </select>
+          <br />
           <label>학번</label>
           <input name="member-id" v-bind:style="styleInput" v-bind:value="member.fields.student_id"><br>
           <label>학과</label>
           <input name="member-department" v-bind:style="styleInput" v-bind:value="member.fields.department"><br>
           <label>티셔츠 사이즈</label>
           <select name="member-size" v-bind:style="styleInput2">
-            <option :selected="supporter.fields.size === 0">85</option>
-            <option :selected="supporter.fields.size === 1">90</option>
-            <option :selected="supporter.fields.size === 2">95</option>
-            <option :selected="supporter.fields.size === 3">100</option>
-            <option :selected="supporter.fields.size === 4">105</option>
-            <option :selected="supporter.fields.size === 5">110</option>
+            <option :selected="member.fields.size === 0">85</option>
+            <option :selected="member.fields.size === 1">90</option>
+            <option :selected="member.fields.size === 2">95</option>
+            <option :selected="member.fields.size === 3">100</option>
+            <option :selected="member.fields.size === 4">105</option>
+            <option :selected="member.fields.size === 5">110</option>
           </select>
-          <label v-if="member.fields.is_leader">조장</label>
-          <label v-else v-on:click="setLeader(this.members.indexOf(member) + 1)">조장으로 하기</label>
+          <br />
+          <label v-if="checkLeader(index + 1)" name="member-leader" style="font-weight: bold">조장</label>
+          <label v-else v-on:click="setLeader(index + 1)" name="member-leader" style="cursor: pointer">조장으로 하기</label>
         </div>
         <div v-for="n in click" v-bind:style="styleMember" class="supporter">
           <label>이름</label>
           <input name="member-name" v-bind:style="styleInput"><br>
           <label>성별</label>
-          <select name="member-sex">
+          <select name="member-sex" v-bind:style="styleInput2" v-on:change="setLeader2(members.length + n, $event.target.selectedIndex)">
             <option>남성</option>
             <option>여성</option>
           </select>
+          <br />
           <label>학번</label>
           <input name="member-id" v-bind:style="styleInput"><br>
           <label>학과</label>
           <input name="member-department" v-bind:style="styleInput"><br>
           <label>티셔츠 사이즈</label>
-          <select name="member-size">
+          <select name="member-size" v-bind:style="styleInput2">
             <option>85</option>
             <option>90</option>
             <option>95</option>
@@ -100,16 +104,17 @@
             <option>105</option>
             <option>110</option>
           </select>
-          <label v-if="member.fields.is_leader">조장</label>
-          <label v-else v-on:click="setLeader(this.members.length + n)">조장으로 하기</label>
+          <br />
+          <label v-if="checkLeader(members.length + n)" name="member-leader" style="font-weight: bold">조장</label>
+          <label v-else name="member-leader" v-on:click="setLeader(members.length + n)" style="cursor: pointer">조장으로 하기</label>
         </div>
+      </div>
       <router-link :to="{ name: 'supporters' }">
         <button class="submit" v-on:click="submit">제출</button>
       </router-link>
       <router-link :to="{ name: 'supporters' }">
         <button class="del" v-on:click="del">삭제</button>
       </router-link>
-    </div>
   </div>
 </div>
 </template>
@@ -125,9 +130,9 @@ export default {
       click: 0,
       supporterTeam: {},
       members: [],
-      currentLeaderM: {},
-      currentLeaderF: {},
-      styleSupporter: {
+      currentLeaderM: 1,
+      currentLeaderF: 1,
+      styleMember: {
         backgroundColor: '#efefef',
         borderRadius: '5px',
         width: '260px',
@@ -191,6 +196,10 @@ export default {
         .then((response) => {
           this.supporterTeam = JSON.parse(response.data['supporter_team'])[0]
           this.members = JSON.parse(response.data['members'])
+          for (let i = 0; i < this.members.length; i++) {
+            if (this.members[i].fields.sex === 1 && this.members[i].fields.is_leader) this.currentLeaderF = i + 1
+            if (this.members[i].fields.sex === 0 && this.members[i].fields.is_leader) this.currentLeaderM = i + 1
+          }
           this.certified = true
         })
     },
@@ -201,17 +210,55 @@ export default {
       console.log(this.members[0])
     },
     addClick: function () {
+      if (this.click + this.members.length === 10) {
+        alert('한 팀에 최대 10명을 동륵할 수 있습니다.')
+        return
+      }
       this.click++
     },
-    deleteClick: function () {
+    deleteClick: function (n) {
+      let sex = document.getElementsByName('member-sex')[n - 1].selectedIndex
+      if (this.checkLeader(n)) {
+        if (sex) this.currentLeaderF = this.findSameSexLeader(n, sex)
+        else this.currentLeaderM = this.findSameSexLeader(n, sex)
+      }
+
       if (this.click > 0) {
         this.click--
       } else if (this.click === 0 && this.members.length > 0) {
         this.members.pop()
       }
     },
+    checkLeader: function (n) {
+      if (this.currentLeaderM === n || this.currentLeaderF === n) return true
+      return false
+    },
     setLeader: function (n) {
-
+      if (document.getElementsByName('member-sex')[n - 1].selectedIndex === 0) {
+        if (this.currentLeaderM === this.currentLeaderF) this.currentLeaderF = n
+        this.currentLeaderM = n
+      } else {
+        if (this.currentLeaderM === this.currentLeaderF) this.currentLeaderM = n
+        this.currentLeaderF = n
+      }
+    },
+    setLeader2: function (n, sex) {
+      if (sex) {
+        if (document.getElementsByName('member-sex')[this.currentLeaderF - 1].selectedIndex !== sex) this.currentLeaderF = n
+        if (this.currentLeaderM === n) this.currentLeaderM = this.findSameSexLeader(n, 0)
+      } else {
+        if (document.getElementsByName('member-sex')[this.currentLeaderM - 1].selectedIndex !== sex) this.currentLeaderM = n
+        if (this.currentLeaderF === n) this.currentLeaderF = this.findSameSexLeader(n, 1)
+      }
+    },
+    findSameSexLeader (n, sex) {
+      let i = 1
+      while (i <= this.members.length + this.click) {
+        if (i !== n && document.getElementsByName('member-sex')[i - 1].selectedIndex === sex) return i
+        ++i
+      }
+      if (sex) return this.currentLeaderM
+      else return this.currentLeaderF
     },
     submit: function () {
       let teamName = document.getElementsByName('team-name')[0].value
@@ -230,7 +277,8 @@ export default {
         let memberDepartment = departmentList[i].value
         let memberSex = sexList[i].selectedIndex
         let memberSize = sizeList[i].selectedIndex
-        let supporter = { 'name': memberName, 'sex': memberSex, 'studentID': memberId, 'department': memberDepartment, 'size': memberSize }
+        let memberIsLeader = this.checkLeader(i + 1)
+        let supporter = { 'name': memberName, 'sex': memberSex, 'studentID': memberId, 'department': memberDepartment, 'size': memberSize, 'isLeader': memberIsLeader }
         supporterList.push(supporter)
       }
 
@@ -311,9 +359,10 @@ export default {
    background-color: #efefef;
    margin-right: 10px;
    margin-top: 10px;
-   width: 180px;
+   width: 200px;
    padding: 10px 10px 10px 10px;
    text-align: center;
+   font-size: 28px;
  }
 
  .supporter-info > li {
@@ -330,10 +379,12 @@ export default {
   color: white;
   cursor: pointer;
   padding: 5px 11px;
+  height: 40px;
 }
 
 .link-container {
   margin-top: 20px;
+  width: 25%;
 }
 
 .link1 {
@@ -408,12 +459,12 @@ export default {
   margin-bottom: 10px;
 }
 
-.member {
+.members {
   display: flex;
   margin-bottom: 10px;
 }
 
-.member > button {
+.members > button {
   margin-right: 15px;
   background-color: #555555;
   text-align: center;
@@ -424,7 +475,7 @@ export default {
   padding: 5px 11px;
 }
 
-.member > p {
+.members > p {
   margin-left: 10px;
   margin-top: -2px;
   font-size: 28px;
@@ -444,6 +495,7 @@ export default {
 .supporter-block {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .del {

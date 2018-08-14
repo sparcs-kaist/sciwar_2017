@@ -89,12 +89,19 @@ export default {
   },
   methods: {
     addClick () {
+      if (this.click === 10) {
+        alert('한 팀에 최대 10명을 동륵할 수 있습니다.')
+        return
+      }
       this.click++
     },
     deleteClick (n) {
       let sex = document.getElementsByName('member-sex')[n - 1].selectedIndex
-      if (sex) this.currentLeaderF = this.findSameSexLeader(n, sex)
-      else this.currentLeaderM = this.findSameSexLeader(n, sex)
+      if (this.checkLeader(n)) {
+        if (sex) this.currentLeaderF = this.findSameSexLeader(n, sex)
+        else this.currentLeaderM = this.findSameSexLeader(n, sex)
+      }
+
       if (this.click > 0) {
         this.click--
       }
@@ -119,7 +126,6 @@ export default {
       } else {
         if (document.getElementsByName('member-sex')[this.currentLeaderM - 1].selectedIndex !== sex) this.currentLeaderM = n
         if (this.currentLeaderF === n) this.currentLeaderF = this.findSameSexLeader(n, 1)
-        console.log(this.currentLeaderF)
       }
     },
     findSameSexLeader (n, sex) {
@@ -142,7 +148,9 @@ export default {
       let departmentList = document.getElementsByName('member-department')
       let sizeList = document.getElementsByName('member-size')
       let members = []
-      for (let i = 0; i < nameList.length; i++) {
+
+      let i = 0
+      while (i < this.click) {
         let member = {
           'name': nameList[i].value,
           'sex': sexList[i].selectedIndex,
@@ -152,6 +160,7 @@ export default {
           'isLeader': this.checkLeader(i + 1)
         }
         members.push(member)
+        ++i
       }
 
       let crypto = require('crypto')
