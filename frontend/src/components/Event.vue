@@ -28,49 +28,54 @@
       <span v-else-if="event.fields.winner == 2" class="winner-team postech">POSTECH</span>
       <router-link :to="{ name: 'videos' }" class="to-video">
         <br>경기 보러가기
-        <i class="fa fa-youtube-play"></i>
+        <i class="fab fa-youtube"></i>
       </router-link>
       </p>
     </div>
-    <div class="time"><i class="fa fa-clock-o"></i>일시<span>{{ day }} {{ startTimeH }}:{{ startTimeM }}~{{ endTimeH }}:{{ endTimeM }}</span>
+    <div class="time"><i class="fas fa-clock"></i>일시<span>{{ day }} {{ startTimeH }}:{{ startTimeM }}~{{ endTimeH }}:{{ endTimeM }}</span>
     </div>
-    <div class="location"><i class="fa fa-map-marker"></i>위치<span>{{ locations[event.fields.location] }}</span>
+    <div class="location"><i class="fas fa-map-marker-alt"></i>위치<span>{{ locations[event.fields.location] }}</span>
       <div class="chevron" v-on:click="location()"><i class="fa fa-chevron-down"></i></div>
       <div class="location-picture"></div>
     </div>
-    <div class="player"><i class="fa fa-user"></i>선수단 목록
+    <div class="player"><i class="fas fa-user"></i>선수단 목록
       <div v-on:click="player()" class="chevron"><i class="fa fa-chevron-down"></i></div>
       <div class="player-detail">
         <div>
           <div class="team-kaist">KAIST</div>
           <div class="players-list">
-            <p v-for="player in playersK" class="">{{ player.fields.name }}</p>
+            <p v-for="player in playersK" class=""> {{ player.fields.position }} : {{ player.fields.name }}</p>
           </div>
         </div>
         <div>
           <div class="team-postech">POSTECH</div>
           <div class="players-list">
-            <p v-for="player in playersP" class="">{{ player.fields.name }}</p>
+            <p v-for="player in playersP" class="">{{ player.fields.position }} : {{ player.fields.name }}</p>
           </div>
         </div>
       </div>
+    </div>
+    <div class="words"><i class="fas fa-hand-peace"></i>선수들의 각오<br />
+      <img src="/static/images/quote1.png" width="24" height="24">
+      <img src="/static/images/quote2.png" width="24" height="24">
+      <p>{{ event.fields.words }}</p>
     </div>
     <div class="cheer-message">
       <p>응원의 메시지</p>
       <router-link :to="{ name: 'cheermessage' }"><p>나도 한 마디<img src="/static/images/message.png" width="60"></p></router-link>
       <div class="messages">
-        <p v-if="messages[0]">{{ messages[0].fields.content }}
-        <span v-if="messages[0].fields.school == 1">to. KAIST</span>
-        <span v-if="messages[0].fields.school == 2">to. POSTECH</span>
-        </p>
-        <p v-if="messages[1]">{{ messages[1].fields.content }}
-        <span v-if="messages[1].fields.school == 1">to. KAIST</span>
-        <span v-if="messages[1].fields.school == 2">to. POSTECH</span>
-        </p>
-        <p v-if="messages[2]">{{ messages[2].fields.content }}
-        <span v-if="messages[2].fields.school == 1">to. KAIST</span>
-        <span v-if="messages[2].fields.school == 2">to. POSTECH</span>
-        </p>
+        <div v-if="messages[0]">{{ messages[0].fields.content }}
+        <div v-if="messages[0].fields.school == 1">to. KAIST</div>
+        <div v-if="messages[0].fields.school == 2">to. POSTECH</div>
+        </div>
+        <div v-if="messages[1]">{{ messages[1].fields.content }}
+        <div v-if="messages[1].fields.school == 1">to. KAIST</div>
+        <div v-if="messages[1].fields.school == 2">to. POSTECH</div>
+        </div>
+        <div v-if="messages[2]">{{ messages[2].fields.content }}
+        <div v-if="messages[2].fields.school == 1">to. KAIST</div>
+        <div v-if="messages[2].fields.school == 2">to. POSTECH</div>
+        </div>
       </div>
     </div>
   </div>
@@ -274,8 +279,8 @@ html, body {
 
 .location > i {
   margin-top: 8px;
-  margin-left: 7px;
-  margin-right: 13px;
+  margin-left: 3px;
+  margin-right: 15px;
   font-size: 40px !important;
 }
 
@@ -295,6 +300,32 @@ html, body {
   margin-left: 2px;
   margin-right: 12px;
   font-size: 40px !important;
+}
+
+.words {
+  padding-top: 5px;
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.words > i {
+  margin-top: 8px;
+  margin-left: 2px;
+  margin-right: 12px;
+  font-size: 40px !important;
+}
+
+.words > p {
+  font-size: 30px;
+  font-weight: 200;
+  text-align: center;
+  margin-right: 75px;
+  word-wrap: break-word;
+  word-break: keep-all;
+}
+
+.words > img:nth-child(4) {
+  margin-left: 752px;
 }
 
 .chevron {
@@ -333,7 +364,7 @@ html, body {
   background-color: rgb(242, 242, 242);
   padding: 0 5px;
   width: 100%;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .player-detail > div:nth-child(1) > .players-list {
@@ -341,6 +372,7 @@ html, body {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  text-align: left;
 }
 
 .player-detail > div:nth-child(2) > .players-list {
@@ -348,10 +380,12 @@ html, body {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
+  text-align: right;
 }
 
 .players-list > p {
   margin: 0 5px;
+  width: 100%;
 }
 
 .player-detail {
@@ -394,19 +428,21 @@ html, body {
   font-weight: 200;
 }
 
-.messages > p {
+.messages > div {
   font-size: 30px;
   padding: 0 10px;
   width: 780px;
+  overflow: hidden;
 }
 
-.messages > p:nth-child(odd) {
+.messages > div:nth-child(odd) {
   background-color: rgb(242, 242, 242);
   border-radius: 10px;
 }
 
-.messages > p > span{
+.messages > div > div {
   float: right;
+  text-align: right;
   width: 200px;
 }
 </style>

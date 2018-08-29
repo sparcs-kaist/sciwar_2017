@@ -3,7 +3,7 @@
     <div v-if="vif" class="classified">
       <div class="head">서포터즈 조회하기</div>
       <label>작성하실 때 사용하신 비밀번호를 입력해주세요</label><br>
-      <input type="password" name="password">
+      <input type="password" name="password" v-model="password">
       <button v-on:click="show()">확인</button>
     </div>
     <div v-else-if="velseif" class="supporter-reg">
@@ -14,16 +14,13 @@
           <td>{{ supporterTeam.fields.name }}</td>
         </tr>
         <tr>
-          <th>대표자 연락처</th>
-          <td>{{ supporterTeam.fields.contact }}</td>
-        </tr>
-        <tr>
           <th>멤버</th>
           <td class="supporter-list">
             <ul v-for="member in members" class="supporter-info">{{ member.fields.name }} {{ showLeader(member.fields.is_leader) }}
               <li>{{ sex[member.fields.sex] }}</li>
               <li class="student-id">{{ member.fields.student_id }}</li>
               <li>{{ member.fields.department }}</li>
+              <li>{{ member.fields.contact }}</li>
               <li>사이즈 {{ size[member.fields.size] }}</li>
             </ul>
           </td>
@@ -42,13 +39,9 @@
         <label>팀 이름</label>
         <input name="team-name" v-bind:value="supporterTeam.fields.name" />
       </div>
-      <div class="team-contact">
-        <label>대표자 연락처</label>
-        <input name="team-contact" v-bind:value="supporterTeam.fields.contact" />
-      </div>
       <div class="team-password">
         <label>비밀번호</label>
-        <input name="team-password" type="password" />
+        <input name="team-password" type="password" v-model="password"/>
       </div>
       <div class="members">
         <button v-on:click="addClick()" class="member-add">멤버 추가</button>
@@ -69,6 +62,8 @@
           <input name="member-id" v-bind:style="styleInput" v-bind:value="member.fields.student_id"><br>
           <label>학과</label>
           <input name="member-department" v-bind:style="styleInput" v-bind:value="member.fields.department"><br>
+          <label>연락처</label>
+          <input name="member-contact" v-bind:style="styleInput3" v-bind:value="member.fields.contact"><br>
           <label>티셔츠 사이즈</label>
           <select name="member-size" v-bind:style="styleInput2">
             <option :selected="member.fields.size === 0">85</option>
@@ -95,6 +90,8 @@
           <input name="member-id" v-bind:style="styleInput"><br>
           <label>학과</label>
           <input name="member-department" v-bind:style="styleInput"><br>
+          <label>연락처</label>
+          <input name="member-contact" v-bind:style="styleInput3"><br>
           <label>티셔츠 사이즈</label>
           <select name="member-size" v-bind:style="styleInput2">
             <option>85</option>
@@ -124,6 +121,7 @@ export default {
   name: 'supporters_view',
   data () {
     return {
+      password: '',
       theRightPassword: '',
       certified: false,
       edit: false,
@@ -150,6 +148,12 @@ export default {
         position: 'relative',
         top: '-2px',
         margin: '0px 0 0 10px',
+        fontSize: '15px',
+        display: 'inline-block'
+      },
+      styleInput3: {
+        margin: '-10px 0 0 10px',
+        width: 'calc(100% - 105px)',
         fontSize: '15px',
         display: 'inline-block'
       },
@@ -210,8 +214,8 @@ export default {
       console.log(this.members[0])
     },
     addClick: function () {
-      if (this.click + this.members.length === 10) {
-        alert('한 팀에 최대 10명을 동륵할 수 있습니다.')
+      if (this.click + this.members.length === 12) {
+        alert('한 팀에 최대 12명을 동륵할 수 있습니다.')
         return
       }
       this.click++
@@ -262,12 +266,12 @@ export default {
     },
     submit: function () {
       let teamName = document.getElementsByName('team-name')[0].value
-      let teamContact = document.getElementsByName('team-contact')[0].value
       let teamPassword = document.getElementsByName('team-password')[0].value
 
       let nameList = document.getElementsByName('member-name')
       let idList = document.getElementsByName('member-id')
       let departmentList = document.getElementsByName('member-department')
+      let contactList = document.getElementsByName('member-contact')
       let sexList = document.getElementsByName('member-sex')
       let sizeList = document.getElementsByName('member-size')
       let supporterList = []
@@ -275,10 +279,19 @@ export default {
         let memberName = nameList[i].value
         let memberId = idList[i].value
         let memberDepartment = departmentList[i].value
+        let memberContact = contactList[i].value
         let memberSex = sexList[i].selectedIndex
         let memberSize = sizeList[i].selectedIndex
         let memberIsLeader = this.checkLeader(i + 1)
-        let supporter = { 'name': memberName, 'sex': memberSex, 'studentID': memberId, 'department': memberDepartment, 'size': memberSize, 'isLeader': memberIsLeader }
+        let supporter = {
+          'name': memberName,
+          'sex': memberSex,
+          'studentID': memberId,
+          'department': memberDepartment,
+          'contact': memberContact,
+          'size': memberSize,
+          'isLeader': memberIsLeader
+        }
         supporterList.push(supporter)
       }
 
@@ -286,11 +299,11 @@ export default {
       let shasum = crypto.createHash('sha256')
       shasum.update(teamPassword)
       teamPassword = shasum.digest('hex')
-      let data = { 'pk': this.supporterTeam.pk, 'teamName': teamName, 'contact': teamContact, 'password': teamPassword, 'supporters': supporterList }
+      let data = { 'pk': this.supporterTeam.pk, 'teamName': teamName, 'password': teamPassword, 'supporters': supporterList }
       data = JSON.stringify(data)
       this.$http.post('/api/supporters/', data)
         .then((response) => {
-          console.log('successful')
+          console.log(response.data)
         })
     },
     del: function () {

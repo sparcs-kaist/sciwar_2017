@@ -13,6 +13,7 @@ SEX = (
 class Player(models.Model):
     name = models.CharField(max_length=30, blank=True)
     age = models.IntegerField(blank=True)
+    position = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -22,6 +23,9 @@ class Location(models.Model):
     school = models.IntegerField(choices=SCHOOLS)
     name_eng = models.CharField(max_length=30)
     name_kor = models.CharField(max_length=30)
+    left = models.IntegerField(default=0)
+    top = models.IntegerField(default=0)
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.name_kor}'
@@ -53,7 +57,8 @@ class Event(models.Model):
     live = models.IntegerField(default = 0, choices = STATUS)
     score_weight = models.FloatField(blank=True, null=True, default = 0.0)
     win_weight = models.FloatField(blank=True, null=True, default = 1.0)
-
+    about = models.TextField(blank=True, null=True)
+    words = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.name_kor} {self.live}'
@@ -95,9 +100,6 @@ class SupporterTeam(models.Model):
     name = models.CharField(
         max_length = 30,
     )
-    contact = models.CharField(
-        max_length = 11,
-    )
     password = models.CharField(
         max_length = 64,
         default = '1234',
@@ -129,6 +131,10 @@ class Supporter(models.Model):
     )
     department = models.CharField(
         max_length = 50,
+    )
+    contact = models.CharField(
+        max_length = 11,
+        null = True,
     )
     size = models.IntegerField(
         default = 0,

@@ -117,9 +117,9 @@
         </div>
         <div class="event-list">
           <div>
-            <router-link :to="{ name: 'introduction' }">
+            <router-link :to="{ name: 'intro-sports' }">
               <div class="menu-images">
-                <img v-bind:src="'/static/images/Baseball.png'" width="22" style="margin:7px 10px 0 5px;">
+                <img v-bind:src="'/static/images/face.png'" width="30px" style="margin:5px 8px 0 4px;">
               </div>
               <p class="submenu-event-name">
                 운동 경기
@@ -130,9 +130,9 @@
         </div>
         <div class="event-list">
           <div>
-            <router-link :to="{ name: 'introduction' }">
+            <router-link :to="{ name: 'intro-science' }">
               <div class="menu-images">
-                <img v-bind:src="'/static/images/Hacking.png'" width="22" style="margin:7px 10px 0 5px;">
+                <img v-bind:src="'/static/images/questionmark.png'" width="22" style="margin:7px 10px 0 5px;">
               </div>
               <p class="submenu-event-name">
                 과학 경기

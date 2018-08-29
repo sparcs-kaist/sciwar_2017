@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Introduction from '@/components/Introduction'
+import IntroductionSports from '@/components/IntroductionSports'
+import IntroductionScience from '@/components/IntroductionScience'
 import Album from '@/components/Album'
 import Event from '@/components/Event'
 import Videos from '@/components/Videos'
@@ -10,7 +12,8 @@ import VideoUpdate from '@/components/Internal/VideoUpdate'
 import VideoAdd from '@/components/Internal/VideoAdd'
 import Video from '@/components/Video'
 import Schedule from '@/components/Schedule'
-import Map from '@/components/Map'
+import Map from '@/components/MapPostech'
+// import Map from '@/components/MapKaist'
 import Supporters from '@/components/Supporters'
 import SupportersWrite from '@/components/SupportersWrite'
 import SupportersView from '@/components/SupportersView'
@@ -44,6 +47,20 @@ export default new Router({
       name: 'introduction',
       components: {
         contents: Introduction
+      }
+    },
+    {
+      path: '/intro-sports',
+      name: 'intro-sports',
+      components: {
+        contents: IntroductionSports
+      }
+    },
+    {
+      path: '/intro-science',
+      name: 'intro-science',
+      components: {
+        contents: IntroductionScience
       }
     },
     {

@@ -59,7 +59,7 @@
     <div class="supporters-recruit noto-sans">
       <p class="title">서포터즈가 되어주세요!</p>
       <div>
-        <div><img src="static/images/supporters.svg" alt="supporters" width="300" height="230"></div>
+        <div><img src="static/images/supporters.svg" alt="supporters" width="200" height="200"></div>
         <p>하나! 공식 티셔츠 및 각종 응원도구<br>둘! 한정 기념품 및 신청자 한정 추첨 상품<br>셋! 서포터즈만을 위한 경기 중 특별 이벤트<br>넷! 전야제에 참가한 서포터즈를 위해 ELKA가 준비한 60만원 상당의 추첨 상품<br>그리고 다섯! 새터반 마일리지를 (새내기 대상) 서포터즈 여러분들을 위해 준비했답니다. 서포터즈의 역할을 메뉴의 '서포터즈' 버튼을 눌러 확인하시고 신청해 주세요. </p>
       </div>
     </div>
@@ -317,15 +317,23 @@ html, body {
 }
 
 .supporters-recruit > div > div {
-  height: 220px;
   margin-top: -10px;
-  float: left;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.supporters-recruit > div > div > img {
+  align-self: center;
+  margin-left: 350px;
 }
 
 .supporters-recruit > div > p {
   display: inline;
   left: 350px;
-  font-size: 32px;
+  font-size: 30px;
+  word-wrap: break-word;
+  word-break: keep-all;
 }
 
 </style>

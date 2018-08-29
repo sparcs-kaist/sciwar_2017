@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^toto-content/$', views.totoContent),
     url(r'^supporters/(?P<pk>\d+)/', views.supportersView),
     url(r'^supporters/complete/(?P<pk>\d+)/', views.SupportersViewComplete),
+    url(r'^locations/$', views.locations),
 
     # PUT
     url(r'^toto/$', views.toto),

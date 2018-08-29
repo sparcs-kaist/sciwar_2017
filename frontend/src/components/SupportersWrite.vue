@@ -7,10 +7,6 @@
       <label>이름</label>
       <input name="team-name">
     </div>
-    <div class="team-contact">
-      <label>대표자 연락처</label>
-      <input name="team-contact">
-    </div>
     <div class="team-password">
       <label>비밀번호</label>
       <input name="team-password" type="password">
@@ -34,6 +30,8 @@
         <input name="member-id" v-bind:style="styleInput"><br>
         <label>학과</label>
         <input name="member-department" v-bind:style="styleInput"><br>
+        <label>연락처</label>
+        <input name="member-contact" v-bind:style="styleInput3"><br>
         <label>티셔츠 사이즈</label>
         <select name="member-size" v-bind:style="styleInput2">
           <option selected>85</option>
@@ -82,6 +80,12 @@ export default {
         margin: '0px 0 0 10px',
         fontSize: '15px',
         display: 'inline-block'
+      },
+      styleInput3: {
+        margin: '-10px 0 0 10px',
+        width: 'calc(100% - 105px)',
+        fontSize: '15px',
+        display: 'inline-block'
       }
     }
   },
@@ -89,8 +93,8 @@ export default {
   },
   methods: {
     addClick () {
-      if (this.click === 10) {
-        alert('한 팀에 최대 10명을 동륵할 수 있습니다.')
+      if (this.click === 12) {
+        alert('한 팀에 최대 12명을 동륵할 수 있습니다.')
         return
       }
       this.click++
@@ -139,13 +143,13 @@ export default {
     },
     submit () {
       let teamName = document.getElementsByName('team-name')[0].value
-      let teamContact = document.getElementsByName('team-contact')[0].value
       let teamPassword = document.getElementsByName('team-password')[0].value
 
       let nameList = document.getElementsByName('member-name')
       let sexList = document.getElementsByName('member-sex')
       let idList = document.getElementsByName('member-id')
       let departmentList = document.getElementsByName('member-department')
+      let contactList = document.getElementsByName('member-contact')
       let sizeList = document.getElementsByName('member-size')
       let members = []
 
@@ -156,6 +160,7 @@ export default {
           'sex': sexList[i].selectedIndex,
           'studentID': idList[i].value,
           'department': departmentList[i].value,
+          'contact': contactList[i].value,
           'size': sizeList[i].selectedIndex,
           'isLeader': this.checkLeader(i + 1)
         }
@@ -167,12 +172,12 @@ export default {
       let shasum = crypto.createHash('sha256')
       shasum.update(teamPassword)
       teamPassword = shasum.digest('hex')
-      let data = { 'teamName': teamName, 'contact': teamContact, 'password': teamPassword, 'supporters': members }
+      let data = { 'teamName': teamName, 'password': teamPassword, 'supporters': members }
       data = JSON.stringify(data)
       let url = '/api/supporters/'
       this.$http.put(url, data)
         .then((response) => {
-          console.log('save successfully')
+          console.log(response)
         })
     }
   }
@@ -204,22 +209,6 @@ export default {
 }
 
 .team-name > input {
-  font-size: 24px;
-  font-weight: 200;
-}
-
-.team-contact {
-  padding-bottom: 15px;
-}
-
-.team-contact > label {
-  font-size: 28px;
-  margin-right: 20px;
-  display: inline-block;
-  width: 200px;
-}
-
-.team-contact > input {
   font-size: 24px;
   font-weight: 200;
 }
