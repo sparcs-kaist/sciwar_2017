@@ -1,4 +1,4 @@
-# from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from core.models import *
 from django.http import JsonResponse, HttpResponse
@@ -23,7 +23,7 @@ def events(request):
         return JsonResponse(events, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
-# @csrf_exempt
+@csrf_exempt
 def event(request, event_id):
     if request.method == "GET":
         event = Event.objects.get(id = event_id)
@@ -118,7 +118,7 @@ def event_messages(request, event_id):
         return JsonResponse(messages, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
-# @csrf_exempt
+@csrf_exempt
 def messages(request):
     if request.method == "GET":
         messages = CheerMessage.objects.all()
@@ -150,7 +150,7 @@ def messageLike(request, pk):
         return HttpResponse('')
 
 
-# @csrf_exempt
+@csrf_exempt
 def videos(request):
     if request.method == "GET":
         videos = Video.objects.all().order_by('-time')
@@ -174,7 +174,7 @@ def videos(request):
         return HttpResponse('')
 
 
-# @csrf_exempt
+@csrf_exempt
 def video(request, pk):
     if request.method == "GET":
         video = Video.objects.get(id = pk)
@@ -197,6 +197,7 @@ def video(request, pk):
         return HttpResponse('')
 
 
+@csrf_exempt
 def supporters(request):
     if request.method == "GET":
         supporter_teams = SupporterTeam.objects.all().order_by('-id')
@@ -205,7 +206,7 @@ def supporters(request):
         return JsonResponse(supporter_teams, safe = False, json_dumps_params = {'ensure_ascii': False})
 
     if request.method == "PUT":
-        if len(Supporter.objects.all()) > 12 or len(SupporterTeam.objects.all()) > 180:
+        if len(Supporter.objects.all()) > 180:
             return HttpResponse('최대 신청자수를 초과하였습니다.')
 
         data = json.loads(request.body)
@@ -226,7 +227,7 @@ def supporters(request):
             )
             supporter.save()
 
-        return HttpResponse('')
+        return HttpResponse('신청 완료되었습니다! 아래 리스트에 없는 경우 운영진에게 알려주세요.')
 
 
     if request.method == "POST":

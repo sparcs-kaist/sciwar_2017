@@ -182,6 +182,7 @@ export default {
       this.$http.put(url, data)
         .then((response) => {
           console.log(response)
+          alert(response.data)
         })
     }
   }
