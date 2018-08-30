@@ -10,18 +10,18 @@
       <div class="head">서포터즈 조회하기</div>
       <table class="team-info">
         <tr>
-          <th>팀 이름</th>
+          <th>Team name</th>
           <td>{{ supporterTeam.fields.name }}</td>
         </tr>
         <tr>
-          <th>멤버</th>
+          <th>Members</th>
           <td class="supporter-list">
             <ul v-for="member in members" class="supporter-info">{{ member.fields.name }} {{ showLeader(member.fields.is_leader) }}
               <li>{{ sex[member.fields.sex] }}</li>
               <li class="student-id">{{ member.fields.student_id }}</li>
               <li>{{ member.fields.department }}</li>
               <li>{{ member.fields.contact }}</li>
-              <li>사이즈 {{ size[member.fields.size] }}</li>
+              <li>Size {{ size[member.fields.size] }}</li>
             </ul>
           </td>
         </tr>

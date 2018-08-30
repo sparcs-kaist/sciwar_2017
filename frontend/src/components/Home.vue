@@ -349,6 +349,6 @@ html, body {
 }
 
 .sponsor > img {
-  filter: hue-rotate(180deg); 
+  filter: hue-rotate(180deg);
 }
 </style>

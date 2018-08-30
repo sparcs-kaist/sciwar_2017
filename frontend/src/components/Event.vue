@@ -35,8 +35,6 @@
     <div class="time"><i class="fas fa-clock"></i>일시<span>{{ day }} {{ startTimeH }}:{{ startTimeM }}~{{ endTimeH }}:{{ endTimeM }}</span>
     </div>
     <div class="location"><i class="fas fa-map-marker-alt"></i>위치<span>{{ locations[event.fields.location] }}</span>
-      <div class="chevron" v-on:click="location()"><i class="fa fa-chevron-down"></i></div>
-      <div class="location-picture"></div>
     </div>
     <div class="player"><i class="fas fa-user"></i>선수단 목록
       <div v-on:click="player()" class="chevron"><i class="fa fa-chevron-down"></i></div>

@@ -151,6 +151,7 @@ export default {
   text-align: justify;
   line-height: 120%;
   word-break: keep-all;
+  font-size: 30px;
 }
 
 .board{
