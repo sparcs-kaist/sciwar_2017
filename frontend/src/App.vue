@@ -613,12 +613,19 @@ a:hover > p > .fa {
 
 .logos {
   margin-top: 50px;
-  font-size: 18px;
   filter: grayscale(0%);
   position: absolute;
   top: 1470px;
   display: flex;
   flex-direction: column;
+}
+
+.logos > p {
+  text-align: right;
+  font-size: 32px !important;
+  font-weight: 900;
+  color: rgb(149,179,215);
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .logo {
