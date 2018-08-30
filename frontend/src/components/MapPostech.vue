@@ -68,8 +68,14 @@ export default {
           }
           this.setCurrent(location)
           document.getElementById(location.fields.name_eng).classList.add('hover')
+          return
         }
       }
+      if (this.currentLocation.hasOwnProperty('fields')) {
+        document.getElementById(this.currentLocation.fields.name_eng).classList.remove('hover')
+      }
+      this.currentLocation = {}
+      return
     },
     discardCurrent () {
       for (let pin of document.getElementsByClassName('pin')) {
