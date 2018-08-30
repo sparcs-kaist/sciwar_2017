@@ -161,7 +161,7 @@ export default {
 
 .video-cheermessages-title > p {
   font-size: 40px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .video-cheermessages-title > a > p {

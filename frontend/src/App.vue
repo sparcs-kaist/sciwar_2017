@@ -101,6 +101,12 @@
           </router-link>
         </div>
       </div>
+      <div class="logos">
+        <p>주관 및 후원</p>
+        <img src="/static/images/netmarble.PNG" class="logo" width="300" height="100" />
+        <img src="/static/images/imgeffectlogo.png" class="logo" width="300" height="100" />
+        <img src="/static/images/WideKAPOlogo.png" class="logo" width="300" height="100" />
+      </div>
       <div id="submenu">
         <div class="event-list">
           <div>
@@ -255,17 +261,20 @@ export default {
       if (document.getElementsByClassName('image')[0]) {
         document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
         document.getElementById('submenu').style.top = '865px'
+        document.getElementsByClassName('logos')[0].style.top = '1470px'
       } else if (this.$route.params.id && this.$route.name === 'event') {
         // document.getElementsByClassName('contents')[0].style.margin = '767px auto 0 auto'
         document.getElementsByClassName('contents')[0].style.margin = '244px auto 0 auto'
         document.getElementById('submenu').style.top = '342px'
         document.getElementById('nav-bar').style.top = '0px'
         document.getElementById('sidebar-wrapper').style.top = '244px'
+        document.getElementsByClassName('logos')[0].style.top = '947px'
       } else {
         document.getElementsByClassName('contents')[0].style.margin = '144px auto 0 auto'
         document.getElementById('submenu').style.top = '242px'
         document.getElementById('nav-bar').style.top = '0px'
         document.getElementById('sidebar-wrapper').style.top = '144px'
+        document.getElementsByClassName('logos')[0].style.top = '847px'
       }
       document.getElementById('kaist-score').innerHTML = this.kaistScore
       document.getElementById('postech-score').innerHTML = this.postechScore
@@ -602,6 +611,29 @@ a:hover > p > .fa {
   z-index: 10;
 }
 
+.logos {
+  margin-top: 50px;
+  font-size: 18px;
+  filter: grayscale(0%);
+  position: absolute;
+  top: 1470px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  margin-top: 15px;
+}
+
+.logo:nth-child(3) {
+  margin-top: 20px;
+  filter: invert(80%);
+}
+
+.logo:nth-child(4) {
+  margin-top: 5px;
+}
+
 .event-list {
   width: 180px;
   margin-bottom: 10px;
@@ -644,7 +676,7 @@ a:hover > p > .fa {
   width: 945px;
 }
 
-img {
+img:not(.logo) {
   filter: grayscale(100%);
 }
 </style>

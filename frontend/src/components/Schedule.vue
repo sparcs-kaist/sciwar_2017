@@ -23,12 +23,12 @@
             </div>
             <div class="time-location">
               <div class="event-time">
-                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                <i class="fas fa-clock" aria-hidden="true"></i>
                 {{ event.fields.start_time.split('T')[1].split('Z')[0].split(':')[0] }}:{{ event.fields.start_time.split('T')[1].split('Z')[0].split(':')[1] }}&nbsp; &nbsp;
               </div>
               <div class="event-location">
-                <i class="fa fa-map-pin" aria-hidden="true"></i>
-                {{ locations[event.fields.location] }}
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                {{ findLocation(event.fields.location) }}
               </div>
             </div>
           </div>
@@ -58,7 +58,18 @@ export default {
           }
         }
       })
-    this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장', 'N5 2268, 2269호']
+    this.$http.get('/api/locations/')
+      .then((response) => {
+        this.locations = JSON.parse(response.data)
+      })
+  },
+  methods: {
+    findLocation (pk) {
+      for (let i of this.locations) {
+        if (i.pk === pk) return i.fields.name_kor
+      }
+      return ''
+    }
   }
 }
 </script>

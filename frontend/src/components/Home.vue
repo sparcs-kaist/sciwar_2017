@@ -60,13 +60,8 @@
       <p class="title">서포터즈가 되어주세요!</p>
       <div>
         <div><img src="static/images/supporters.svg" alt="supporters" width="200" height="200"></div>
-        <p>하나! 공식 티셔츠 및 각종 응원도구<br>둘! 한정 기념품 및 신청자 한정 추첨 상품<br>셋! 서포터즈만을 위한 경기 중 특별 이벤트<br>넷! 전야제에 참가한 서포터즈를 위해 ELKA가 준비한 60만원 상당의 추첨 상품<br>그리고 다섯! 새터반 마일리지를 (새내기 대상) 서포터즈 여러분들을 위해 준비했답니다. 서포터즈의 역할을 메뉴의 '서포터즈' 버튼을 눌러 확인하시고 신청해 주세요. </p>
+        <p>하나! 공식 티셔츠 및 각종 응원도구 제공 Offering official T-shirts and various cheering tools<br>둘! 포스텍까지 왕복 버스 지원 및 숙소지원 Round-trip bus support to Postech and accommodation support<br>셋! 한정 기념품 및 신청자 한정 추첨 상품 Qualified souvenirs and applicants limited draw prizes<br>넷! 서포터즈만을 위한 특별 이벤트 Special events for supporters only<br>다섯! 서포터즈들에게 마일리지 점수 제공 Providing mileage points to supporters<br />서포터즈의 역할을 메뉴의 '서포터즈' 버튼을 눌러 확인하시고 신청해 주세요. Apply after checking the role of the supporters by pressing the "Supporters" button on the menu.</p>
       </div>
-    </div>
-    <div class="sponsor noto-sans">
-      <span>이 행사는</span>
-      <img src="static/images/netmarble.PNG" width="150"/>
-      <span>의 후원으로 이루어졌습니다.</span>
     </div>
   </div>
 </template>
@@ -341,14 +336,4 @@ html, body {
   text-align: justify;
 }
 
-.sponsor {
-  margin-top: 50px;
-  font-size: 18px;
-  float: right;
-  width: 450px;
-}
-
-.sponsor > img {
-  filter: hue-rotate(180deg);
-}
 </style>

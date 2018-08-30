@@ -12,8 +12,8 @@ SEX = (
 
 class Player(models.Model):
     name = models.CharField(max_length=30, blank=True)
-    age = models.IntegerField(blank=True)
-    position = models.CharField(max_length=30, blank=True)
+    age = models.IntegerField(blank=True, null=True)
+    position = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -49,11 +49,11 @@ class Event(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     winner = models.IntegerField(default=0, choices=SCHOOLS)
-    location = models.ForeignKey(Location, null=True, related_name="events", on_delete=models.SET_NULL)
+    location = models.ForeignKey(Location, null=True, blank=True, related_name="events", on_delete=models.SET_NULL)
     score_k = models.IntegerField(blank=True, null=True, default=0)
     score_p = models.IntegerField(blank=True, null=True, default=0)
-    players_k = models.ManyToManyField(Player, related_name="events_k")
-    players_p = models.ManyToManyField(Player, related_name="events_p")
+    players_k = models.ManyToManyField(Player, related_name="events_k", null=True, blank=True)
+    players_p = models.ManyToManyField(Player, related_name="events_p", null=True, blank=True)
     live = models.IntegerField(default = 0, choices = STATUS)
     score_weight = models.FloatField(blank=True, null=True, default = 0.0)
     win_weight = models.FloatField(blank=True, null=True, default = 1.0)
@@ -90,7 +90,7 @@ class CheerMessage(models.Model):
     likes = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f'<{self.get_school_display()}>: {self.content}, {self.event.name_kor}'
+        return f'<{self.get_school_display()}>: {self.content}'
 
     class Meta:
         ordering = ['-likes','-time']
