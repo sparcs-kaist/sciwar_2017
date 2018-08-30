@@ -38,7 +38,7 @@
               <img src="/static/images/sciwar.png" width="35">
             </div>
             <p>
-            카포전이란
+            Kapo-Jeon?
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></a>
           <router-link :to="{ name: 'schedule' }" class="button">
@@ -46,7 +46,7 @@
               <img src="/static/images/schedule.png" width="35">
             </div>
             <p>
-            일정
+            Schedule
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
           <router-link :to="{ name: 'supporters' }" class="button">
@@ -54,7 +54,7 @@
               <img src="/static/images/supporters.svg" width="50">
             </div>
             <p>
-            서포터즈
+            Supporters
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
           <router-link :to="{ name: 'toto' }" class="button">
@@ -62,7 +62,7 @@
               <img src="/static/images/toto.png" width="35">
             </div>
             <p>
-            토토이벤트
+            Lottery
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
           <router-link :to="{ name: 'map' }" class="button">
@@ -70,7 +70,7 @@
               <img src="/static/images/map.png" width="50">
             </div>
             <p>
-            지도
+            Map
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
           <router-link :to="{ name: 'videos' }" class="button">
@@ -78,7 +78,7 @@
               <img src="/static/images/image.png" width="35">
             </div>
             <p>
-            비디오
+            Videos
               <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
             </p></router-link>
             <router-link :to="{ name: 'cheermessage' }" class="button">
@@ -86,7 +86,7 @@
                 <img src="/static/images/message.png" width="50">
               </div>
               <p>
-              응원메세지
+              Comments
                 <i class="fa fa-chevron-right menu" aria-hidden="true"></i>
               </p></router-link>
         </div>

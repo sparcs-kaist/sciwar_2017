@@ -1,21 +1,24 @@
 <template>
   <div class="supporters noto-sans">
     <div class="supporters-title">
-      서포터즈가 되면...
-      <p>아래의 <서포터즈 활용 동의서>를 숙지하시고 신청해 주세요.</p>
+      서포터즈 신청 시 유의사항
+      <p>아래의 유의사항을 숙지하시고 신청해 주세요. Please understand the following precautions and apply to supporters.</p>
     </div>
     <table class="supporters-todo">
       <tr>
-        <th>하나,</th><td>카이스트 서포터즈로서 최선을 다해 활동에 참여해주시기 바랍니다.</td>
+        <th>하나,</th><td>카이스트 서포터즈로서 최선을 다해 활동에 참여해주시기 바랍니다. As a KAIST supporter, please do your best to participate in the activity.</td>
       </tr>
       <tr>
-        <th>둘,</th><td>6개의 경기 (축구, 농구, 야구, LOL, AI, 과학퀴즈) 중 3가지 이상의 경기를 관람해주셔야 합니다.</td>
+        <th>둘,</th><td>7개의 경기(축구, 농구, 야구, LOL, AI, 과학퀴즈, 배드민턴) 4가지의 경기를 관람하시면 대전으로 돌아오는 버스에 탑승하실 수 있고, 6가지의 경기를 모두 관람해야만 보증금을 환급 받으실 수 있습니다. If you watch four of the seven games (football, basketball, baseball, LOL, AI, science quiz, badminton) you can get on the bus back to Daejeon, and only get a refund on your deposit after watching six games.</td>
       </tr>
       <tr>
-        <th>셋,</th><td>서포터즈 티셔츠 및 각종 물품을 제공할 예정이니 9/21(목) 전야제에 꼭 참석하셔야 합니다.</td>
+        <th>셋,</th><td>전야제에 참여하시거나, 카포전 당일에 공지되는 이벤트에 참여하시면 최대 2개까지의 경기를 관람하신 것으로 인정됩니다. If you participate in the previous-night festival or an event announced on the day of the Kapo-jeon, you are recognized as to have watched up to two competitions.</td>
       </tr>
       <tr>
-        <th>넷,</th><td>9/20(수) 저녁에 엘카의 경기 응원 교육이 있습니다.</td>
+        <th>넷,</th><td>서포터즈 티셔츠 및 각종 물품을 제공해드리고 지진 대피 교육을 진행할 예정이니 9/12(수) 19:30 서포터즈 OT에 꼭 참석하셔야 합니다. T-shirts for supporters and other items will be offered and earthquake evacuation training will be conducted, so be sure to attend the September 12th (Wed) 19:30 Supporters OT.</td>
+      </tr>
+      <tr>
+        <th>다섯,</th><td>인당 10000원의 보증금까지 보내주셔야 신청이 완료됩니다. 계좌: 우리 1002-357-978124 예금주: 김동주 You need to send a deposit of 10,000 won per person to complete the application. Account: Woori-Bank 1002-357-978124 Depositor: 김동주(Kim Dong Joo)</td>
       </tr>
     </table>
     <table class="board">
@@ -50,7 +53,7 @@
         <button class="pg" v-on:click="page_turn(max_page)">></button>
       </div>
       <router-link :to="{ name: 'supporters_write' }">
-        <span class="write noto-sans">쓰기</span>
+        <span class="write noto-sans">신청하기</span>
       </router-link>
     </div>
   </div>
@@ -144,7 +147,10 @@ export default {
 }
 
 .supporters-todo > tr > td {
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  text-align: justify;
+  line-height: 120%;
+  word-break: keep-all;
 }
 
 .board{

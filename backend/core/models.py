@@ -117,6 +117,7 @@ class Supporter(models.Model):
         (3, 'L'),
         (4, 'XL'),
         (5, 'XXL'),
+        (6, 'XXXL')
     )
     name = models.CharField(
         max_length = 30,

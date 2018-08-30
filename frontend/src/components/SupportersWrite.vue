@@ -4,11 +4,11 @@
       <p>아래의 칸을 채워주세요</p>
     </div>
     <div class="team-name">
-      <label>이름</label>
+      <label>Team name</label>
       <input name="team-name">
     </div>
     <div class="team-password">
-      <label>비밀번호</label>
+      <label>Password</label>
       <input name="team-password" type="password">
     </div>
     <div class="member">
@@ -18,32 +18,33 @@
     </div>
     <div class="supporter-block">
       <div v-for="n in click" v-bind:style="styleSupporter" class="supporter">
-        <label>이름</label>
+        <label>Name</label>
         <input name="member-name" v-bind:style="styleInput"><br>
-        <label>성별</label>
+        <label>Gender</label>
         <select name="member-sex" v-bind:style="styleInput2" v-on:change="setLeader2(n, $event.target.selectedIndex)">
-          <option selected>남성</option>
-          <option>여성</option>
+          <option selected>Male</option>
+          <option>Female</option>
         </select>
         <br>
-        <label>학번</label>
+        <label>Student ID</label>
         <input name="member-id" v-bind:style="styleInput"><br>
-        <label>학과</label>
+        <label>Department</label>
         <input name="member-department" v-bind:style="styleInput"><br>
-        <label>연락처</label>
+        <label>Phone</label>
         <input name="member-contact" v-bind:style="styleInput3"><br>
-        <label>티셔츠 사이즈</label>
+        <label>T-shirt size</label>
         <select name="member-size" v-bind:style="styleInput2">
-          <option selected>85</option>
-          <option>90</option>
-          <option>95</option>
-          <option>100</option>
-          <option>105</option>
-          <option>110</option>
+          <option selected>XS(80)</option>
+          <option>S(85)</option>
+          <option>M(90)</option>
+          <option>L(95)</option>
+          <option>XL(100)</option>
+          <option>XXL(105)</option>
+          <option>XXXL(110)</option>
         </select>
         <br>
-        <label v-if="checkLeader(n)" name="member-leader" style="font-weight:bold">조장</label>
-        <label v-else name="member-leader" v-on:click="setLeader(n)" style="cursor:pointer">조장으로 설정하기</label>
+        <label v-if="checkLeader(n)" name="member-leader" style="font-weight:bold">Leader</label>
+        <label v-else name="member-leader" v-on:click="setLeader(n)" style="cursor:pointer">Set to leader</label>
       </div>
     </div>
     <router-link :to="{ name: 'supporters' }">
@@ -63,29 +64,32 @@ export default {
       styleSupporter: {
         backgroundColor: '#efefef',
         borderRadius: '5px',
-        width: '260px',
+        width: '280px',
         margin: '15px 15px 0 0',
         padding: '10px 7px 10px 17px',
-        fontSize: '24px'
+        fontSize: '19px'
       },
       styleInput: {
-        margin: '-10px 0 0 10px',
-        width: 'calc(100% - 83px)',
-        fontSize: '15px',
-        display: 'inline-block'
+        margin: '0 0 0 10px',
+        width: 'calc(100% - 120px)',
+        fontSize: '14px',
+        display: 'inline-block',
+        float: 'right'
       },
       styleInput2: {
         position: 'relative',
-        top: '-2px',
+        top: '2px',
         margin: '0px 0 0 10px',
         fontSize: '15px',
-        display: 'inline-block'
+        display: 'inline-block',
+        float: 'right'
       },
       styleInput3: {
-        margin: '-10px 0 0 10px',
-        width: 'calc(100% - 105px)',
+        margin: '0px 0 0 10px',
+        width: 'calc(100% - 120px)',
         fontSize: '15px',
-        display: 'inline-block'
+        display: 'inline-block',
+        float: 'right'
       }
     }
   },
