@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from core import views as core_views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('core.urls')),
+    url(r'^', TemplateView.as_view(template_name='index.html')),
 ]
