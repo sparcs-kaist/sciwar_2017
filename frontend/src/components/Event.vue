@@ -34,7 +34,7 @@
     </div>
     <div class="time"><i class="fas fa-clock"></i>일시<span>{{ day }} {{ startTimeH }}:{{ startTimeM }}~{{ endTimeH }}:{{ endTimeM }}</span>
     </div>
-    <div class="location"><i class="fas fa-map-marker-alt"></i>위치<span>{{ locations[event.fields.location] }}</span>
+    <div class="location"><i class="fas fa-map-marker-alt"></i>위치<span>{{ findLocation(event.fields.location) }}</span>
     </div>
     <div class="player"><i class="fas fa-user"></i>선수단 목록
       <div v-on:click="player()" class="chevron"><i class="fa fa-chevron-down"></i></div>
@@ -94,8 +94,6 @@ export default {
   },
   created () {
     this.fetchData()
-    this.locations = ['E11 창의학습관', 'W9 노천극장', 'N3 스포츠 컴플렉스', 'E17 운동장', 'N13 앞 학부운동장', 'N5 2268, 2269호']
-    this.mapList = ['map_E11, Creative Learning Building.png', 'map_W9, Outdoor Theater.png', 'map_N3, Sports Complex.png', 'map_E17, Stadium.png', 'map_In Front of N3, Main Playground.png', 'map_N5, Basic Experiment & Research.jpg']
   },
   watch: {
     '$route': 'fetchData'
@@ -132,6 +130,10 @@ export default {
               this.messages = JSON.parse(response.data)
               document.getElementsByClassName('location-picture')[0].style.background = "url('/static/images/" + this.mapList[this.event.fields.location] + "')"
             })
+          this.$http.get('/api/locations/')
+            .then((response) => {
+              this.locations = JSON.parse(response.data)
+            })
         })
     },
     location () {
@@ -149,6 +151,12 @@ export default {
       } else {
         document.getElementsByClassName('player-detail')[0].style.display = 'none'
       }
+    },
+    findLocation (pk) {
+      for (let i of this.locations) {
+        if (i.pk === pk) return i.fields.name_kor
+      }
+      return ''
     }
   }
 }
