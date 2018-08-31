@@ -43,8 +43,8 @@ export default {
       certified: false,
       supporter: [],
       size: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-      supporterTeam = {},
-      members = []
+      supporterTeam: {},
+      members: []
     }
   },
   created () {
