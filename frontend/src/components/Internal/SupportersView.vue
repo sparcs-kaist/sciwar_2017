@@ -38,7 +38,8 @@ export default {
       theRightPassword: '',
       certified: false,
       supporter: [],
-      size: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+      size: ['80', '85', '90', '95', '100', '105', '110'],
+      sex: ['남', '여'],
       supporterTeam: {},
       members: []
     }
