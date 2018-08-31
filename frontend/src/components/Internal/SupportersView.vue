@@ -2,7 +2,7 @@
   <div class="supporters-view noto-sans">
     <div class="head">서포터즈 조회하기</div>
     <div class="supporter-reg">
-      <table class="team-info">
+      <table v-for="member in members" class="team-info">
         <tr>
           <th>이름</th>
           <td>{{ supporter.fields.name }}</td>
@@ -42,14 +42,21 @@ export default {
       theRightPassword: '',
       certified: false,
       supporter: [],
-      size: ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+      size: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+      supporterTeam = {},
+      members = []
     }
   },
   created () {
     let uri = '/api/supporters/complete/' + this.$route.params.id + '/'
     this.$http.get(uri)
       .then((response) => {
-        this.supporter = JSON.parse(response.data)[0]
+        this.supporterTeam = JSON.parse(response.data['supporter_team'])[0]
+        this.members = JSON.parse(response.data['members'])
+        for (let i = 0; i < this.members.length; i++) {
+          if (this.members[i].fields.sex === 1 && this.members[i].fields.is_leader) this.currentLeaderF = i + 1
+          if (this.members[i].fields.sex === 0 && this.members[i].fields.is_leader) this.currentLeaderM = i + 1
+        }
       })
   },
   methods: {
