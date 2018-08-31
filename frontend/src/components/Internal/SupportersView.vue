@@ -61,6 +61,10 @@ export default {
         .then((response) => {
           console.log('successful')
         })
+    },
+    showLeader: function (bool) {
+      if (bool) return '/ 조장'
+      return ''
     }
   }
 }
