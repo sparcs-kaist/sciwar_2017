@@ -3,7 +3,7 @@
     <div class="internal-supporters-title">
       서포터즈 확인 페이지
     </div>
-    <div class="supporters-status">
+    <!-- <div class="supporters-status">
       <p>인원: {{ numSupporters }}</p>
       <div class="supporters-size">
         <p class="0">XS: {{ numXS }}</p>
@@ -13,7 +13,7 @@
         <p class="4">XL: {{ numXL }}</p>
         <p class="5">XXL: {{ numXXL }}</p>
       </div>
-    </div>
+    </div> -->
     <table class="board">
       <thead>
         <tr>

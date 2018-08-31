@@ -2,26 +2,22 @@
   <div class="supporters-view noto-sans">
     <div class="head">서포터즈 조회하기</div>
     <div class="supporter-reg">
-      <table v-for="supporter in members" class="team-info">
+      <table class="team-info">
         <tr>
-          <th>이름</th>
-          <td>{{ supporter.fields.name }}</td>
+          <th>Team name</th>
+          <td>{{ supporterTeam.fields.name }}</td>
         </tr>
         <tr>
-          <th>학번</th>
-          <td>{{ supporter.fields.student_id }}</td>
-        </tr>
-        <tr>
-          <th>학과</th>
-          <td>{{ supporter.fields.department }}</td>
-        </tr>
-        <tr>
-          <th>연락처</th>
-          <td>{{ supporter.fields.contact }}</td>
-        </tr>
-        <tr>
-          <th>사이즈</th>
-          <td>{{ size[supporter.fields.size] }}</td>
+          <th>Members</th>
+          <td class="supporter-list">
+            <ul v-for="member in members" class="supporter-info">{{ member.fields.name }} {{ showLeader(member.fields.is_leader) }}
+              <li>{{ sex[member.fields.sex] }}</li>
+              <li class="student-id">{{ member.fields.student_id }}</li>
+              <li>{{ member.fields.department }}</li>
+              <li>{{ member.fields.contact }}</li>
+              <li>Size {{ size[member.fields.size] }}</li>
+            </ul>
+          </td>
         </tr>
       </table>
       <div class="link-container">
@@ -153,4 +149,42 @@ export default {
 .link2 {
   float: right;
 }
+
+
+.team-info > tr {
+  height: 30px;
+}
+
+.team-info > tr > th {
+  font-size: 32px;
+  width: 230px;
+}
+
+.team-info > tr > td {
+  font-size: 28px;
+}
+
+.supporter-list {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+ }
+
+ .supporter-info {
+   border-radius: 10px;
+   background-color: #efefef;
+   margin-right: 10px;
+   margin-top: 10px;
+   width: 200px;
+   padding: 10px 10px 10px 10px;
+   text-align: center;
+   font-size: 28px;
+ }
+
+ .supporter-info > li {
+   font-size: 20px;
+   font-weight: 300;
+   margin: 0 auto;
+ }
+
 </style>
