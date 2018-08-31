@@ -206,7 +206,7 @@ def supporters(request):
         return JsonResponse(supporter_teams, safe = False, json_dumps_params = {'ensure_ascii': False})
 
     if request.method == "PUT":
-        if len(Supporter.objects.all()) > 180:
+        if len(Supporter.objects.all()) > 200:
             return HttpResponse('최대 신청자수를 초과하였습니다.')
 
         data = json.loads(request.body)

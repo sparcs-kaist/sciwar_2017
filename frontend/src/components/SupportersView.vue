@@ -142,7 +142,7 @@ export default {
       },
       styleInput: {
         margin: '0 0 0 10px',
-        width: 'calc(100% - 120px)',
+        width: 'calc(100% - 125px)',
         fontSize: '14px',
         display: 'inline-block',
         float: 'right'
@@ -157,12 +157,12 @@ export default {
       },
       styleInput3: {
         margin: '0px 0 0 10px',
-        width: 'calc(100% - 120px)',
+        width: 'calc(100% - 125px)',
         fontSize: '15px',
         display: 'inline-block',
         float: 'right'
       },
-      size: ['85', '90', '95', '100', '105', '110'],
+      size: ['80', '85', '90', '95', '100', '105', '110'],
       sex: ['남', '여']
     }
   },
