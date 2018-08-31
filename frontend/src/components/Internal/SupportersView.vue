@@ -2,7 +2,7 @@
   <div class="supporters-view noto-sans">
     <div class="head">서포터즈 조회하기</div>
     <div class="supporter-reg">
-      <table v-for="member in members" class="team-info">
+      <table v-for="supporter in members" class="team-info">
         <tr>
           <th>이름</th>
           <td>{{ supporter.fields.name }}</td>
