@@ -50,15 +50,18 @@ export default {
       .then((response) => {
         this.videos = JSON.parse(response.data)
         this.videosRendered = JSON.parse(JSON.stringify(this.videos))
-        for (let i of this.videos) {
-          if (i.fields.type === 0) {
-            this.videoLive.push(i)
-          }
-        }
       })
     this.$http.get('/api/events/')
       .then((response) => {
         this.events = JSON.parse(response.data)
+        for (let video of this.videos) {
+          if (video.fields.type === 1) continue
+          for (let pk of video.fields.event) {
+            for (let event of this.events) {
+              if (event.pk === pk && event.fields.live === 1) this.videoLive.push(video)
+            }
+          }
+        }
       })
   },
   mounted () {
