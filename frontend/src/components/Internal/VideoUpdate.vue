@@ -31,10 +31,10 @@
     </div>
     <div class="radio-container">
       <label>live streaming 여부</label><br>
-      <input type="radio" id="live0" value="0" v-model="live">
-      <label v-on:click="radioClick(0)" for="live0" class="link radio-label">네</label>
-      <input type="radio" id="live1" value="1" v-model="live">
-      <label v-on:click="radioClick(1)" for="live1" class="link radio-label">아니요</label>
+      <input type="radio" id="live0" :value="0" v-model="live">
+      <label :style="`color:${radioClick(0)}`" for="live0" class="link radio-label">네</label>
+      <input type="radio" id="live1" :value="1" v-model="live">
+      <label :style="`color:${radioClick(1)}`" for="live1" class="link radio-label">아니요</label>
     </div>
     <div class="button-container">
       <router-link :to="{ name: 'videos_check' }"><button v-on:click="submit()" class="link">제출</button></router-link>
@@ -55,8 +55,10 @@ export default {
         this.link = this.video.fields.link
         this.loadEvent(this.video.fields.event)
         this.live = this.video.fields.type
-        console.log('this.live', this.live)
       })
+  },
+  mounted: function () {
+    this.radioClick(this.live)
   },
   data () {
     return {
@@ -64,7 +66,7 @@ export default {
       link: [],
       events: [],
       cheermessages: [],
-      live: ''
+      live: 0
     }
   },
   methods: {
@@ -81,7 +83,6 @@ export default {
             this.cheermessages.push.apply(this.cheermessages, JSON.parse(response.data))
           })
       }
-      console.log(this.cheermessages)
     },
     generateUrl (key) {
       return `http://www.youtube.com/embed/${key}`
@@ -93,9 +94,8 @@ export default {
       event.target.style.background = 'rgb(242,242,242)'
     },
     submit () {
-      let data = { 'type': this.live }
-      data = JSON.stringify(data)
-      this.$http.post('/api/videos/' + this.$route.params.id + '/', data)
+      let data = { 'pk': this.$route.params.id, 'type': this.live }
+      this.$http.post('/api/videos/' + this.$route.params.id + '/', JSON.stringify(data))
         .then((response) => {
           console.log('successful')
         })
@@ -107,11 +107,8 @@ export default {
         })
     },
     radioClick (num) {
-      let link = document.getElementsByClassName('radio-label')
-      for (let i of link) {
-        i.style.color = 'white'
-      }
-      link[num].style.color = 'black'
+      if (this.live === num) return 'black'
+      return 'white'
     }
   }
 }

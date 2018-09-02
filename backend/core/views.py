@@ -51,21 +51,11 @@ def event(request, event_id):
             # Toto score update
             totos = event.totos.all()
             for toto in totos:
-                if event.type == 0:
-                    if score_k == toto.score_k and score_p == toto.score_p:
-                        toto.bet.total += event.score_weight
+                if score_k == toto.score_k and score_p == toto.score_p:
+                    toto.bet.total += event.score_weight
                 if winner == toto.winner:
                     toto.bet.total += event.win_weight
                 toto.bet.save()
-
-        # Live video
-        videos = event.video_set.all()
-        for video in videos:
-            if len(video.event.filter(live=1)) == 0:
-                video.type = 1
-            else:
-                video.type = 0
-            video.save()
 
         return HttpResponse('')
 
@@ -118,7 +108,7 @@ def event_messages(request, event_id):
         return JsonResponse(messages, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
-@csrf_exempt
+# @csrf_exempt
 def messages(request):
     if request.method == "GET":
         messages = CheerMessage.objects.all()
@@ -304,9 +294,8 @@ def totoViewComplete(request, pk):
         data['name'] = totoContent.name
 
         for toto in totoContent.totos.all():
-            if toto.event.type == 0:
-                data[f'{toto.event.name_eng}K'] = toto.score_k
-                data[f'{toto.event.name_eng}P'] = toto.score_p
+            data[f'{toto.event.name_eng}K'] = toto.score_k
+            data[f'{toto.event.name_eng}P'] = toto.score_p
             data[f'{toto.event.name_eng}Winner'] = toto.winner
 
         data = json.dumps(data)
@@ -314,7 +303,7 @@ def totoViewComplete(request, pk):
         return JsonResponse(data, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
-# @csrf_exempt
+@csrf_exempt
 def toto(request):
     if request.method == "PUT":
         data = json.loads(request.body)
@@ -326,11 +315,9 @@ def toto(request):
 
         for totoData in data['toto']:
             event = Event.objects.get(id = totoData['event'])
-            if event.type == 0:
+            if event.type != 2:
+                print(totoData)
                 toto = Toto(event=event, bet=totoContent, score_k=totoData[f'{event.name_eng}K'], score_p=totoData[f'{event.name_eng}P'], winner=school[totoData[f'{event.name_eng}Winner']])
                 toto.save()
-            elif event.type == 1:
-                toto = Toto(event=event, bet=totoContent, winner=school[totoData[f'{event.name_eng}Winner']])
-                toto.save()
 
-        return HttpResponse('')
+        return HttpResponse('토토가 정상적으로 저장되었습니다')

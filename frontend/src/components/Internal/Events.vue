@@ -11,10 +11,10 @@
             <option v-for="option in options" :value="option.value" :selected="option.value == event.fields.live">{{ option.text }}</option>
           </select>
         </div>
-        <button class="button is-primary submit" v-on:click = selectClick($event) name="button">Submit</button>
+        <button class="button is-primary submit" v-on:click="selectClick($event)" name="button">Submit</button>
       </div>
     </div>
-    <button id="restore" v-on:click=restore()>절대로 누르지 마세요</button>
+    <button id="restore" v-on:click="restore()">절대로 누르지 마세요</button>
   </div>
 </template>
 
@@ -78,13 +78,14 @@ export default {
           winner = 2
         }
       }
-      this.$http.post(url, JSON.stringify({
+      let newEvent = {
         'live': live,
         'score_k': kaist,
         'score_p': postech,
         'pk': pk,
         'winner': winner
-      }))
+      }
+      this.$http.post(url, JSON.stringify(newEvent))
         .then((response) => {
           console.log('save successfully')
         })

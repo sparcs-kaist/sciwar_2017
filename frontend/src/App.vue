@@ -148,7 +148,7 @@
           </div>
         </div>
       </div>
-      <div class="main">
+      <div class="main" >
         <router-view name="contents"></router-view>
       </div>
     </div>
@@ -183,6 +183,11 @@ export default {
   },
   updated () {
     this.relocateContents()
+  },
+  watch: {
+    videosRendered () {
+      console.log(this.videosRendered)
+    }
   },
   methods: {
     submenu (event) {
@@ -227,19 +232,25 @@ export default {
           for (let i = 0; i < this.eventsRendered.length; i++) {
             this.videosRendered.push(0)
           }
-          for (let x in this.eventsRendered) {
-            if (this.eventsRendered[x].fields.live === 0) {
-              continue
-            } else if (this.eventsRendered[x].fields.live === 1) {
-              for (let video of this.videos) {
-                if (video.fields.event.indexOf(this.eventsRendered[x].pk) > -1 && video.fields.type === 0) {
-                  this.videosRendered[x] = video
-                  break
-                }
-              }
+          this.renderVideo()
+        })
+    },
+    renderVideo () {
+      console.log('b')
+      for (let x in this.eventsRendered) {
+        if (this.eventsRendered[x].fields.live === 0) {
+          continue
+        } else if (this.eventsRendered[x].fields.live === 1) {
+          for (let y in this.videos) {
+            console.log(this.videos[y])
+            if (this.videos[y].fields.event.indexOf(this.eventsRendered[x].pk) > -1 && this.videos[y].fields.type === 0) {
+              this.videosRendered[x] = this.videos[y]
+              console.log(this.videosRendered)
+              break
             }
           }
-        })
+        }
+      }
     },
     moveLeft () {
       if (this.currentIndex > 0) {

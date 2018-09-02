@@ -7,7 +7,6 @@
     <label class="control-label">Password</label>
     <input v-model="password" type="password" name="password" class="form-controll-small" v-on:keyup="check()">
 		<div class="toto-content">
-			<h2 class="table-title">운동경기 점수 맞추기</h2>
 			<table class="toto-table board-table">
 				<thead>
 					<tr>
@@ -18,29 +17,12 @@
 					</tr>
 				</thead>
 				<tbody>
-          <tr v-for="event in events" v-if="event.fields.type === 0">
+          <tr v-for="event in events" v-if="event.fields.type !== 2">
             <td>{{ event.fields.name_kor }}</td>
             <td><input :id="event.fields.name_eng.concat('K')" placeholder="ex)3" v-on:keyup="getWinner(event.fields.name_eng);"></td>
 						<td><input :id="event.fields.name_eng.concat('P')" placeholder="ex)0" v-on:keyup="getWinner(event.fields.name_eng);"></td>
             <td class="winner"><span :id="event.fields.name_eng.concat('Winner')">NONE</span></td>
           </tr>
-				</tbody>
-			</table>
-			<h2 class="table-title">과학경기 승패 맞추기</h2>
-			<table class="toto-table board-table quater">
-				<thead>
-					<tr>
-						<th></th>
-						<th>KAIST win</th>
-						<th>POSTECH win</th>
-					</tr>
-				</thead>
-				<tbody>
-          <tr v-for="event in events" v-if="event.fields.type === 1">
-						<td>{{ event.fields.name_kor }}</td>
-						<td><input :id="event.fields.name_eng.concat('K')" type="radio" :name="event.fields.name_eng" class="radio-button" value="KAIST" checked></td>
-						<td><input :id="event.fields.name_eng.concat('P')" type="radio" :name="event.fields.name_eng" class="radio-button" value="POSTECH"></td>
-					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -76,17 +58,12 @@ export default {
         return
       }
       for (let event of this.events) {
-        if (event.fields.type === 0) {
+        if (event.fields.type !== 2) {
           if (!document.getElementById(event.fields.name_eng.concat('K')).value || !document.getElementById(event.fields.name_eng.concat('P')).value) {
             this.checkSubmit = false
             return
           }
           if (isNaN(document.getElementById(event.fields.name_eng.concat('K')).value) || isNaN(document.getElementById(event.fields.name_eng.concat('P')).value)) {
-            this.checkSubmit = false
-            return
-          }
-        } else if (event.fields.type === 1) {
-          if (!document.getElementById(event.fields.name_eng.concat('K')).checked && !document.getElementById(event.fields.name_eng.concat('P')).checked) {
             this.checkSubmit = false
             return
           }
@@ -108,17 +85,11 @@ export default {
     },
     appendToto (event) {
       var eventToto = {}
-      if (event.fields.type === 0) {
-        eventToto['event'] = event.pk
-        eventToto[`${event.fields.name_eng}K`] = parseInt(document.getElementById(event.fields.name_eng.concat('K')).value)
-        eventToto[`${event.fields.name_eng}P`] = parseInt(document.getElementById(event.fields.name_eng.concat('P')).value)
-        eventToto[`${event.fields.name_eng}Winner`] = document.getElementById(event.fields.name_eng.concat('Winner')).innerHTML
-      } else if (event.fields.type === 1) {
-        eventToto['event'] = event.pk
-        eventToto[`${event.fields.name_eng}Winner`] = document.getElementById(event.fields.name_eng.concat('K')).checked ? 'KAIST' : 'POSTECH'
-      } else {
-        return
-      }
+      if (event.fields.type === 2) return
+      eventToto['event'] = event.pk
+      eventToto[`${event.fields.name_eng}K`] = parseInt(document.getElementById(event.fields.name_eng.concat('K')).value)
+      eventToto[`${event.fields.name_eng}P`] = parseInt(document.getElementById(event.fields.name_eng.concat('P')).value)
+      eventToto[`${event.fields.name_eng}Winner`] = document.getElementById(event.fields.name_eng.concat('Winner')).innerHTML
       return eventToto
     },
     submit () {
@@ -132,10 +103,11 @@ export default {
       console.log(this.toto)
       let data = { 'studentID': this.studentId, 'name': this.name, 'password': shasum.digest('hex'), 'toto': this.toto }
       data = JSON.stringify(data)
+      console.log(data)
       let url = '/api/toto/'
       this.$http.put(url, data)
         .then((response) => {
-          console.log('save successfully')
+          alert(response.data)
         })
     }
   }
