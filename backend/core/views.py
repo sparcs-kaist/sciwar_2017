@@ -108,7 +108,7 @@ def event_messages(request, event_id):
         return JsonResponse(messages, safe = False, json_dumps_params = {'ensure_ascii': False})
 
 
-# @csrf_exempt
+@csrf_exempt
 def messages(request):
     if request.method == "GET":
         messages = CheerMessage.objects.all()
@@ -127,6 +127,7 @@ def messages(request):
         return HttpResponse('')
 
 
+@csrf_exempt
 def messageLike(request, pk):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -247,6 +248,7 @@ def supporters(request):
         return HttpResponse('')
 
 
+@csrf_exempt
 def supportersView(request, pk):
     if request.method == "GET":
         data = serializers.serialize('json', [SupporterTeam.objects.get(id = pk)], fields=('password'))
