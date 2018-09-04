@@ -7,7 +7,7 @@
     <iframe id="frame" width="800" height="450" :src="generateUrl(link)" frameborder="0" allowfullscreen></iframe>
     <div class="related-events">
       <p>연관 행사:</p>
-      <router-link v-for="event in events" :to="{ name: 'event', params: { id: event.pk } }">
+      <router-link v-for="event in events" v-if="event.fields.type !== 2" :to="{ name: 'event', params: { id: event.pk } }">
         <label v-on:mouseover="mouseOver()" v-on:mouseleave="mouseLeave()">{{ event.fields.name_kor }}</label>
       </router-link>
     </div>

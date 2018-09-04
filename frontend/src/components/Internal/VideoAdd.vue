@@ -13,7 +13,7 @@
       <label v-on:click="radioClick(1)" for="live1" class="link">아니요</label>
     </div>
     <p>해당 이벤트</p>
-    <div v-for="event in events">
+    <div v-for="event in events" v-if="event.fields.type !== 2">
       <input type="checkbox" :value="event.pk" v-model="checkedEvents">
       <label>{{ event.fields.name_kor }}</label>
     </div>

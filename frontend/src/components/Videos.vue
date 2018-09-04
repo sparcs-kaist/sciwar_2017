@@ -17,7 +17,7 @@
         전체
       </label>
     </div>
-    <div v-for="event in events" v-on:click="filterChange(event)" class="videos-event button is-large">
+    <div v-for="event in events" v-if="event.fields.type !== 2" v-on:click="filterChange(event)" class="videos-event button is-large">
       <label class="radio">
         <input v-on:click="radioClick()" type="radio" name="videos-event" :value="event.pk">
         {{ event.fields.name_kor }}
