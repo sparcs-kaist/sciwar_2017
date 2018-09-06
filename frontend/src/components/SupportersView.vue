@@ -309,6 +309,7 @@ export default {
       this.$http.post('/api/supporters/', data)
         .then((response) => {
           console.log(response.data)
+          alert(response.data)
         })
     },
     del: function () {

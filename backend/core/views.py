@@ -197,55 +197,57 @@ def supporters(request):
         return JsonResponse(supporter_teams, safe = False, json_dumps_params = {'ensure_ascii': False})
 
     if request.method == "PUT":
-        if len(Supporter.objects.all()) > 200:
-            return HttpResponse('최대 신청자수를 초과하였습니다.')
-
-        data = json.loads(request.body)
-        print(data)
-        supporter_team = SupporterTeam(name = data['teamName'], password = data['password'])
-        supporter_team.save()
-        for member in data['supporters']:
-            print(member)
-            supporter = Supporter(
-                name = member['name'],
-                sex = member['sex'],
-                student_id = member['studentID'],
-                department = member['department'],
-                contact = member['contact'],
-                size = member['size'],
-                is_leader = member['isLeader'],
-                team = supporter_team
-            )
-            supporter.save()
-
-        return HttpResponse('신청 완료되었습니다! 아래 리스트에 없는 경우 운영진에게 알려주세요.')
+        return HttpResponse('현재 신청 및 수정이 불가합니다.')
+        # if len(Supporter.objects.all()) > 200:
+        #     return HttpResponse('최대 신청자수를 초과하였습니다.')
+        #
+        # data = json.loads(request.body)
+        # print(data)
+        # supporter_team = SupporterTeam(name = data['teamName'], password = data['password'])
+        # supporter_team.save()
+        # for member in data['supporters']:
+        #     print(member)
+        #     supporter = Supporter(
+        #         name = member['name'],
+        #         sex = member['sex'],
+        #         student_id = member['studentID'],
+        #         department = member['department'],
+        #         contact = member['contact'],
+        #         size = member['size'],
+        #         is_leader = member['isLeader'],
+        #         team = supporter_team
+        #     )
+        #     supporter.save()
+        #
+        # return HttpResponse('신청 완료되었습니다! 아래 리스트에 없는 경우 운영진에게 알려주세요.')
 
 
     if request.method == "POST":
-        data = json.loads(request.body)
-
-        print(data)
-        SupporterTeam.objects.get(id = data['pk']).members.all().delete()
-        supporter_team = SupporterTeam(
-            id = data['pk'],
-            name = data['teamName'],
-            password = data['password']
-        )
-        supporter_team.save()
-        for instance in data['supporters']:
-            supporter = Supporter(
-                name = instance['name'],
-                sex = instance['sex'],
-                student_id = instance['studentID'],
-                department = instance['department'],
-                contact = instance['contact'],
-                size = instance['size'],
-                is_leader = instance['isLeader'],
-                team = supporter_team
-            )
-            supporter.save()
-
-        return HttpResponse('')
+        return HttpResponse('현재 신청 및 수정이 불가합니다.')
+        # data = json.loads(request.body)
+        #
+        # print(data)
+        # SupporterTeam.objects.get(id = data['pk']).members.all().delete()
+        # supporter_team = SupporterTeam(
+        #     id = data['pk'],
+        #     name = data['teamName'],
+        #     password = data['password']
+        # )
+        # supporter_team.save()
+        # for instance in data['supporters']:
+        #     supporter = Supporter(
+        #         name = instance['name'],
+        #         sex = instance['sex'],
+        #         student_id = instance['studentID'],
+        #         department = instance['department'],
+        #         contact = instance['contact'],
+        #         size = instance['size'],
+        #         is_leader = instance['isLeader'],
+        #         team = supporter_team
+        #     )
+        #     supporter.save()
+        #
+        # return HttpResponse('')
 
 
 @csrf_exempt
