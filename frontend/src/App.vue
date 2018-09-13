@@ -103,7 +103,7 @@
       </div>
       <div class="logos">
         <p>주관 및 후원</p>
-        <img src="/static/images/netmarble.PNG" class="logo" width="300" height="100" />
+        <a href="https://company.netmarble.com/" target="_blank"><img src="/static/images/netmarble_banner.jpg" class="logo" width="300" height="100" /></a>
         <img src="/static/images/imgeffectlogo.png" class="logo" width="300" height="100" />
         <img src="/static/images/WideKAPOlogo.png" class="logo" width="300" height="100" />
       </div>
